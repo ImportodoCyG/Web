@@ -740,20 +740,29 @@
 
 /* Ajuste para móviles */
 @media (max-width: 768px) {
-    .footer-container {
+    .detail-layout {
         flex-direction: column;
-        text-align: center;
-        gap: 30px;
+        gap: 20px;
     }
-    .footer-col {
+    .detail-gallery {
+        width: 100%;
+    }
+    .detail-info {
         min-width: 100%;
     }
-    .social-links-grid {
-        justify-content: center;
+    .detail-info h2 {
+        font-size: 22px;
     }
-    .footer-logo {
-        margin: 0 auto 15px;
+    .detail-info .price {
+        font-size: 26px;
     }
+    .detail-specs {
+        padding: 16px;
+    }
+    .gallery-thumbs {
+        flex-wrap: wrap;
+    }
+
 }
 
         /* ===== WHATSAPP BUTTON ===== */
@@ -1064,6 +1073,17 @@ const products = [
 
     { id: 11, name: "Mini Parlante Bluetooth", price: 8500, isOffer: true, specs: "", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/12/parlan-4led.webp", category: "Electronica" },
 
+    { id: 12, name: "Soporte Móvil TV 14 a 42", price: 15000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_816926-MLA100089974977_122025-F.webp", category: "Hogar" },
+
+    { id: 13, name: "Balde Mopa Centrifugador 360⁰", price: 18000, isOffer: false, specs: "", img:"https://images.fravega.com/f500/52c38a58e79478a8fe902cbf518ce622.png", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_902643-MLA82581799826_032025-F.webp", "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQwJ5CvAXVLcmlLDNvX5Mi6L6ivnoEkkX1-v1SNI7vhw4a5Z3ee"], category: "Hogar" },
+
+    { id: 14, name: "Tender de Ropa vertical 50kg", price: 26000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_751618-MLA79909584834_102024-O.webp", category: "Hogar" },
+
+    { id: 15, name: "Inflador de globos", price: 27000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_761487-MLA99564551334_122025-O.webp", category: "Infantil" },
+
+    { id: 16, name: "Cuchara coladora 29cm", price: 3500, isOffer: false, specs: "Ahora podes servir sopa y/o verduras por separado", img:"https://scontent.faep7-1.fna.fbcdn.net/v/t1.6435-9/122478377_3584366894916835_6878363035807118457_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=06a7ca&_nc_eui2=AeHsS7F1RCQvMrESCy8w0n4V41GiBzKNRDrjUaIHMo1EOsVVmSDX69CehztQWUqgiWA&_nc_ohc=TmngcDAH-84Q7kNvwE9sOAK&_nc_oc=Adq0bLCOxRzYWYQlKLVMm8t4Rsyvr0dSQ5-huAYB7IKa4p6-mPGhF5256bBbkBlpdMH5wE2rk-KgjLkxZ1Pm6A-n&_nc_zt=23&_nc_ht=scontent.faep7-1.fna&_nc_gid=7CnHKuGKTTjYN2Lq-qjU0Q&_nc_ss=7a3a8&oh=00_Af3yGPcJpgzxopffqWK8VuhAy6rz2h3JLmIRocFY423WcQ&oe=69FF6E36", images: ["https://www.dspecialtystore.com/wp-content/uploads/2025/01/H10b3b82a383d44959ed5e59e2ef961efw.webp", "https://images.nexusapp.co/assets/ae/20/51/260363913.jpg"], category: "Hogar" },
+
+    { id: 17, name: "Soporte para espejo retrovisor", price: 4500, isOffer: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/477/775/products/ogvjkswrgjgporjw-fd657cf11747f409da16980906830521-1024-1024.webp", category: "Infantil" },
 
 ];
 
@@ -1498,13 +1518,7 @@ function renderAbout() {
         <p>En <strong>Importodo CyG</strong>, nacimos con la misión de acercar la tecnología de vanguardia a cada hogar. Somos un emprendimiento apasionado por la eficiencia y la innovación.</p>
         <h3 style="margin-top:40px; color:var(--destructive); font-weight:700; font-size:18px">Síguenos en nuestras redes:</h3>
         <div style="margin-top:16px">${socialLinksHTML}</div>
-    </div>
-<div style="background: rgba(24, 119, 242, 0.1); border: 1px solid #1877F2; border-radius: 8px; padding: 12px; margin-top: 15px; display: inline-block; max-width: 100%;">
-    <p style="color: #1877F2; font-size: 14px; margin: 0; font-weight: 600; display: flex; align-items: center; gap: 8px;">
-        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-        ¡Únete a nuestra comunidad! Más de 10,000 seguidores ya nos eligen.
-    </p>
-</div>`;
+    </div>`;
 }
 
 function renderHelp() {
