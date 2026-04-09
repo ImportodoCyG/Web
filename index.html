@@ -821,6 +821,82 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .fade-in { animation: fadeInUp 0.5s ease-out; }
+
+/* ===== CORRECCIONES MÓVIL Y DISEÑO ===== */
+
+/* 3. Iconos de redes siempre visibles (Color oscuro o el de tu marca) */
+.social-link {
+    color: #1d1d1f !important; /* Color oscuro para que se vea sobre blanco */
+    background: #f5f5f7;
+}
+.social-link:hover {
+    background: #1d1d1f;
+    color: #ffffff !important;
+}
+
+/* Reglas solo para celulares (pantallas menores a 768px) */
+@media (max-width: 768px) {
+    /* 7. Dos productos por fila en el catálogo */
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+        padding: 10px !important;
+    }
+    .product-card {
+        padding: 10px !important;
+    }
+    .product-title {
+        font-size: 13px !important;
+        /* Evita que títulos largos rompan la tarjeta */
+        white-space: nowrap; 
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .product-price {
+        font-size: 15px !important;
+    }
+    .add-to-cart-btn {
+        font-size: 12px !important;
+        padding: 8px !important;
+    }
+
+    /* 2. Carrito adaptado para que no se corte el tachito */
+    .cart-item {
+        flex-wrap: wrap !important;
+        gap: 10px;
+    }
+    .cart-item-title {
+        font-size: 13px !important;
+        max-width: 130px; /* Deja espacio para el tachito */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .cart-remove {
+        margin-left: auto !important; /* Empuja el tachito a la derecha del todo */
+    }
+
+    /* 6. Modal del producto individual adaptable */
+    .modal-content {
+        width: 95% !important;
+        margin: 20px auto !important;
+    }
+    .modal-body {
+        flex-direction: column !important; /* Pone la imagen arriba y el texto abajo */
+        gap: 15px !important;
+    }
+    .modal-image {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* 4. Mostrar Slogan en celular */
+    .hero-content p {
+        display: block !important;
+        font-size: 14px !important;
+        margin-bottom: 20px !important;
+    }
+}
     </style>
 </head>
 <body>
@@ -864,7 +940,19 @@
 <!-- HERO -->
 <div class="hero" id="heroSection">
     
-    <div class="hero-slide active">
+<div class="hero-slide active">
+        <img class="hero-bg" src="https://media.istockphoto.com/id/1191022270/photo/abstract-geometric-black-background-made-of-light-tubes.jpg?s=612x612&w=0&k=20&c=Gf-CZnUzuMgH4dAzcHAkAoEHa2W3Z4tvsQPqnsiD0vg=" alt="Fondo oscuro">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h2>Todo lo que necesitas en un solo lugar <br> "Un Emprendimiento Familiar"</h2>
+            <h1>Reserva tu pedido hoy!!!</h1>
+            <p>Variedad, confianza, personalización, garantia.</p>
+            <div class="hero-buttons">
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-slide">
         <img class="hero-bg" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80" alt="Fondo espacial">
         <div class="hero-overlay"></div>
         <div class="hero-content">
@@ -914,10 +1002,10 @@
         <div class="footer-col social-col">
             <h4>Seguinos en nuestras Redes y recibi todas las ofertas</h4>
             <div class="social-links-grid">
-                <a href="#" target="_blank" class="social-icon-link instagram" title="Seguinos en Instagram">
+                <a href="https://www.instagram.com/clauyguillesenaimportodocyg/" target="_blank" class="social-icon-link instagram" title="Seguinos en Instagram">
                     <svg viewBox="0 0 448 512"><path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.8 9.9 67.6 36.1 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
                 </a>
-                <a href="#" target="_blank" class="social-icon-link facebook" title="Seguinos en Facebook">
+                <a href="https://www.facebook.com/importodocyg" target="_blank" class="social-icon-link facebook" title="Seguinos en Facebook">
                     <svg viewBox="0 0 512 512"><path fill="currentColor" d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245.47V332.69h-57.3V256h57.3v-58.46c0-56.74 33.82-88.08 85.24-88.08 24.63 0 50.36 4.4 50.36 4.4v55.35h-28.36c-28.12 0-36.87 17.46-36.87 35.35V256h62.47l-10 76.69h-52.47V501.47C413.31 482.38 504 379.78 504 256z"/></svg>
                 </a>
                 <a href="#" target="_blank" class="social-icon-link tiktok" title="Seguinos en TikTok">
@@ -1023,8 +1111,8 @@ const icons = {
 
 const socialLinksHTML = `
 <div class="social-links">
-    <a href="#" class="social-link ig" title="Instagram"><svg viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.036 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/></svg></a>
-    <a href="#" class="social-link fb" title="Facebook"><svg viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg></a>
+    <a href="https://www.instagram.com/clauyguillesenaimportodocyg/" class="social-link ig" title="Instagram"><svg viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.036 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/></svg></a>
+    <a href="https://www.facebook.com/importodocyg" class="social-link fb" title="Facebook"><svg viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg></a>
     <a href="#" class="social-link tk" title="TikTok"><svg viewBox="0 0 16 16"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V0Z"/></svg></a>
 </div>`;
 
@@ -1164,6 +1252,18 @@ function renderSection() {
     }
 }
 
+function handleSearch(value) {
+    searchQuery = value;
+    renderSection();
+
+    // devolver foco al input nuevo
+    const input = document.querySelector('.search-wrap input');
+    if (input) {
+        input.focus();
+        input.setSelectionRange(value.length, value.length);
+    }
+}
+
 function renderHome() {
     const filtered = getFiltered();
     const whyCards = [
@@ -1195,7 +1295,7 @@ function renderHome() {
         <div class="filters">
             <div class="search-wrap">
                 ${icons.search}
-                <input type="text" placeholder="Buscar productos..." value="${searchQuery}" oninput="searchQuery=this.value; renderSection()">
+                <input type="text" placeholder="Buscar productos..." value="${searchQuery}" oninput="handleSearch(this.value)">
             </div>
             <div class="filter-row">
                 <div class="cat-pills">
@@ -1398,7 +1498,13 @@ function renderAbout() {
         <p>En <strong>Importodo CyG</strong>, nacimos con la misión de acercar la tecnología de vanguardia a cada hogar. Somos un emprendimiento apasionado por la eficiencia y la innovación.</p>
         <h3 style="margin-top:40px; color:var(--destructive); font-weight:700; font-size:18px">Síguenos en nuestras redes:</h3>
         <div style="margin-top:16px">${socialLinksHTML}</div>
-    </div>`;
+    </div>
+<div style="background: rgba(24, 119, 242, 0.1); border: 1px solid #1877F2; border-radius: 8px; padding: 12px; margin-top: 15px; display: inline-block; max-width: 100%;">
+    <p style="color: #1877F2; font-size: 14px; margin: 0; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        ¡Únete a nuestra comunidad! Más de 10,000 seguidores ya nos eligen.
+    </p>
+</div>`;
 }
 
 function renderHelp() {
