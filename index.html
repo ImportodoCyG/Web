@@ -309,12 +309,12 @@
 /* Responsive */
 @media (max-width: 900px) { 
     .why-grid { 
-        grid-template-columns: repeat(2, 1fr); 
+        grid-template-columns: repeat(3, 1fr); 
         gap: 20px;
     } 
 }
 
-@media (max-width: 500px) { 
+@media (max-width: 450px) { 
     .why-grid { 
         grid-template-columns: 1fr; 
     } 
@@ -358,7 +358,7 @@
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
         }
         @media (max-width: 900px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 700px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 450px) { .product-grid { grid-template-columns: 1fr; } }
         .product-card {
             background: var(--card); border-radius: 16px; padding: 20px;
@@ -824,6 +824,32 @@
         .main-content { min-height: 70vh; padding: 32px 0; }
         .section-title { text-align: center; font-size: 28px; font-weight: 700; margin-bottom: 32px; }
 
+        /* ===== FOOTER MOBILE FIX ===== */
+        @media (max-width: 640px) {
+            .footer-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .footer-col {
+                min-width: unset;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .footer-logo {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .social-links-grid {
+                justify-content: center;
+            }
+            .footer-bottom { text-align: center; }
+        }
+        .main-content { min-height: 70vh; padding: 32px 0; }
+        .section-title { text-align: center; font-size: 28px; font-weight: 700; margin-bottom: 32px; }
+
         /* Animations */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -1053,15 +1079,15 @@ const products = [
 
     { id: 1, name: "Iphone 16 PRO", price: 870000, isOffer: true, specs: "Pantalla OLED 6.7', 128GB, Cámara 48MP.", img: "https://http2.mlstatic.com/D_Q_NP_960877-MLA95686523081_102025-O.webp", category: "Electronica" },
 
-    { id: 2, name: "Proyector 3 en 1", price: 115000, isOffer: false, specs: "Proyector con juegos y apps instalados. Incluye Xuper TV, series, películas, canales, fútbol, todo gratis! Incluye 2 joysticks inalámbricos.", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2026/01/proyector.webp", category: "Entretenimiento" },
+    { id: 2, name: "Proyector 3 en 1", price: 115000, isOffer: false, specs: "Proyector con juegos y apps instalados. Incluye Xuper TV, series, películas, canales, fútbol, todo gratis! Incluye 2 joysticks inalámbricos.", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2026/01/proyector.webp", category: ["Entretenimiento", "Electronica", "Hogar"] },
 
     { id: 3, name: "Juego de mesa ¡Basta!", price: 18000, isOffer: true, specs: "Pensa y responde rápido antes de que se acabe el tiempo, el más rápido e ingenioso gana!!!", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/12/basta.jpg", category: "Infantil" },
 
     { id: 4, name: "Ventilador de Techo", price: 120000, isOffer: false, specs: "VENTILADOR DE TECHO C/LUZ CALIDA/FRIO 60W.", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/11/ventecho.jpg", category: "Hogar" },
 
-    { id: 5, name: "TV BOX 2+8G TIME", price: 42000, isOffer: false, specs: "Con comando de voz y Xuper TV: Películas – Series – Futbol – etc...", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/11/tvbox-time.jpg", category: "Hogar" },
+    { id: 5, name: "TV BOX 2+8G TIME", price: 42000, isOffer: false, specs: "Con comando de voz y Xuper TV: Películas – Series – Futbol – etc...", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/11/tvbox-time.jpg", category: ["Hogar", "Electronica", "Entretenimiento"] },
 
-    { id: 6, name: "Auricular Bluetooth con Pantalla", price: 18000, isOffer: false, specs: "", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/12/JK-610.jpg", category: "Auriculares" },
+    { id: 6, name: "Auricular Bluetooth con Pantalla", price: 18000, isOffer: false, specs: "", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/12/JK-610.jpg", category: ["Auriculares", "Electronica"] },
 
     { id: 7, name: "Portacepillo luz uv con dispensador de pasta", price: 11000, isOffer: false, specs: "Recargable Disponible en color negro.", img: "https://acdn-us.mitiendanube.com/stores/001/567/093/products/3_108dcfd7-dd89-49b2-904b-85846895e4ff-b1068e280c17e6a08917263206707694-640-0.webp", category: "Hogar" },
 
@@ -1073,7 +1099,7 @@ const products = [
 
     { id: 11, name: "Mini Parlante Bluetooth", price: 8500, isOffer: true, specs: "", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/12/parlan-4led.webp", category: "Electronica" },
 
-    { id: 12, name: "Soporte Móvil TV 14 a 42", price: 15000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_816926-MLA100089974977_122025-F.webp", category: "Hogar" },
+    { id: 12, name: "Soporte Móvil TV 14 a 42", price: 15000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_816926-MLA100089974977_122025-F.webp", category: ["Soporte", "Hogar"] },
 
     { id: 13, name: "Balde Mopa Centrifugador 360⁰", price: 18000, isOffer: false, specs: "", img:"https://images.fravega.com/f500/52c38a58e79478a8fe902cbf518ce622.png", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_902643-MLA82581799826_032025-F.webp", "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQwJ5CvAXVLcmlLDNvX5Mi6L6ivnoEkkX1-v1SNI7vhw4a5Z3ee"], category: "Hogar" },
 
@@ -1083,7 +1109,9 @@ const products = [
 
     { id: 16, name: "Cuchara coladora 29cm", price: 3500, isOffer: false, specs: "Ahora podes servir sopa y/o verduras por separado", img:"https://scontent.faep7-1.fna.fbcdn.net/v/t1.6435-9/122478377_3584366894916835_6878363035807118457_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=06a7ca&_nc_eui2=AeHsS7F1RCQvMrESCy8w0n4V41GiBzKNRDrjUaIHMo1EOsVVmSDX69CehztQWUqgiWA&_nc_ohc=TmngcDAH-84Q7kNvwE9sOAK&_nc_oc=Adq0bLCOxRzYWYQlKLVMm8t4Rsyvr0dSQ5-huAYB7IKa4p6-mPGhF5256bBbkBlpdMH5wE2rk-KgjLkxZ1Pm6A-n&_nc_zt=23&_nc_ht=scontent.faep7-1.fna&_nc_gid=7CnHKuGKTTjYN2Lq-qjU0Q&_nc_ss=7a3a8&oh=00_Af3yGPcJpgzxopffqWK8VuhAy6rz2h3JLmIRocFY423WcQ&oe=69FF6E36", images: ["https://www.dspecialtystore.com/wp-content/uploads/2025/01/H10b3b82a383d44959ed5e59e2ef961efw.webp", "https://images.nexusapp.co/assets/ae/20/51/260363913.jpg"], category: "Hogar" },
 
-    { id: 17, name: "Soporte para espejo retrovisor", price: 4500, isOffer: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/477/775/products/ogvjkswrgjgporjw-fd657cf11747f409da16980906830521-1024-1024.webp", category: "Infantil" },
+    { id: 17, name: "Soporte para espejo retrovisor", price: 4500, isOffer: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/477/775/products/ogvjkswrgjgporjw-fd657cf11747f409da16980906830521-1024-1024.webp", category: ["Soportes", "Hogar"] },
+
+    { id: 18, name: "Soporte para Notebook y tablet P2", price: 6000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_783501-MLA47857378138_102021-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_693134-MLA83439914618_042025-O.webp"], category: ["Electronica", "Soportes"] },
 
 ];
 
@@ -1343,13 +1371,18 @@ function renderHome() {
     } else {
         html += `<div class="product-grid">`;
         filtered.forEach(p => {
+            const allImgs = [p.img, ...(p.images || [])];
+            const unique = [...new Set(allImgs)];
+            const catLabel = Array.isArray(p.category) ? p.category.join(' · ') : p.category;
+            const cardId = `card-${p.id}`;
             html += `
             <div class="product-card fade-in" onclick="viewProduct(${p.id})">
                 ${p.isOffer ? '<span class="offer-badge">OFERTA</span>' : ''}
                 <div class="product-img-wrap">
                     <img src="${p.img}" alt="${p.name}" loading="lazy">
-                </div>
-                <p class="product-cat">${p.category}</p>
+		    ${unique.map((src, i) => '<img class="card-img' + p.name + '" loading="lazy">').join('')}
+                     </div>
+                <p class="product-cat">${catLabel}</p>
                 <h3 class="product-name">${p.name}</h3>
                 <p class="product-price ${p.isOffer ? 'offer' : ''}">$${p.price.toLocaleString()}</p>
                 <button class="add-cart-btn" onclick="event.stopPropagation(); addToCart(${p.id})">
