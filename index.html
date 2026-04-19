@@ -30,6 +30,12 @@
             background: var(--bg);
             color: var(--fg);
             line-height: 1.6;
+	    overflow-x: hidden;
+  	    width: 100%;
+   	    max-width: 100%;
+  	    position: relative;
+  	    margin: 0;
+   	    padding: 0;
         }
 
         h1, h2, h3 { font-family: 'Space Grotesk', 'Inter', sans-serif; }
@@ -112,6 +118,37 @@
         }
         .mobile-menu button:hover { background: rgba(255,255,255,0.1); }
         .mobile-menu button.active { background: rgba(255,255,255,0.2); }
+
+	@media (max-width: 768px) {
+    	.toast {
+       	      left: 12px;
+       	      right: 12px;
+   	      bottom: 16px;
+      	      width: auto;
+      	      max-width: calc(100vw - 24px);
+
+ 	     font-size: 13px;
+ 	     padding: 12px 14px;
+ 	     border-radius: 12px;
+             text-align: center;
+   	     line-height: 1.35;
+  	  }
+	}
+
+	@media (max-width: 768px) {
+ 	   .related-arrow {
+	        width: 34px;
+	        height: 34px;
+ 	   }
+
+ 	   .related-arrow.left {
+ 	       left: 4px;
+	    }
+
+	    .related-arrow.right {
+	        right: 4px;
+    	  }
+	}
 
         @media (max-width: 640px) {
             .nav-links { display: none; }
@@ -403,7 +440,7 @@
             font-weight: 600; margin-bottom: 24px; transition: all 0.2s;
         }
         .detail-back:hover { background: var(--fg); color: var(--bg); }
-        .detail-layout { display: flex; gap: 40px; flex-wrap: wrap; }
+        .detail-layout { display: flex; gap: 24px; flex-wrap: wrap; width: 100%; max-width: 100%; }
         .detail-gallery { position: relative; width: 400px; max-width: 100%; }
         .detail-main-img {
             width: 100%; border-radius: 16px; background: var(--card); overflow: hidden;
@@ -429,7 +466,7 @@
         .gallery-thumb:hover { opacity: 1; }
         .gallery-thumb.active { border-color: var(--fg); opacity: 1; transform: scale(1.05); }
         .gallery-thumb img { width: 100%; height: 100%; object-fit: contain; }
-        .detail-info { flex: 1; min-width: 300px; }
+        .detail-info { flex: 1; min-width: 0px; width: 100%; max-width: 100%; }
         .detail-info .cat { font-size: 12px; color: var(--muted-fg); font-weight: 500; margin-bottom: 4px; }
         .detail-info h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
         .detail-info .price { font-size: 32px; font-weight: 700; margin-bottom: 24px; }
@@ -446,7 +483,7 @@
         .detail-add-btn:hover { opacity: 0.9; }
 
         /* Related products */
-        .related { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); position: relative; }
+        .related { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); position: relative; overflow: hidden; }
         .related h3 { font-weight: 700; font-size: 18px; margin-bottom: 16px; }
         .related-scroll { overflow: hidden; padding: 8px 0; }
         .related-track {
@@ -469,8 +506,8 @@
             transition: all 0.2s;
         }
         .related-arrow:hover { background: var(--fg); color: var(--bg); }
-        .related-arrow.left { left: -22px; }
-        .related-arrow.right { right: -22px; }
+        .related-arrow.left { left: 22px; }
+        .related-arrow.right { right: 22px; }
 
         /* ===== CART ===== */
         .cart-section { background: var(--card); border-radius: 16px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
@@ -742,13 +779,18 @@
 @media (max-width: 768px) {
     .detail-layout {
         flex-direction: column;
-        gap: 20px;
+        gap: 18px;
+        width: 100%;
     }
     .detail-gallery {
         width: 100%;
+        max-width: 100%;
+        min-width: 0;
     }
     .detail-info {
-        min-width: 100%;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
     }
     .detail-info h2 {
         font-size: 22px;
@@ -872,7 +914,8 @@
 /* Reglas solo para celulares (pantallas menores a 768px) */
 @media (max-width: 768px) {
     /* 7. Dos productos por fila en el catálogo */
-    .products-grid {
+    .product-grid {
+        display: grid;
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 12px !important;
         padding: 10px !important;
@@ -1009,8 +1052,8 @@
             <h1>Exelentes regalos, incluso para uno mismo</h1>
             <p>No te quedes sin tu "experiencia Importodo".</p>
             <div class="hero-buttons">
-                <button class="hero-btn-primary" onclick="document.getElementById('catalogo').scrollIntoView({behavior:'smooth'})">Ver Ofertas</button>
-            </div>
+	    	<button class="hero-btn-primary" onclick="document.getElementById('catalogo').scrollIntoView({behavior:'smooth'})">Ver Ofertas</button>           
+	 </div>
         </div>
     </div>
 
@@ -1077,15 +1120,15 @@
 
 const products = [
 
-    { id: 1, name: "Iphone 16 PRO", price: 870000, isOffer: true, specs: "Pantalla OLED 6.7', 128GB, Cámara 48MP.", img: "https://http2.mlstatic.com/D_Q_NP_960877-MLA95686523081_102025-O.webp", category: "Electronica" },
+    { id: 1, name: "TV BOX 2+8G Time", price: 42000, isOffer: false, specs: "Con comando de voz y Xuper TV: Películas – Series – Futbol – etc...", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/11/tvbox-time.jpg", category: ["Hogar", "Electronica"] },
 
-    { id: 2, name: "Proyector 3 en 1", price: 115000, isOffer: false, specs: "Proyector con juegos y apps instalados. Incluye Xuper TV, series, películas, canales, fútbol, todo gratis! Incluye 2 joysticks inalámbricos.", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2026/01/proyector.webp", category: ["Entretenimiento", "Electronica", "Hogar"] },
+    { id: 2, name: "Proyector 3 en 1", price: 115000, isOffer: false, specs: "Proyector con juegos y apps instalados. Incluye Xuper TV, series, películas, canales, fútbol, todo gratis! Incluye 2 joysticks inalámbricos.", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2026/01/proyector.webp", category: ["Electronica", "Hogar"] },
 
     { id: 3, name: "Juego de mesa ¡Basta!", price: 18000, isOffer: true, specs: "Pensa y responde rápido antes de que se acabe el tiempo, el más rápido e ingenioso gana!!!", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/12/basta.jpg", category: "Infantil" },
 
     { id: 4, name: "Ventilador de Techo", price: 120000, isOffer: false, specs: "VENTILADOR DE TECHO C/LUZ CALIDA/FRIO 60W.", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/11/ventecho.jpg", category: "Hogar" },
 
-    { id: 5, name: "TV BOX 2+8G TIME", price: 42000, isOffer: false, specs: "Con comando de voz y Xuper TV: Películas – Series – Futbol – etc...", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/11/tvbox-time.jpg", category: ["Hogar", "Electronica", "Entretenimiento"] },
+    { id: 5, name: "Taza Infusión y Mezclador Recargable", price: 12500, isOffer: false, specs: "(Ingresan por Pedido).", img: "https://http2.mlstatic.com/D_Q_NP_837557-MLA86057134583_062025-O.webp", category: ["Electronica", "Hogar"] },
 
     { id: 6, name: "Auricular Bluetooth con Pantalla", price: 18000, isOffer: false, specs: "", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/12/JK-610.jpg", category: ["Auriculares", "Electronica"] },
 
@@ -1099,19 +1142,63 @@ const products = [
 
     { id: 11, name: "Mini Parlante Bluetooth", price: 8500, isOffer: true, specs: "", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/12/parlan-4led.webp", category: "Electronica" },
 
-    { id: 12, name: "Soporte Móvil TV 14 a 42", price: 15000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_816926-MLA100089974977_122025-F.webp", category: ["Soporte", "Hogar"] },
+    { id: 12, name: "Soporte Móvil TV 14 a 42", price: 15000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_816926-MLA100089974977_122025-F.webp", category: ["Soportes", "Hogar"] },
 
     { id: 13, name: "Balde Mopa Centrifugador 360⁰", price: 18000, isOffer: false, specs: "", img:"https://images.fravega.com/f500/52c38a58e79478a8fe902cbf518ce622.png", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_902643-MLA82581799826_032025-F.webp", "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQwJ5CvAXVLcmlLDNvX5Mi6L6ivnoEkkX1-v1SNI7vhw4a5Z3ee"], category: "Hogar" },
 
     { id: 14, name: "Tender de Ropa vertical 50kg", price: 26000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_751618-MLA79909584834_102024-O.webp", category: "Hogar" },
 
-    { id: 15, name: "Inflador de globos", price: 27000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_761487-MLA99564551334_122025-O.webp", category: "Infantil" },
+    { id: 15, name: "Inflador de globos", price: 22000, isOffer: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_761487-MLA99564551334_122025-O.webp", category: "Infantil" },
 
-    { id: 16, name: "Cuchara coladora 29cm", price: 3500, isOffer: false, specs: "Ahora podes servir sopa y/o verduras por separado", img:"https://scontent.faep7-1.fna.fbcdn.net/v/t1.6435-9/122478377_3584366894916835_6878363035807118457_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=06a7ca&_nc_eui2=AeHsS7F1RCQvMrESCy8w0n4V41GiBzKNRDrjUaIHMo1EOsVVmSDX69CehztQWUqgiWA&_nc_ohc=TmngcDAH-84Q7kNvwE9sOAK&_nc_oc=Adq0bLCOxRzYWYQlKLVMm8t4Rsyvr0dSQ5-huAYB7IKa4p6-mPGhF5256bBbkBlpdMH5wE2rk-KgjLkxZ1Pm6A-n&_nc_zt=23&_nc_ht=scontent.faep7-1.fna&_nc_gid=7CnHKuGKTTjYN2Lq-qjU0Q&_nc_ss=7a3a8&oh=00_Af3yGPcJpgzxopffqWK8VuhAy6rz2h3JLmIRocFY423WcQ&oe=69FF6E36", images: ["https://www.dspecialtystore.com/wp-content/uploads/2025/01/H10b3b82a383d44959ed5e59e2ef961efw.webp", "https://images.nexusapp.co/assets/ae/20/51/260363913.jpg"], category: "Hogar" },
+    { id: 16, name: "Cuchara coladora 29cm", price: 3500, isOffer: false, specs: "Ahora podes servir sopa y/o verduras por separado", img:"https://images.nexusapp.co/assets/ae/20/51/260363913.jpg", images: ["https://www.dspecialtystore.com/wp-content/uploads/2025/01/H10b3b82a383d44959ed5e59e2ef961efw.webp", "https://scontent.faep7-1.fna.fbcdn.net/v/t1.6435-9/122478377_3584366894916835_6878363035807118457_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=06a7ca&_nc_eui2=AeHsS7F1RCQvMrESCy8w0n4V41GiBzKNRDrjUaIHMo1EOsVVmSDX69CehztQWUqgiWA&_nc_ohc=TmngcDAH-84Q7kNvwE9sOAK&_nc_oc=Adq0bLCOxRzYWYQlKLVMm8t4Rsyvr0dSQ5-huAYB7IKa4p6-mPGhF5256bBbkBlpdMH5wE2rk-KgjLkxZ1Pm6A-n&_nc_zt=23&_nc_ht=scontent.faep7-1.fna&_nc_gid=7CnHKuGKTTjYN2Lq-qjU0Q&_nc_ss=7a3a8&oh=00_Af3yGPcJpgzxopffqWK8VuhAy6rz2h3JLmIRocFY423WcQ&oe=69FF6E36"], category: "Hogar" },
 
     { id: 17, name: "Soporte para espejo retrovisor", price: 4500, isOffer: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/477/775/products/ogvjkswrgjgporjw-fd657cf11747f409da16980906830521-1024-1024.webp", category: ["Soportes", "Hogar"] },
 
     { id: 18, name: "Soporte para Notebook y tablet P2", price: 6000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_783501-MLA47857378138_102021-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_693134-MLA83439914618_042025-O.webp"], category: ["Electronica", "Soportes"] },
+
+    { id: 19, name: "Set de Molinillo madera, Salero y Pimentero", price: 11000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_647079-MLA77817102643_072024-O.webp", category: ["Hogar"] },
+
+    { id: 20, name: "Pava Eléctrica Plegable", price: 19000, isOffer: false, specs: "(Por Pedido) <br> Pava Eléctrica Plegable Ideal para Viaje, una solución práctica y eficiente para tus aventuras. Con una capacidad de 600ml, es perfecta para preparar café o mate  en cualquier lugar. Su diseño compacto y ligero la hace fácil de transportar, ideal para cualquier viaje", img: "https://http2.mlstatic.com/D_NQ_NP_825751-MLA95633512196_102025-O.webp", category: ["Hogar"] },
+
+    { id: 21, name: "Pizarra LED neon usb 30 × 20", price: 13000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_825603-MLA101159527877_122025-O.webp", category: ["Infantil"] },
+
+    { id: 22, name: "Organizador Multifuncional P/ Baño", price: 5500, isOffer: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_644268-MLA79993731546_102024-F.webp", category: ["Hogar"] },
+
+    { id: 23, name: "Pava eléctrica con corte de Mate", price: 22000, isOffer: false, specs: "", img: "https://maxihogar.vtexassets.com/arquivos/ids/167054-800-auto?v=638705908365470000&width=800&height=auto&aspect=true", category: ["Hogar"] },
+
+    { id: 24, name: "Auriculares Deporte  Bluetooth Gafas De Sol Inteligente", price: 21000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_766147-CBT81011851840_122024-O.webp", category: ["Electronica", "Auriculares"] },
+
+    { id: 25, name: "Sofa inflable 116cm x 98cm x 83 cm", price: 35000, isOffer: false, specs: "Con apoyapies de 62cm x 62 cm x 31cm <br> Incluye inflador de pie", img: "https://http2.mlstatic.com/D_NQ_NP_718294-MLA86028238326_062025-O.webp", category: ["Hogar"] },
+
+    { id: 26, name: "Auriculares Bolsita", price: 3500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_665171-MLA92675856009_092025-O.webp", category: ["Auriculares"] },
+
+    { id: 27, name: "Auricular bolsita Time M/L", price: 3500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_716376-MLA97025350731_112025-O.webp", category: ["Auriculares"] },
+
+    { id: 28, name: "Proyector LED ULTRA HD", price: 80000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_834810-MLA85558716745_062025-O.webp", category: ["Hogar", "Elctronica"] },
+
+    { id: 29, name: "Cargador rápido. Tipo C. 45w + 20w", price: 15000, isOffer: false, specs: "Marca Time", img: "https://http2.mlstatic.com/D_NQ_NP_928761-MLA95527063900_102025-O.webp", category: ["Cables y Adaptadores"] },
+
+    { id: 30, name: "Inflador", price: 6500, isOffer: false, specs: "Inflador con pico para ruedas y pico para pelotas.", img: "https://http2.mlstatic.com/D_NQ_NP_911733-MLA83441574562_042025-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_688336-MLA96618237117_102025-O.webp"], category: ["Hogar"] },
+
+    { id: 31, name: "Tira LED 50x50", price: 11000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_909336-MLA96402140577_102025-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_901014-MLA82327399244_022025-O.webp"], category: ["Luces"] },
+
+    { id: 32, name: "Lámpara Velador proyector de estrellas", price: 9000, isOffer: false, specs: "Proyector de estrellas giratorio con varios colores de luz. <br> Se puede usar con un color fijo o que vaya cambiando de colores.", img: "https://dcdn-us.mitiendanube.com/stores/674/724/products/star-master-21-b0ca48f34004e7de9f15406113159174-1024-1024.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_623997-MLA107518491767_022026-O.webp"], category: ["Luces"] },
+
+    { id: 33, name: "Batidora de 7 Velocidades", price: 19000, isOffer: false, specs: "", img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTmCLle1t9PBnpw5pbvMLO7KI4gelxVWdZsXRPUDUOUtusXE44I", category: ["Hogar"] },
+
+    { id: 34, name: "Liston LED con tecla", price: 13000, isOffer: false, specs: "Ideal para iluminar tu mesada y tambien tan versatil que lo podes colocar donde necesites una mejor iluminacion. <br> 60cm 9w $9500 <br> 90cm 12w $11000 <br> 120cm 18w $13000", img: "https://http2.mlstatic.com/D_NQ_NP_967840-MLU78801139759_082024-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_966952-MLU74983232604_032024-O.webp", "https://http2.mlstatic.com/D_NQ_NP_782726-MLU78047383739_072024-O.webp", "https://http2.mlstatic.com/D_NQ_NP_895356-MLA81445976633_122024-O.webp", "https://www.eclairage-design.com/14258-large_default/tira-de-led-t5-31-cm-para-mueble-de-cocina-conectable-4000k.jpg"], category: ["Luces"] },
+
+    { id: 35, name: "Funda económica para Bici/Moto", price: 7000, isOffer: false, specs: "Protege tu vehículo de la lluvia sol polvo etc", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjNTlBAexaCnc5TIlifxnaKyBYYfUzMf2A9KhhCm7_aMTICGlM", category: ["Hogar"] },
+
+    { id: 36, name: "Camara Wifi Video Llamada", price: 35000, isOffer: false, specs: "El audio e imagen bidireccional facilita la comunicación a través de la cámara, permitiendo escuchar y hablar, además de realizar videollamadas.", img: "https://http2.mlstatic.com/D_NQ_NP_837372-MLA92687545995_092025-O.webp", category: ["Hogar", "Elecronica"] },
+
+    { id: 37, name: "Saca Pelusas", price: 9500, isOffer: false, specs: "Excelente cepillo quita pelusas y pelos de mascotas", img: "https://http2.mlstatic.com/D_NQ_NP_994426-CBT108641349886_032026-O.webp", category: ["Hogar"] },
+
+    { id: 38, name: "Timbre inalámbrico", price: 8500, isOffer: false, specs: "32 tonos. 50 metros de alcance en espacio abierto. El pulsador incluye una pila 23A, el receptor utiliza 2 pilas AAA. Precio sin pilas.", img: "https://d22fxaf9t8d39k.cloudfront.net/aec4839f4645fbc68c92dc268bdb20cf5320983e65799cf81b80d2dffc7cd6396442.jpg", category: ["Hogar"] },
+
+    { id: 39, name: "Control Aire Acondicionado", price: 6000, isOffer: false, specs: "Control universal... excelente calidad.", img: "https://http2.mlstatic.com/D_NQ_NP_922366-MLA48822052768_012022-O.webp", category: ["Hogar"] },
+
+    { id: 40, name: "Adaptador portalamparas", price: 2800, isOffer: false, specs: "Adaptador para focos con interruptor de encendido. Las patas se giran según sea conveniente.", img: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTnpx1Jy-LNLlNGqM3MqvpATqqtxbbyc9AbrMsYASIgiXKcN2Bi", category: ["Hogar"] },
 
 ];
 
@@ -1276,8 +1363,11 @@ function getFiltered() {
         result = result.filter(p => p.name.toLowerCase().includes(q) || p.specs.toLowerCase().includes(q));
     }
     if (selectedCategory !== 'Todos') {
-        result = result.filter(p => p.category === selectedCategory);
-    }
+	result = result.filter(p => {
+       	    const cats = Array.isArray(p.category) ? p.category : [p.category];
+	    return cats.includes(selectedCategory);
+	});   
+ }
     switch (sortOrder) {
         case 'price-asc': result.sort((a, b) => a.price - b.price); break;
         case 'price-desc': result.sort((a, b) => b.price - a.price); break;
@@ -1286,6 +1376,8 @@ function getFiltered() {
     }
     return result;
 }
+
+
 
 // ===== RENDER =====
 function renderSection() {
@@ -1404,7 +1496,6 @@ function renderDetail() {
     const unique = [...new Set(allImages)];
     const hasMultiple = unique.length > 1;
     const related = products.filter(p => p.id !== product.id);
-
     let html = `
     <div class="fade-in">
         <button class="detail-back" onclick="navigate('home')">← Volver al catálogo</button>
