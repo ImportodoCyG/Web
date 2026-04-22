@@ -1096,7 +1096,7 @@
             <h4>Catálogo Completo</h4>
             <p>¿Querés ver más productos?</p>
             <p>Mirá nuestro catálogo directo en WhatsApp.</p>
-            <a href="https://wa.me/5491530646881" target="_blank" class="btn-whatsapp-footer">
+            <a href="https://wa.me/c/5491130646881" target="_blank" class="btn-whatsapp-footer">
                 Ver Catálogo WhatsApp
             </a>
         </div>
@@ -1124,7 +1124,7 @@ const products = [
 
     { id: 2, name: "Proyector 3 en 1", price: 115000, isOffer: false, specs: "Proyector con juegos y apps instalados. Incluye Xuper TV, series, películas, canales, fútbol, todo gratis! Incluye 2 joysticks inalámbricos.", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2026/01/proyector.webp", category: ["Electronica", "Hogar"] },
 
-    { id: 3, name: "Juego de mesa ¡Basta!", price: 18000, isOffer: true, specs: "Pensa y responde rápido antes de que se acabe el tiempo, el más rápido e ingenioso gana!!!", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/12/basta.jpg", category: "Infantil" },
+    { id: 3, name: "Combo Auricular + Parlante Astronauta + Velador", price: 19000, isOffer: true, specs: "", img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQB59LwOW9z3dJk-CBJwcRuDktvbZq7ZymmJ1HpAgtfKmzB6q4L", images: ["https://acdn-us.mitiendanube.com/stores/001/131/056/products/ultrpod-25b69f8566aeed484017311936142468-640-0.webp", "https://http2.mlstatic.com/D_NQ_NP_958161-MLA99653095869_112025-O.webp", "https://http2.mlstatic.com/D_Q_NP_943437-MLA94687605859_102025-O.webp"], category: ["Infantil", "Auriculares"] },
 
     { id: 4, name: "Ventilador de Techo", price: 120000, isOffer: false, specs: "VENTILADOR DE TECHO C/LUZ CALIDA/FRIO 60W.", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/11/ventecho.jpg", category: "Hogar" },
 
@@ -1144,7 +1144,7 @@ const products = [
 
     { id: 12, name: "Soporte Móvil TV 14 a 42", price: 15000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_816926-MLA100089974977_122025-F.webp", category: ["Soportes", "Hogar"] },
 
-    { id: 13, name: "Balde Mopa Centrifugador 360⁰", price: 18000, isOffer: false, specs: "", img:"https://images.fravega.com/f500/52c38a58e79478a8fe902cbf518ce622.png", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_902643-MLA82581799826_032025-F.webp", "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQwJ5CvAXVLcmlLDNvX5Mi6L6ivnoEkkX1-v1SNI7vhw4a5Z3ee"], category: "Hogar" },
+    { id: 13, name: "Balde Mopa Centrifugador 360⁰", price: 18000, isOffer: false, specs: "", img:"https://images.fravega.com/f500/52c38a58e79478a8fe902cbf518ce622.png", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_902643-MLA82581799826_032025-F.webp", "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQwJ5CvAXVLcmlLDNvX5Mi6L6ivnoEkkX1-v1SNI7vhw4a5Z3ee"], video: "https://www.youtube.com/embed/iNzLBEBfk9I", category: "Hogar" },
 
     { id: 14, name: "Tender de Ropa vertical 50kg", price: 26000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_751618-MLA79909584834_102024-O.webp", category: "Hogar" },
 
@@ -1200,15 +1200,53 @@ const products = [
 
     { id: 40, name: "Adaptador portalamparas", price: 2800, isOffer: false, specs: "Adaptador para focos con interruptor de encendido. Las patas se giran según sea conveniente.", img: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTnpx1Jy-LNLlNGqM3MqvpATqqtxbbyc9AbrMsYASIgiXKcN2Bi", category: ["Hogar"] },
 
+    { id: 41, name: "Bicicleta 2.0 Pro Mountain Bike", price: 260000, isOffer: false, specs: "Rodado 29 21 Vel Shimano Freno Disco <br> (Consultar colores y talles disponibles).", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2502271416075526-a-05df3ac13c3caa314a17539907078295-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2502191317291214-a-2adc0b4e74e724612f17539900801641-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2501231413406723-a-7899a0c0c40e8fa79a17539904061515-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2501231413177635-a-c74172cce4a68ce04c17539907559346-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/5-hombre-a5bf44580b6c43720f17605333614572-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/4-hombre-39c7e91e334086584817605333565658-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-3f5cfd7c897a9c5c1917605333660857-640-0.webp"], category: ["Deporte"] },
+
+    { id: 42, name: "Bicicleta 1.0 Pro Mountain Bike", price: 250000, isOffer: false, specs: "Rodado 29 21 Vel Freno Disco Suspension Delantera <br> (Consultar colores y talles disponibles).", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/7-copia-6807a592665486dee017623601875283-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/4-copia-7bd8693e072104a9b917623602381745-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/10-copia-c0a210442a838b7a3617623602408988-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/4-hombre-ec6438e3de73cf325717631221588463-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/5-hombre-3800fc1aaa0e15745117631221653939-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-6ffb7b3ab9ed26f3a417631221463579-640-0.webp"], category: ["Deporte"] },
+
+    { id: 43, name: "Barra Dominadas Pared", price: 65000, isOffer: false, specs: "Crossfit Paralela 200k Iron Bar", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/d-c3e267e3d426ff842417655488958710-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/d_nq_np_2x_985460-mla100665471970_122025-f-57c17472ac5852794617655488963009-640-0.webp"], category: ["Deporte"] },
+
+    { id: 44, name: "Kit Mancuernas Y Barra", price: 65000, isOffer: false, specs: "ope A Rosca 25 Kg Discos Pvc Force Pack 25", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/01-cb0c4a15a0651f447317614047110994-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/07-d43f5fb5abc15e194717614047307701-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/08-0283229fc3f9ccd87417614047339445-640-0.webp"], category: ["Deporte"] },
+
+    { id: 45, name: "Kit Térmico Cuello Cordon + Guantes Primera Piel", price: 10000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-1-46035953e994e7386317585530071957-1024-1024.webp", category: ["Deporte"] },
+
+    { id: 46, name: "Kit Térmico Guantes Primera Piel + Medias Primera Piel", price: 10000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-1-f1c55a6102c8a9146317585562652164-1024-1024.webp", category: ["Deporte"] },
+
+    { id: 47, name: "Conjunto Termico Completo Remera + Calza Frio Extremo Frizado Mujer", price: 25000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-f76f96b432b2be677b17549264208838-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-mujer-61a659b63efb53caa617750710496162-640-0.webp"], category: ["Deporte"] },
+
+    { id: 48, name: "Conjunto Termico Completo Remera + Calza Frio Extremo Frizado Hombre", price: 25000, isOffer: false, specs: "Material de microfibra premium que absorbe la humedad. <br> Elasticidad gracias al 15% de lycra para un calce perfecto. <br> Diseño que se ajusta al cuerpo y maximiza la retención de calor. <br> Resistente, cómodo y de secado rápido.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-53956943716ba8621017549269935408-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-hombre-558571e2ae0200296017745385977737-640-0.webp"], category: ["Deporte"] },
+
+    { id: 49, name: "Kit Cubre Manos Con Abrigo + Guantes Primera Piel", price: 15000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-c492d571994d6e961517545153428122-1024-1024.webp", category: ["Deporte"] },
+
+    { id: 50, name: "Pasamontaña Primera Piel Termico Balaclava", price: 6500, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-6db380679f5f20787617544302048628-1024-1024.webp", category: ["Deporte"] },
+
+    { id: 51, name: "Kit Conjunto Termico + Guantes Pp + Medias Pp + Mascara Frio Extremo Deportivo Hombre", price: 32000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-2-1608b52a71d8b5cffc17745385528913-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-hombre-558571e2ae0200296017745385977737-640-0.webp"], category: ["Deporte"] },
+
+    { id: 52, name: "Kit Conjunto Termico + Medias PP + Pasamontañas Balaclava Frio Extremo Deportivo Mujer", price: 32000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-0b0e681da62c6881bb17750710777057-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-mujer-61a659b63efb53caa617750710496162-640-0.webp"], category: ["Deporte"] },
+
+    { id: 53, name: "Botas Para La Lluvia Pvc Impermeables", price: 21000, isOffer: false, specs: "Ideal para el Trebajo diario", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-3-812de5ff7328091ea117547517450325-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/1905241749323922-b-e383e4662d4b9d12fc17547517540446-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-f-7378d9488c2aae220117547530519178-1024-1024.webp"], category: ["Hogar"] },
+
+    { id: 54, name: "Zapatillas Cuero Ecológico c/Protecciones", price: 11000, isOffer: false, specs: "Pensado para motociclistas <br> Este modelo incorpora protector para la palanca de cambios y diseño anatómico con bandas reflectivas laterales y traseras, mejorando la visibilidad en condiciones de poca luz. Su suela de PVC ultra liviana y de alto grip asegura estabilidad y agarre óptimo, mientras que la plantilla de 4 mm ofrece un confort excepcional.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2011261804034479-a-47f6194aa8e8f1451617549117756693-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2011261804034479-e-b0d938dde262ea04b717549117771585-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-f-7378d9488c2aae220117547530519178-1024-1024.webp"], category: ["Hogar"] },
+
+    { id: 55, name: " Botas Moto Ruta Cuero Sintetico", price: 57000, isOffer: false, specs: "Cuenta con bandas reflectivas para mayor visibilidad, puntera y talonera reforzada, así como un protector para la palanca de cambios que evita el desgaste prematuro. Su canillera libre y menos reforzada proporciona ligereza, mientras que el sistema de cierre con doble fijación (cierre y abrojo) asegura un ajuste firme y cómodo.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2206041315319523-c-613dc75fe6971cd60417549108538405-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2206041315319523-f-07cbeeb8b52a7b677f17549108541379-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-f-7378d9488c2aae220117547530519178-1024-1024.webp"], category: ["Hogar"] },
+
+    { id: 56, name: "Botas Zapatillas Moto Cuerina Protecciones Trelew", price: 48000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-6-918992d0b8f76463d617547530462557-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-c-582b2a1b980b0a8a0417547530547425-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-f-7378d9488c2aae220117547530519178-640-0.webp"], category: ["Hogar"] },
+
+    { id: 57, name: "Kit Impermeable", price: 49000, isOffer: false, specs: "Diseñado para quienes enfrentan días lluviosos en moto o al aire libre y necesitan protección total, confort y durabilidad. <br> Incluye un equipo de lluvia (campera + pantalón) fabricado en PVC de alta calidad y botas touring 100% impermeables, ideales para conducción urbana o uso diario.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-13-f99601c9674bef8b1017544993343567-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409281229232082-d-30240f7dd6c36067a817544993496548-640-0.webp"], category: ["Hogar"] },
+
+    { id: 58, name: "Cortapelo Profesional Recargable X31", price: 29000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_892705-MLA93991989291_102025-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_870005-MLA82254666003_022025-O.webp", "https://http2.mlstatic.com/D_NQ_NP_653076-MLA94653116622_102025-O.webp"], category: ["Electronica"] },
+
+    { id: 59, name: "Set de Molinillo madera, Salero y Pimentero", price: 11000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_647079-MLA77817102643_072024-O.webp", category: ["Hogar"] },
+
 ];
 
-const categories = ['Todos', 'Hogar', 'Auriculares', 'Infantil', 'Electronica', 'Soportes', 'Cables y Adaptadores', 'Luces'];
+const categories = ['Todos', 'Hogar', 'Auriculares', 'Infantil', 'Electronica', 'Soportes', 'Cables y Adaptadores', 'Luces', 'Deporte'];
 
 const faqs = [
-    { q: '¿Que medios de pagos aceptan?', a: 'Aceptamos efectivo, en caso de no tener y no poder conseguirlo tambien podemos aceptar medios de pago electronico con un cargo del 10%.' },
-    { q: '¿Hacen envíos?', a: 'Sí, hacemos envíos a todo el país. Consultanos por costos de envío a tu zona.' },
-    { q: '¿Como funcionan la Garantia y que productos la tienen?', a: 'La mayoria de productos con los que trebajamos poseen una garantia maxima de hasta 30 días, dichos productos quedan excluidos de las categorias como Luces, Niños, etc... Además claro el producto debe cumplir ciertos "requisitos minimos" para acceder a este derecho, tales como el de estar en optimas condiciones (sano. no roto, ni rayado, ni presentar indicos de haber sido abierto), debe ser devuelto con todas sus piezas u accesorios y en la caja. Además el reclamop de la misma se a de hacer en el domicilio del vendedor, siendo este previamente informado.' },
-    { q: '¿Cuales son sus días y horarios de atención?', a: 'Nuestros horarios son de: Lunes a Sabados, de 10hs a 20hs.' },
+    { q: '¿Que medios de pagos aceptan?', a: 'Aceptamos efectivo, en caso de no tener y no poder conseguirlo tambien podemos aceptar medios de pago electronico.' },
+    { q: '¿Hacen entregas?', a: 'Sí, por el momento solo en nuestra zona.' },
+    { q: '¿Como funcionan la Garantia y que productos la tienen?', a: 'La mayoria de productos con los que trebajamos poseen una garantia maxima de hasta 30 días, dichos productos quedan excluidos de las categorias como Luces, Infantil, etc... Además claro el producto debe cumplir ciertos "requisitos minimos" para acceder a este derecho, tales como el de estar en optimas condiciones (sano. no roto, ni rayado, ni presentar indicos de haber sido abierto), debe ser devuelto con todas sus piezas u accesorios y en la caja. Además el reclamo de la misma se debe hacer en el domicilio del vendedor, siendo este previamente informado.' },
+    { q: '¿Cuales son sus días y horarios de atención?', a: 'Nuestros horarios de atención mediante WhatsApp son de: Lunes a Viernes de 8hs a 20hs, y los Sabados y Domingos de 10hs a 20hs.' },
 ];
 
 // ===== STATE =====
@@ -1417,7 +1455,7 @@ function renderHome() {
     <section class="why-section">
         <div class="section-header">
             <h2>¿Por qué elegirnos?</h2>
-            <p>Somos un emprendimiento con mas de 10 años en el rubro, y...</p>
+            <p>Somos un emprendimiento con mas de 10 años en Ventas, y...</p>
         </div>
         <div class="why-grid">
             ${whyCards.map(c => `
@@ -1494,32 +1532,67 @@ function renderDetail() {
     if (!product) return '<p>Producto no encontrado</p>';
     const allImages = [product.img, ...(product.images || [])];
     const unique = [...new Set(allImages)];
-    const hasMultiple = unique.length > 1;
+    const hasVideo = !!product.video;
+    const totalSlides = unique.length + (hasVideo ? 1 : 0);
+    const hasMultiple = totalSlides > 1;
+    const isVideoSlide = activeImgIndex >= unique.length;
     const related = products.filter(p => p.id !== product.id);
+
+    function getYoutubeId(url) {
+        const m = url.match(/embed\/([^?&]+)/);
+        return m ? m[1] : null;
+    }
+
+    let mainMedia;
+    if (isVideoSlide && hasVideo) {
+        const ytId = getYoutubeId(product.video);
+        const thumbUrl = ytId ? 'https://img.youtube.com/vi/' + ytId + '/hqdefault.jpg' : '';
+        mainMedia =
+            '<div id="videoThumb" onclick="loadVideo(\'' + product.video + '\')" style="position:relative;cursor:pointer;border-radius:12px;overflow:hidden;background:#000;">' +
+                '<img src="' + thumbUrl + '" style="width:100%;display:block;opacity:0.85;">' +
+                '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">' +
+                    '<div style="width:72px;height:72px;border-radius:50%;background:rgba(255,0,0,0.9);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,0.4);">' +
+                        '<svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+    } else {
+        mainMedia = '<img id="mainImg" src="' + unique[activeImgIndex] + '" alt="' + product.name + '">';
+    }
+
+    const thumbsHTML = unique.map((img, i) =>
+        '<div class="gallery-thumb ' + (i === activeImgIndex ? 'active' : '') + '" onclick="setActiveImg(' + i + ')">' +
+            '<img src="' + img + '" alt="">' +
+        '</div>'
+    ).join('') + (hasVideo ? (function() {
+        const ytId = getYoutubeId(product.video);
+        const thumbUrl = ytId ? 'https://img.youtube.com/vi/' + ytId + '/default.jpg' : '';
+        return '<div class="gallery-thumb ' + (isVideoSlide ? 'active' : '') + '" onclick="setActiveImg(' + unique.length + ')" style="position:relative;overflow:hidden;cursor:pointer;">' +
+            '<img src="' + thumbUrl + '" alt="Video" style="width:100%;height:100%;object-fit:cover;opacity:0.7;">' +
+            '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">' +
+                '<div style="width:24px;height:24px;border-radius:50%;background:rgba(255,0,0,0.9);display:flex;align-items:center;justify-content:center;">' +
+                    '<svg width="10" height="10" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg>' +
+                '</div>' +
+            '</div>' +
+        '</div>';
+    })() : '');
+
+    const arrowsHTML = hasMultiple
+        ? '<button class="gallery-arrow left" onclick="changeImg(-1,' + totalSlides + ')">' + icons.chevronLeft + '</button>' +
+          '<button class="gallery-arrow right" onclick="changeImg(1,' + totalSlides + ')">' + icons.chevronRight + '</button>'
+        : '';
+
     let html = `
     <div class="fade-in">
         <button class="detail-back" onclick="navigate('home')">← Volver al catálogo</button>
         <div class="detail-layout">
             <div class="detail-gallery">
                 ${product.isOffer ? '<span class="offer-badge" style="z-index:20">OFERTA</span>' : ''}
-                <div class="detail-main-img">
-                    <img id="mainImg" src="${unique[activeImgIndex]}" alt="${product.name} - ${activeImgIndex + 1}">
+                <div class="detail-main-img" id="mainMediaWrap">
+                    ${mainMedia}
                 </div>
-                ${hasMultiple ? `
-                    <button class="gallery-arrow left" onclick="changeImg(-1, ${unique.length})">
-                        ${icons.chevronLeft}
-                    </button>
-                    <button class="gallery-arrow right" onclick="changeImg(1, ${unique.length})">
-                        ${icons.chevronRight}
-                    </button>
-                    <div class="gallery-thumbs">
-                        ${unique.map((img, i) => `
-                            <div class="gallery-thumb ${i === activeImgIndex ? 'active' : ''}" onclick="setActiveImg(${i})">
-                                <img src="${img}" alt="">
-                            </div>
-                        `).join('')}
-                    </div>
-                ` : ''}
+                ${arrowsHTML}
+                ${hasMultiple ? '<div class="gallery-thumbs">' + thumbsHTML + '</div>' : ''}
             </div>
             <div class="detail-info">
                 <p class="cat">${product.category}</p>
@@ -1564,6 +1637,12 @@ function changeImg(dir, total) {
 function setActiveImg(i) {
     activeImgIndex = i;
     renderSection();
+}
+
+function loadVideo(videoUrl) {
+    const wrap = document.getElementById('mainMediaWrap');
+    if (!wrap) return;
+    wrap.innerHTML = '<iframe src="' + videoUrl + '?autoplay=1&rel=0" width="100%" height="320" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="border-radius:12px;display:block;"></iframe>';
 }
 
 function slideRelated(dir) {
@@ -1648,8 +1727,8 @@ function renderAbout() {
 function renderHelp() {
     const contacts = [
         { icon: icons.msgCircle, label: 'WhatsApp', value: '15-3064-6881', href: 'https://wa.me/5491530646881' },
-        { icon: icons.mail, label: 'Email', value: 'importodocyg@gmail.com', href: 'mailto:importodocyg@gmail.com' },
-        { icon: icons.clock, label: 'Horario', value: 'Lun - Sáb: 9:00 - 20:00', href: null },
+        { icon: icons.mail, label: 'Canal de WhatsApp', value: 'ImportOdo CyG', href: 'https://whatsapp.com/channel/0029Vb6j5pWAjPXWD6BpW005' },
+        { icon: icons.clock, label: 'Horario', value: 'Lun - Vie: 8:00 - 20:00', href: null },
     ];
 
     return `
