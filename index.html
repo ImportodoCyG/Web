@@ -119,21 +119,25 @@
         .mobile-menu button:hover { background: rgba(255,255,255,0.1); }
         .mobile-menu button.active { background: rgba(255,255,255,0.2); }
 
-	@media (max-width: 768px) {
-    	.toast {
-       	      left: 12px;
-       	      right: 12px;
-   	      bottom: 16px;
-      	      width: auto;
-      	      max-width: calc(100vw - 24px);
-
- 	     font-size: 13px;
- 	     padding: 12px 14px;
- 	     border-radius: 12px;
-             text-align: center;
-   	     line-height: 1.35;
-  	  }
-	}
+	@media (max-width: 640px) {
+    .toast {
+        left: 16px !important;
+        right: 16px !important;
+        bottom: 20px !important;
+        width: auto !important;
+        max-width: none !important;
+        transform: translateY(30px) scale(0.95) !important;
+        border-radius: 16px !important;
+        padding: 14px 18px !important;
+        font-size: 13px !important;
+        line-height: 1.4 !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+    }
+    .toast.show {
+        transform: translateY(0) scale(1) !important;
+    }
+}
 
 	@media (max-width: 768px) {
  	   .related-arrow {
@@ -975,6 +979,97 @@
         margin-bottom: 20px !important;
     }
 }
+
+        /* ===== SKELETON LOADING ===== */
+        @keyframes shimmer {
+            0%   { background-position: -600px 0; }
+            100% { background-position:  600px 0; }
+        }
+        .skeleton-box {
+            background: linear-gradient(90deg,#e8e8e8 25%,#f5f5f5 50%,#e8e8e8 75%);
+            background-size: 1200px 100%;
+            animation: shimmer 1.4s infinite;
+            border-radius: 12px;
+            position: absolute; inset: 0;
+        }
+
+        /* ===== ZOOM OVERLAY ===== */
+        .zoom-overlay {
+            position: fixed; inset: 0; z-index: 2000;
+            background: rgba(0,0,0,0.93);
+            display: flex; align-items: center; justify-content: center;
+            padding: 16px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.25s;
+        }
+        .zoom-overlay.open { opacity: 1; pointer-events: all; }
+        .zoom-overlay img {
+            max-width: 100%; max-height: 90vh;
+            object-fit: contain; border-radius: 10px;
+            transform: scale(0.92); transition: transform 0.25s;
+            touch-action: pinch-zoom;
+        }
+        .zoom-overlay.open img { transform: scale(1); }
+        .zoom-close {
+            position: absolute; top: 16px; right: 16px;
+            width: 42px; height: 42px; border-radius: 50%;
+            background: rgba(255,255,255,0.15); color: #fff;
+            font-size: 22px; cursor: pointer; border: none;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+        }
+        .zoom-close:hover { background: rgba(255,255,255,0.3); }
+
+        /* ===== FLY-TO-CART ===== */
+        .fly-dot {
+            position: fixed; z-index: 9999; pointer-events: none;
+            width: 30px; height: 30px; border-radius: 50%;
+            background: var(--fg); color: var(--bg);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+        }
+        .fly-dot svg { width: 14px; height: 14px; }
+
+        /* ===== DETAIL QTY & ACTION BUTTONS ===== */
+        .detail-qty-row {
+            display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+        }
+        .detail-qty-label { font-size: 13px; font-weight: 600; color: var(--muted-fg); }
+        .detail-qty-ctrl {
+            display: flex; align-items: center;
+            background: var(--muted); border-radius: 10px; overflow: hidden;
+        }
+        .detail-qty-btn {
+            width: 38px; height: 38px; background: none; border: none;
+            font-size: 20px; cursor: pointer; color: var(--fg);
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.15s;
+        }
+        .detail-qty-btn:hover { background: rgba(0,0,0,0.09); }
+        .detail-qty-val {
+            min-width: 38px; text-align: center; font-weight: 700; font-size: 15px;
+        }
+        .detail-btn-group { display: flex; flex-direction: column; gap: 10px; }
+        .detail-add-btn {
+            width: 100%; padding: 14px 16px; border-radius: 12px;
+            font-size: 15px; font-weight: 600;
+            background: var(--fg); color: var(--bg);
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            border: none; cursor: pointer; transition: opacity 0.2s;
+        }
+        .detail-add-btn:hover { opacity: 0.85; }
+        .detail-add-btn svg { width: 18px; height: 18px; }
+        .detail-wa-btn {
+            width: 100%; padding: 14px 16px; border-radius: 12px;
+            font-size: 15px; font-weight: 600;
+            background: #25d366; color: #fff;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            border: none; cursor: pointer; text-decoration: none;
+            transition: background 0.2s;
+        }
+        .detail-wa-btn:hover { background: #1ebe5d; }
+        .detail-wa-btn svg { width: 20px; height: 20px; fill: #fff; }
+        .detail-main-img img { cursor: zoom-in; }
     </style>
 </head>
 <body>
@@ -1236,7 +1331,13 @@ const products = [
 
     { id: 58, name: "Cortapelo Profesional Recargable X31", price: 29000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_892705-MLA93991989291_102025-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_870005-MLA82254666003_022025-O.webp", "https://http2.mlstatic.com/D_NQ_NP_653076-MLA94653116622_102025-O.webp"], category: ["Electronica"] },
 
-    { id: 59, name: "Set de Molinillo madera, Salero y Pimentero", price: 11000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_647079-MLA77817102643_072024-O.webp", category: ["Hogar"] },
+    { id: 59, name: "Marcadores c/Brillo X24pcs de Dos Puntas", price: 14000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_721083-MLA108333759843_032026-O.webp", category: ["Infantil"] },
+
+    { id: 60, name: "Humidificador con luces", price: 9500, isOffer: true, specs: "Proyecta galaxia.", img: "https://baibao.com.ar/wp-content/uploads/2025/06/fb201716a4238c567f5cb233c9ae92d91c5e830d_original-Photoroom.jpg", images: ["https://http2.mlstatic.com/D_NQ_NP_932570-MLA87031745500_072025-O.webp", "https://http2.mlstatic.com/D_NQ_NP_805924-MLV81313672523_122024-O.webp"], category: ["Hogar"] },
+
+    { id: 61, name: "Pelota Mundial N°5 FIFA", price: 10000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_689132-MLA93300217531_092025-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_926277-MLA101687787744_122025-O.webp", "https://assets.adidas.com/images/w_600,f_auto,q_auto/14165d04c80b4a769d4b667f9c878666_9366/Pelota_Trionda_Competition_Copa_Mundial_de_la_FIFA_26tm_Blanco_JD8031_44_detail.jpg"], category: ["Deporte", "Infantil"] },
+
+    { id: 62, name: "Vaso Termico", price: 17000, isOffer: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_800184-CBT93126100604_092025-O.webp", images: ["https://tu-vendes.sfo3.digitaloceanspaces.com/products/2963_2963-fp-webp.webp", "https://i0.wp.com/recargasrafaela.com.ar/wp-content/uploads/2025/04/vaso_quencher_02.jpg?fit=800,800&ssl=1", "https://acdn-us.mitiendanube.com/stores/741/031/products/5-a63bd44cca7562e5ea17737572818359-1024-1024.webp"], category: ["Hogar"] },
 
 ];
 
@@ -1381,17 +1482,7 @@ function updateNavActive() {
     if (idx !== undefined && idx < 4 && mobileBtns[idx]) mobileBtns[idx].classList.add('active');
 }
 
-function viewProduct(id) {
-    selectedProductId = id;
-    activeImgIndex = 0;
-    relatedOffset = 0;
-    currentSection = 'detail';
-    const hero = document.getElementById('heroSection');
-    hero.style.display = 'none';
-    updateNavActive();
-    renderSection();
-    window.scrollTo(0, 0);
-}
+// viewProduct defined below
 
 // ===== FILTERING =====
 function getFiltered() {
@@ -1508,14 +1599,16 @@ function renderHome() {
             html += `
             <div class="product-card fade-in" onclick="viewProduct(${p.id})">
                 ${p.isOffer ? '<span class="offer-badge">OFERTA</span>' : ''}
-                <div class="product-img-wrap">
-                    <img src="${p.img}" alt="${p.name}" loading="lazy">
-		    ${unique.map((src, i) => '<img class="card-img' + p.name + '" loading="lazy">').join('')}
-                     </div>
+                <div class="product-img-wrap" style="position:relative;">
+                    <div class="skeleton-box" id="sk-${p.id}"></div>
+                    <img src="${p.img}" alt="${p.name}" loading="lazy"
+                         style="position:relative;z-index:1;"
+                         onload="(function(){var s=document.getElementById('sk-${p.id}');if(s)s.remove();})()">
+                </div>
                 <p class="product-cat">${catLabel}</p>
                 <h3 class="product-name">${p.name}</h3>
                 <p class="product-price ${p.isOffer ? 'offer' : ''}">$${p.price.toLocaleString()}</p>
-                <button class="add-cart-btn" onclick="event.stopPropagation(); addToCart(${p.id})">
+                <button class="add-cart-btn" id="addbtn-${p.id}" onclick="event.stopPropagation(); addToCartCard(${p.id}, this)">
                     ${icons.cart} Añadir al carrito
                 </button>
             </div>`;
@@ -1557,7 +1650,7 @@ function renderDetail() {
                 '</div>' +
             '</div>';
     } else {
-        mainMedia = '<img id="mainImg" src="' + unique[activeImgIndex] + '" alt="' + product.name + '">';
+        mainMedia = '<img id="mainImg" src="' + unique[activeImgIndex] + '" alt="' + product.name + '" onclick="openZoom(this.src)" style="cursor:zoom-in">';
     }
 
     const thumbsHTML = unique.map((img, i) =>
@@ -1595,16 +1688,32 @@ function renderDetail() {
                 ${hasMultiple ? '<div class="gallery-thumbs">' + thumbsHTML + '</div>' : ''}
             </div>
             <div class="detail-info">
-                <p class="cat">${product.category}</p>
+                <p class="cat">${Array.isArray(product.category) ? product.category.join(' &middot; ') : product.category}</p>
                 <h2>${product.name}</h2>
                 <p class="price ${product.isOffer ? 'offer' : ''}">$${product.price.toLocaleString()}</p>
                 <div class="detail-specs">
                     <h4>Especificaciones</h4>
                     <p>${product.specs}</p>
                 </div>
-                <button class="detail-add-btn" onclick="addToCart(${product.id})">
-                    ${icons.cart} Añadir al Carrito
-                </button>
+                <div class="detail-qty-row">
+                    <span class="detail-qty-label">Cantidad:</span>
+                    <div class="detail-qty-ctrl">
+                        <button class="detail-qty-btn" onclick="detailQtyChange(-1)">&#8722;</button>
+                        <span class="detail-qty-val" id="detailQty">1</span>
+                        <button class="detail-qty-btn" onclick="detailQtyChange(1)">&#43;</button>
+                    </div>
+                </div>
+                <div class="detail-btn-group">
+                    <button class="detail-add-btn" id="detailAddBtn" onclick="addToCartDetail(${product.id})">
+                        ${icons.cart} Añadir al Carrito
+                    </button>
+                    <a class="detail-wa-btn"
+                       href="https://wa.me/5491530646881?text=${encodeURIComponent('Hola, queria consultarte por esto: ' + product.name + ' - $' + product.price.toLocaleString())}"
+                       target="_blank" rel="noopener">
+                        <svg viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/></svg>
+                        Consultar por WhatsApp
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -1794,6 +1903,119 @@ function renderContact() {
     </div>`;
 }
 
+
+// ===== DETAIL QTY =====
+let detailQty = 1;
+function detailQtyChange(delta) {
+    detailQty = Math.max(1, detailQty + delta);
+    const el = document.getElementById('detailQty');
+    if (el) el.textContent = detailQty;
+}
+function addToCartDetail(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+    const existing = cart.find(i => i.product.id === productId);
+    if (existing) { existing.quantity += detailQty; }
+    else { cart.push({ product, quantity: detailQty }); }
+    updateCartBadge();
+    showToast((detailQty > 1 ? detailQty + 'x ' : '') + product.name + ' añadido al carrito');
+    const btn = document.getElementById('detailAddBtn');
+    if (btn) flyToCart(btn);
+    detailQty = 1;
+    const el = document.getElementById('detailQty');
+    if (el) el.textContent = 1;
+}
+
+// ===== FLY-TO-CART =====
+function addToCartCard(productId, btnEl) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+    const existing = cart.find(i => i.product.id === productId);
+    if (existing) { existing.quantity++; }
+    else { cart.push({ product, quantity: 1 }); }
+    updateCartBadge();
+    showToast(product.name + ' añadido al carrito');
+    flyToCart(btnEl);
+}
+function flyToCart(srcEl) {
+    const target = document.querySelector('.mobile-cart-btn') || document.querySelector('.nav-cart-btn');
+    if (!target || !srcEl) return;
+    const s = srcEl.getBoundingClientRect();
+    const t = target.getBoundingClientRect();
+    const dot = document.createElement('div');
+    dot.className = 'fly-dot';
+    dot.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>';
+    dot.style.cssText = 'left:' + (s.left + s.width/2 - 15) + 'px;top:' + (s.top + s.height/2 - 15) + 'px;';
+    document.body.appendChild(dot);
+    requestAnimationFrame(() => {
+        dot.style.transition = 'left .6s cubic-bezier(.4,0,.2,1),top .6s cubic-bezier(.4,0,.2,1),transform .6s,opacity .6s';
+        dot.style.left = (t.left + t.width/2 - 15) + 'px';
+        dot.style.top  = (t.top  + t.height/2 - 15) + 'px';
+        dot.style.transform = 'scale(0.2)';
+        dot.style.opacity = '0';
+    });
+    setTimeout(() => dot.remove(), 700);
+}
+
+// ===== ZOOM =====
+function openZoom(src) {
+    const ov = document.getElementById('zoomOverlay');
+    const img = document.getElementById('zoomImg');
+    if (!ov || !img || !src) return;
+    img.src = src;
+    ov.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeZoom() {
+    const ov = document.getElementById('zoomOverlay');
+    if (ov) ov.classList.remove('open');
+    document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeZoom(); });
+
+// ===== URL HASH (sin pushState para máxima compatibilidad) =====
+function viewProduct(id) {
+    selectedProductId = id;
+    activeImgIndex = 0;
+    relatedOffset = 0;
+    detailQty = 1;
+    currentSection = 'detail';
+    document.getElementById('heroSection').style.display = 'none';
+    updateNavActive();
+    renderSection();
+    window.scrollTo(0, 0);
+    try { location.hash = 'producto-' + id; } catch(e) {}
+}
+// On load: if URL has a product hash, open it directly
+(function() {
+    try {
+        var m = location.hash.match(/^#producto-(\d+)$/);
+        if (m) {
+            var p = products.find(function(x){ return x.id === +m[1]; });
+            if (p) viewProduct(p.id);
+        }
+    } catch(e) {}
+})();
+
+// ===== SWIPE EN GALERÍA =====
+var _tx = 0, _ty = 0;
+document.addEventListener('touchstart', function(e) {
+    _tx = e.changedTouches[0].clientX;
+    _ty = e.changedTouches[0].clientY;
+}, { passive: true });
+document.addEventListener('touchend', function(e) {
+    if (currentSection !== 'detail') return;
+    var dx = e.changedTouches[0].clientX - _tx;
+    var dy = e.changedTouches[0].clientY - _ty;
+    if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
+    var prod = products.find(function(p){ return p.id === selectedProductId; });
+    if (!prod) return;
+    var imgs = [prod.img].concat(prod.images || []);
+    var total = [...new Set(imgs)].length + (prod.video ? 1 : 0);
+    if (total <= 1) return;
+    changeImg(dx < 0 ? 1 : -1, total);
+}, { passive: true });
+
 // ===== LÓGICA DEL HERO SLIDER =====
 let activeSlide = 0;
 let slideInterval;
@@ -1837,10 +2059,50 @@ function startSlideTimer() {
 }
 
 // Iniciar el slider
+// ===== SWIPE EN GALERÍA DE PRODUCTO =====
+let touchStartX = 0;
+let touchStartY = 0;
+
+document.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].clientX;
+    touchStartY = e.changedTouches[0].clientY;
+}, { passive: true });
+
+document.addEventListener('touchend', function(e) {
+    // Solo actuar si estamos en la vista de detalle de producto
+    if (currentSection !== 'detail') return;
+
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+
+    // Solo swipe horizontal (ignorar si fue más vertical que horizontal)
+    if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
+
+    // Calcular total de slides del producto actual
+    const product = products.find(p => p.id === selectedProductId);
+    if (!product) return;
+    const allImages = [product.img, ...(product.images || [])];
+    const unique = [...new Set(allImages)];
+    const total = unique.length + (product.video ? 1 : 0);
+    if (total <= 1) return;
+
+    if (dx < 0) {
+        // Swipe izquierda → siguiente
+        changeImg(1, total);
+    } else {
+        // Swipe derecha → anterior
+        changeImg(-1, total);
+    }
+}, { passive: true });
+
 setTimeout(initSlider, 100);
 
 // ===== INIT =====
 renderSection();
 </script>
+<div class="zoom-overlay" id="zoomOverlay" onclick="closeZoom()">
+  <button class="zoom-close" onclick="event.stopPropagation();closeZoom()">&#10005;</button>
+  <img id="zoomImg" src="" alt="Zoom" onclick="event.stopPropagation()">
+</div>
 </body>
 </html>
