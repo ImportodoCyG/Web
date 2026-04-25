@@ -1070,6 +1070,14 @@
         .detail-wa-btn:hover { background: #1ebe5d; }
         .detail-wa-btn svg { width: 20px; height: 20px; fill: #fff; }
         .detail-main-img img { cursor: zoom-in; }
+
+        /* Related arrows: ocultar en móvil */
+        @media (max-width: 640px) {
+            .related-arrow { display: none !important; }
+            .related-scroll { padding-left: 0 !important; padding-right: 0 !important; }
+            .related-track { cursor: grab; }
+            .related-track:active { cursor: grabbing; }
+        }
     </style>
 </head>
 <body>
@@ -1077,12 +1085,12 @@
 <!-- NAVBAR -->
 <nav class="navbar">
     <div class="navbar-inner">
-        <div class="navbar-logo" onclick="navigate('home')">
+        <div class="navbar-logo" onclick="navigate('home', {resetFilters:true})">
             <img src="importodocyg-logo.jpg" alt="Importodo CyG Logo">
             <span>"Todo lo que necesitas en un solo lugar"</span>
         </div>
         <div class="nav-links" id="navLinks">
-            <button class="nav-btn active" onclick="navigate('home')">Inicio</button>
+            <button class="nav-btn active" onclick="navigate('home',{resetFilters:true})">Inicio</button>
             <button class="nav-btn" onclick="navigate('about')">Conócenos</button>
             <button class="nav-btn" onclick="navigate('help')">Ayuda</button>
             <button class="nav-btn" onclick="navigate('contact')">Contacto</button>
@@ -1103,7 +1111,7 @@
         </div>
     </div>
     <div class="mobile-menu" id="mobileMenu">
-        <button class="active" onclick="navigate('home')">Inicio</button>
+        <button class="active" onclick="navigate('home',{resetFilters:true})">Inicio</button>
         <button onclick="navigate('about')">Conócenos</button>
         <button onclick="navigate('help')">Ayuda</button>
         <button onclick="navigate('contact')">Contacto</button>
@@ -1147,7 +1155,7 @@
             <h1>Exelentes regalos, incluso para uno mismo</h1>
             <p>No te quedes sin tu "experiencia Importodo".</p>
             <div class="hero-buttons">
-	    	<button class="hero-btn-primary" onclick="document.getElementById('catalogo').scrollIntoView({behavior:'smooth'})">Ver Ofertas</button>           
+	    	<button class="hero-btn-primary" onclick="verOfertas()">Ver Ofertas</button>           
 	 </div>
         </div>
     </div>
@@ -1449,11 +1457,16 @@ function showToast(msg) {
 }
 
 // ===== NAVIGATION =====
-function navigate(section) {
+function navigate(section, opts) {
     currentSection = section;
     selectedProductId = null;
     activeImgIndex = 0;
     relatedOffset = 0;
+    if (opts && opts.resetFilters) {
+        searchQuery = '';
+        selectedCategory = 'Todos';
+        sortOrder = 'default';
+    }
     const hero = document.getElementById('heroSection');
     hero.style.display = section === 'home' ? 'block' : 'none';
     document.getElementById('mobileMenu').classList.remove('open');
@@ -1462,6 +1475,9 @@ function navigate(section) {
     updateNavActive();
     renderSection();
     window.scrollTo(0, 0);
+    // Update URL hash
+    var hashMap = { home: 'inicio', about: 'conocenos', help: 'ayuda', contact: 'contacto', cart: 'carrito' };
+    try { location.hash = hashMap[section] || section; } catch(e) {}
 }
 
 function toggleMobile() {
@@ -1629,7 +1645,22 @@ function renderDetail() {
     const totalSlides = unique.length + (hasVideo ? 1 : 0);
     const hasMultiple = totalSlides > 1;
     const isVideoSlide = activeImgIndex >= unique.length;
-    const related = products.filter(p => p.id !== product.id);
+    // Products sharing at least one category with current product
+    const productCats = Array.isArray(product.category) ? product.category : [product.category];
+    let related = products.filter(p => {
+        if (p.id === product.id) return false;
+        const pCats = Array.isArray(p.category) ? p.category : [p.category];
+        return pCats.some(c => productCats.includes(c));
+    });
+    // Fallback: if fewer than 3 matches, fill with other products
+    if (related.length < 3) {
+        const extras = products.filter(p => p.id !== product.id && !related.includes(p));
+        related = related.concat(extras);
+    }
+    const relatedTitle = related.length > 0 && related.some(p => {
+        const pCats = Array.isArray(p.category) ? p.category : [p.category];
+        return pCats.some(c => productCats.includes(c));
+    }) ? 'Productos similares' : 'Productos Recomendados';
 
     function getYoutubeId(url) {
         const m = url.match(/embed\/([^?&]+)/);
@@ -1677,7 +1708,7 @@ function renderDetail() {
 
     let html = `
     <div class="fade-in">
-        <button class="detail-back" onclick="navigate('home')">← Volver al catálogo</button>
+        <button class="detail-back" onclick="navigate('home'); setTimeout(function(){var c=document.getElementById('catalogo');if(c)c.scrollIntoView({behavior:'smooth'});},120)">← Volver al catálogo</button>
         <div class="detail-layout">
             <div class="detail-gallery">
                 ${product.isOffer ? '<span class="offer-badge" style="z-index:20">OFERTA</span>' : ''}
@@ -1718,7 +1749,7 @@ function renderDetail() {
         </div>
 
         <div class="related">
-            <h3>Productos Recomendados</h3>
+            <h3>${relatedTitle}</h3>
             <button class="related-arrow left" onclick="slideRelated(-1)" style="top:55%">${icons.chevronLeft}</button>
             <button class="related-arrow right" onclick="slideRelated(1)" style="top:55%">${icons.chevronRight}</button>
             <div class="related-scroll">
@@ -1754,13 +1785,30 @@ function loadVideo(videoUrl) {
     wrap.innerHTML = '<iframe src="' + videoUrl + '?autoplay=1&rel=0" width="100%" height="320" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="border-radius:12px;display:block;"></iframe>';
 }
 
+function getRelated() {
+    var product = products.find(function(p){ return p.id === selectedProductId; });
+    if (!product) return products.filter(function(p){ return p.id !== selectedProductId; });
+    var productCats = Array.isArray(product.category) ? product.category : [product.category];
+    var rel = products.filter(function(p) {
+        if (p.id === product.id) return false;
+        var pCats = Array.isArray(p.category) ? p.category : [p.category];
+        return pCats.some(function(c){ return productCats.includes(c); });
+    });
+    if (rel.length < 3) {
+        var extras = products.filter(function(p){ return p.id !== product.id && !rel.includes(p); });
+        rel = rel.concat(extras);
+    }
+    return rel;
+}
+
 function slideRelated(dir) {
-    const step = 240;
-    const related = products.filter(p => p.id !== selectedProductId);
-    const maxScroll = Math.max(0, (related.length - 4) * step);
+    var step = 240;
+    var related = getRelated();
+    var visible = window.innerWidth >= 768 ? 4 : 2;
+    var maxScroll = Math.max(0, (related.length - visible) * step);
     relatedOffset = Math.max(0, Math.min(relatedOffset + dir * step, maxScroll));
-    const track = document.getElementById('relatedTrack');
-    if (track) track.style.transform = `translateX(-${relatedOffset}px)`;
+    var track = document.getElementById('relatedTrack');
+    if (track) track.style.transform = 'translateX(-' + relatedOffset + 'px)';
 }
 
 function renderCart() {
@@ -1997,24 +2045,7 @@ function viewProduct(id) {
     } catch(e) {}
 })();
 
-// ===== SWIPE EN GALERÍA =====
-var _tx = 0, _ty = 0;
-document.addEventListener('touchstart', function(e) {
-    _tx = e.changedTouches[0].clientX;
-    _ty = e.changedTouches[0].clientY;
-}, { passive: true });
-document.addEventListener('touchend', function(e) {
-    if (currentSection !== 'detail') return;
-    var dx = e.changedTouches[0].clientX - _tx;
-    var dy = e.changedTouches[0].clientY - _ty;
-    if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
-    var prod = products.find(function(p){ return p.id === selectedProductId; });
-    if (!prod) return;
-    var imgs = [prod.img].concat(prod.images || []);
-    var total = [...new Set(imgs)].length + (prod.video ? 1 : 0);
-    if (total <= 1) return;
-    changeImg(dx < 0 ? 1 : -1, total);
-}, { passive: true });
+
 
 // ===== LÓGICA DEL HERO SLIDER =====
 let activeSlide = 0;
@@ -2059,39 +2090,84 @@ function startSlideTimer() {
 }
 
 // Iniciar el slider
-// ===== SWIPE EN GALERÍA DE PRODUCTO =====
-let touchStartX = 0;
-let touchStartY = 0;
+
+
+
+// ===== VER OFERTAS =====
+function verOfertas() {
+    currentSection = 'home';
+    selectedProductId = null;
+    searchQuery = '';
+    selectedCategory = 'Todos';
+    sortOrder = 'offers';
+    document.getElementById('heroSection').style.display = 'block';
+    updateNavActive();
+    renderSection();
+    setTimeout(function() {
+        var cat = document.getElementById('catalogo');
+        if (cat) cat.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+    try { location.hash = 'inicio'; } catch(e) {}
+}
+
+// ===== URL HASH INIT (all sections) =====
+(function() {
+    try {
+        var hash = location.hash.replace('#', '');
+        var sectionMap = { inicio: 'home', conocenos: 'about', ayuda: 'help', contacto: 'contact', carrito: 'cart' };
+        var prodMatch = location.hash.match(/^#producto-(\d+)$/);
+        if (prodMatch) {
+            var p = products.find(function(x){ return x.id === +prodMatch[1]; });
+            if (p) { viewProduct(p.id); return; }
+        }
+        if (sectionMap[hash]) navigate(sectionMap[hash]);
+    } catch(e) {}
+})();
+
+// ===== UNIFIED SWIPE =====
+// Tracks start position
+var swipeStartX = 0, swipeStartY = 0;
+var swipeTarget = null; // 'gallery' | 'related' | null
 
 document.addEventListener('touchstart', function(e) {
-    touchStartX = e.changedTouches[0].clientX;
-    touchStartY = e.changedTouches[0].clientY;
+    swipeStartX = e.changedTouches[0].clientX;
+    swipeStartY = e.changedTouches[0].clientY;
+    // Detect if touch started inside the gallery image area
+    var imgWrap = document.querySelector('.detail-main-img');
+    if (imgWrap && imgWrap.contains(e.target)) {
+        swipeTarget = 'gallery';
+    } else {
+        var relTrack = document.getElementById('relatedTrack');
+        if (relTrack && relTrack.contains(e.target)) {
+            swipeTarget = 'related';
+        } else {
+            swipeTarget = null;
+        }
+    }
 }, { passive: true });
 
 document.addEventListener('touchend', function(e) {
-    // Solo actuar si estamos en la vista de detalle de producto
-    if (currentSection !== 'detail') return;
-
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    const dy = e.changedTouches[0].clientY - touchStartY;
-
-    // Solo swipe horizontal (ignorar si fue más vertical que horizontal)
+    var dx = e.changedTouches[0].clientX - swipeStartX;
+    var dy = e.changedTouches[0].clientY - swipeStartY;
+    // Ignore mostly-vertical gestures
     if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
 
-    // Calcular total de slides del producto actual
-    const product = products.find(p => p.id === selectedProductId);
-    if (!product) return;
-    const allImages = [product.img, ...(product.images || [])];
-    const unique = [...new Set(allImages)];
-    const total = unique.length + (product.video ? 1 : 0);
-    if (total <= 1) return;
+    // Gallery swipe — only when touch started on the image
+    if (swipeTarget === 'gallery' && currentSection === 'detail') {
+        var prod = products.find(function(p){ return p.id === selectedProductId; });
+        if (!prod) return;
+        var imgs = [prod.img].concat(prod.images || []);
+        var total = [...new Set(imgs)].length + (prod.video ? 1 : 0);
+        if (total <= 1) return;
+        // Mirror convention: swipe LEFT → next (image moves left, next appears from right)
+        changeImg(dx < 0 ? 1 : -1, total);
+        return;
+    }
 
-    if (dx < 0) {
-        // Swipe izquierda → siguiente
-        changeImg(1, total);
-    } else {
-        // Swipe derecha → anterior
-        changeImg(-1, total);
+    // Related products swipe
+    if (swipeTarget === 'related') {
+        slideRelated(dx < 0 ? 1 : -1);
+        return;
     }
 }, { passive: true });
 
