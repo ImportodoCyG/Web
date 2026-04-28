@@ -1247,7 +1247,7 @@ const products = [
 
     { id: 12, name: "Soporte Móvil TV 14 a 42", price: 15000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_816926-MLA100089974977_122025-F.webp", category: ["Soportes", "Hogar"] },
 
-    { id: 13, name: "Balde Mopa Centrifugador 360⁰", price: 18000, isOffer: false, specs: "", img:"https://images.fravega.com/f500/52c38a58e79478a8fe902cbf518ce622.png", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_902643-MLA82581799826_032025-F.webp", "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQwJ5CvAXVLcmlLDNvX5Mi6L6ivnoEkkX1-v1SNI7vhw4a5Z3ee"], video: "https://youtube.com/embed/uwym-7YlztM?si=ZcWaLwaF4MNq32ua", category: "Hogar" },
+    { id: 13, name: "Balde Mopa Centrifugador 360⁰", price: 18000, isOffer: false, specs: "", img:"https://images.fravega.com/f500/52c38a58e79478a8fe902cbf518ce622.png", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_902643-MLA82581799826_032025-F.webp", "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQwJ5CvAXVLcmlLDNvX5Mi6L6ivnoEkkX1-v1SNI7vhw4a5Z3ee"], category: "Hogar" },
 
     { id: 14, name: "Tender de Ropa vertical 50kg", price: 26000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_751618-MLA79909584834_102024-O.webp", category: "Hogar" },
 
@@ -1346,6 +1346,14 @@ const products = [
     { id: 61, name: "Pelota Mundial N°5 FIFA", price: 10000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_689132-MLA93300217531_092025-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_926277-MLA101687787744_122025-O.webp", "https://assets.adidas.com/images/w_600,f_auto,q_auto/14165d04c80b4a769d4b667f9c878666_9366/Pelota_Trionda_Competition_Copa_Mundial_de_la_FIFA_26tm_Blanco_JD8031_44_detail.jpg"], category: ["Deporte", "Infantil"] },
 
     { id: 62, name: "Vaso Termico", price: 17000, isOffer: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_800184-CBT93126100604_092025-O.webp", images: ["https://tu-vendes.sfo3.digitaloceanspaces.com/products/2963_2963-fp-webp.webp", "https://i0.wp.com/recargasrafaela.com.ar/wp-content/uploads/2025/04/vaso_quencher_02.jpg?fit=800,800&ssl=1", "https://acdn-us.mitiendanube.com/stores/741/031/products/5-a63bd44cca7562e5ea17737572818359-1024-1024.webp"], category: ["Hogar"] },
+
+    { id: 63, name: "Joystick PS4", price: 27000, isOffer: false, specs: "", img: "https://greemos.com.ar/wp-content/uploads/12098.jpg", category: ["Electronica", "Infantil"] },
+
+    { id: 64, name: "Joystick PS3", price: 16000, isOffer: false, specs: "", img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTVL6I1lkeMLedYoPnPCuObPt2Peas8lxvGkZCelr-aqK5hH_4-", category: ["Electronica", "Infantil"] },
+
+    { id: 65, name: "Luz Inteligente De Inducción", price: 9500, isOffer: false, specs: "Transforma tus espacios con la Luz Inteligente de Inducción Nocturna para Hogar con Sensor. Esta lámpara de pared, diseñada para ofrecer una luz cálida y acogedora, es ideal para iluminar pasillos, escaleras o cualquier rincón que necesite un toque de calidez y seguridad. <br> La lámpara es completamente inalámbrica y recargable, lo que facilita su instalación en cualquier lugar de tu hogar.", img: "https://http2.mlstatic.com/D_NQ_NP_2X_622104-MLA110084130153_042026-F.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_631594-MLA94803796404_102025-F.webp"], category: ["Luces"] },
+
+    { id: 66, name: "Cable 4 en 1 Reforzado", price: 4500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_731246-MLA104027512497_012026-O.webp", images: ["https://acdn-us.mitiendanube.com/stores/001/050/433/products/cableronpinreforzado4en1multifichaa-580b061330161fedf117719738520141-480-0.webp", "https://www.mink.com.ar/qloud/ryr/fotos/24747-1.jpg"], category: ["Cables y Adaptadores"] },
 
 ];
 
@@ -1663,16 +1671,40 @@ function renderDetail() {
     }) ? 'Productos similares' : 'Productos Recomendados';
 
     function getYoutubeId(url) {
-        const m = url.match(/embed\/([^?&]+)/);
-        return m ? m[1] : null;
+        if (!url) return null;
+        // /embed/ID
+        var m = url.match(/embed\/([^?&\/]+)/);
+        if (m) return m[1];
+        // /shorts/ID
+        m = url.match(/shorts\/([^?&\/]+)/);
+        if (m) return m[1];
+        // watch?v=ID
+        m = url.match(/[?&]v=([^?&\/]+)/);
+        if (m) return m[1];
+        // youtu.be/ID
+        m = url.match(/youtu\.be\/([^?&\/]+)/);
+        if (m) return m[1];
+        return null;
+    }
+
+    function isShorts(url) {
+        return url && url.indexOf('/shorts/') !== -1;
+    }
+
+    function toEmbedUrl(url) {
+        var id = getYoutubeId(url);
+        if (!id) return url;
+        // Shorts embed correctly as /embed/ID too
+        return 'https://www.youtube.com/embed/' + id;
     }
 
     let mainMedia;
     if (isVideoSlide && hasVideo) {
         const ytId = getYoutubeId(product.video);
         const thumbUrl = ytId ? 'https://img.youtube.com/vi/' + ytId + '/hqdefault.jpg' : '';
+        const shortsStyle = isShorts(product.video) ? 'max-width:270px;margin:0 auto;' : 'width:100%;';
         mainMedia =
-            '<div id="videoThumb" onclick="loadVideo(\'' + product.video + '\')" style="position:relative;cursor:pointer;border-radius:12px;overflow:hidden;background:#000;">' +
+            '<div id="videoThumb" onclick="loadVideo(\'' + product.video + '\')" style="position:relative;cursor:pointer;border-radius:12px;overflow:hidden;background:#000;' + shortsStyle + '">' +
                 '<img src="' + thumbUrl + '" style="width:100%;display:block;opacity:0.85;">' +
                 '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">' +
                     '<div style="width:72px;height:72px;border-radius:50%;background:rgba(255,0,0,0.9);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,0.4);">' +
@@ -1780,9 +1812,16 @@ function setActiveImg(i) {
 }
 
 function loadVideo(videoUrl) {
-    const wrap = document.getElementById('mainMediaWrap');
+    var wrap = document.getElementById('mainMediaWrap');
     if (!wrap) return;
-    wrap.innerHTML = '<iframe src="' + videoUrl + '?autoplay=1&rel=0" width="100%" height="320" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="border-radius:12px;display:block;"></iframe>';
+    var embedUrl = toEmbedUrl(videoUrl);
+    var shorts = isShorts(videoUrl);
+    // Shorts are vertical (9:16), regular videos are horizontal (16:9)
+    var h = shorts ? '480px' : '320px';
+    var maxW = shorts ? '270px' : '100%';
+    wrap.innerHTML = '<div style="display:flex;justify-content:center;">' +
+        '<iframe src="' + embedUrl + '?autoplay=1&rel=0" width="100%" style="max-width:' + maxW + ';height:' + h + ';border-radius:12px;display:block;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>' +
+        '</div>';
 }
 
 function getRelated() {
