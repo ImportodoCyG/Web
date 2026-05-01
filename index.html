@@ -1225,7 +1225,7 @@ const products = [
 
     { id: 1, name: "TV BOX 2+8G Time", price: 42000, isOffer: false, specs: "Con comando de voz y Xuper TV: Películas – Series – Futbol – etc...", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/11/tvbox-time.jpg", category: ["Hogar", "Electronica"] },
 
-    { id: 2, name: "Proyector 3 en 1", price: 115000, isOffer: false, specs: "Proyector con juegos y apps instalados. Incluye Xuper TV, series, películas, canales, fútbol, todo gratis! Incluye 2 joysticks inalámbricos.", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2026/01/proyector.webp", video: "https://youtube.com/shorts/2CKdNqGn-I4?si=0A4Zk3yCcL28R72x", category: ["Electronica", "Hogar"] },
+    { id: 2, name: "Proyector 3 en 1", price: 115000, isOffer: false, specs: "Proyector con juegos y apps instalados. Incluye Xuper TV, series, películas, canales, fútbol, todo gratis! Incluye 2 joysticks inalámbricos.", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2026/01/proyector.webp", video: "https://www.youtube.com/embed/rUXbaPKYeYE", category: ["Electronica", "Hogar"] },
 
     { id: 3, name: "Combo Auricular + Parlante Astronauta + Velador", price: 19000, isOffer: true, specs: "", img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQB59LwOW9z3dJk-CBJwcRuDktvbZq7ZymmJ1HpAgtfKmzB6q4L", images: ["https://acdn-us.mitiendanube.com/stores/001/131/056/products/ultrpod-25b69f8566aeed484017311936142468-640-0.webp", "https://http2.mlstatic.com/D_NQ_NP_958161-MLA99653095869_112025-O.webp", "https://http2.mlstatic.com/D_Q_NP_943437-MLA94687605859_102025-O.webp"], category: ["Infantil", "Auriculares"] },
 
@@ -1653,108 +1653,80 @@ function renderHome() {
 function renderDetail() {
     const product = products.find(p => p.id === selectedProductId);
     if (!product) return '<p>Producto no encontrado</p>';
+
     const allImages = [product.img, ...(product.images || [])];
-    const unique = [...new Set(allImages)];
-    const hasVideo = !!product.video;
-    const totalSlides = unique.length + (hasVideo ? 1 : 0);
-    const hasMultiple = totalSlides > 1;
-    const isVideoSlide = activeImgIndex >= unique.length;
-    // Products sharing at least one category with current product
+    const unique    = [...new Set(allImages)];
+    const hasVideo  = !!product.video;
+    const total     = unique.length + (hasVideo ? 1 : 0);
+    const hasMultiple   = total > 1;
+    const isVideoSlide  = activeImgIndex >= unique.length;
+
+    // ── Related (by shared category) ──────────────────────────────────────
     const productCats = Array.isArray(product.category) ? product.category : [product.category];
     let related = products.filter(p => {
         if (p.id === product.id) return false;
-        const pCats = Array.isArray(p.category) ? p.category : [p.category];
-        return pCats.some(c => productCats.includes(c));
+        const c = Array.isArray(p.category) ? p.category : [p.category];
+        return c.some(x => productCats.includes(x));
     });
-    // Fallback: if fewer than 3 matches, fill with other products
     if (related.length < 3) {
         const extras = products.filter(p => p.id !== product.id && !related.includes(p));
         related = related.concat(extras);
     }
-    const relatedTitle = related.length > 0 && related.some(p => {
-        const pCats = Array.isArray(p.category) ? p.category : [p.category];
-        return pCats.some(c => productCats.includes(c));
-    }) ? 'Productos similares' : 'Productos Recomendados';
+    const relatedTitle = 'Productos similares';
 
-    function getYoutubeId(url) {
-        if (!url) return null;
-        // /embed/ID
-        var m = url.match(/embed\/([^?&\/]+)/);
-        if (m) return m[1];
-        // /shorts/ID
-        m = url.match(/shorts\/([^?&\/]+)/);
-        if (m) return m[1];
-        // watch?v=ID
-        m = url.match(/[?&]v=([^?&\/]+)/);
-        if (m) return m[1];
-        // youtu.be/ID
-        m = url.match(/youtu\.be\/([^?&\/]+)/);
-        if (m) return m[1];
-        return null;
-    }
-
-    function isShorts(url) {
-        return url && url.indexOf('/shorts/') !== -1;
-    }
-
-    function toEmbedUrl(url) {
-        var id = getYoutubeId(url);
-        if (!id) return url;
-        // Shorts embed correctly as /embed/ID too
-        return 'https://www.youtube.com/embed/' + id;
-    }
-
+    // ── Main media ─────────────────────────────────────────────────────────
     let mainMedia;
     if (isVideoSlide && hasVideo) {
-        const shorts = isShorts(product.video);
-        const ytId = getYoutubeId(product.video);
-        // Try to load thumbnail; if it fails (common for Shorts), onerror shows a fallback
+        // Extract YT id from embed URL (format: https://www.youtube.com/embed/ID)
+        const ytId    = (product.video.match(/embed\/([^?&\/]+)/) || [])[1] || '';
         const thumbUrl = ytId ? 'https://img.youtube.com/vi/' + ytId + '/hqdefault.jpg' : '';
-        const wrapStyle = shorts
-            ? 'position:relative;cursor:pointer;border-radius:12px;overflow:hidden;background:#111;max-width:270px;margin:0 auto;min-height:180px;display:flex;align-items:center;justify-content:center;'
-            : 'position:relative;cursor:pointer;border-radius:12px;overflow:hidden;background:#111;min-height:180px;display:flex;align-items:center;justify-content:center;';
-        const playOverlay =
-            '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;z-index:2;">' +
-                '<div style="width:72px;height:72px;border-radius:50%;background:rgba(255,0,0,0.92);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,0.5);">' +
-                    '<svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg>' +
-                '</div>' +
-                '<span style="color:#fff;font-size:13px;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,0.7);">' + (shorts ? 'Ver Short' : 'Reproducir video') + '</span>' +
-            '</div>';
-        // Thumbnail img — if it loads, great; if not, the background + overlay still looks good
-        const thumbImg = thumbUrl
-            ? '<img src="' + thumbUrl + '" style="width:100%;display:block;opacity:0.55;position:absolute;inset:0;object-fit:cover;" onerror="this.remove()">'
-            : '';
+        // Store URL safely in data attribute — no inline-onclick quoting issues
         mainMedia =
-            '<div id="videoThumb" onclick="loadVideo(\'' + product.video + '\')" style="' + wrapStyle + '">' +
-                thumbImg +
-                playOverlay +
-            '</div>';
+            '<button id="videoPlayBtn" data-src="' + product.video + '?autoplay=1&rel=0"' +
+            ' style="width:100%;border:none;cursor:pointer;padding:0;border-radius:12px;overflow:hidden;' +
+            'background:#111;display:block;position:relative;">' +
+            (thumbUrl
+                ? '<img src="' + thumbUrl + '" style="width:100%;display:block;opacity:0.7;" onerror="this.style.display=\'none\'">'
+                : '<div style="height:200px;"></div>') +
+            '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;' +
+            'justify-content:center;gap:10px;">' +
+            '<div style="width:68px;height:68px;border-radius:50%;background:rgba(255,0,0,0.92);' +
+            'display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,0.5);">' +
+            '<svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg>' +
+            '</div>' +
+            '<span style="color:#fff;font-size:13px;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,0.8);">Reproducir video</span>' +
+            '</div></button>';
     } else {
-        mainMedia = '<img id="mainImg" src="' + unique[activeImgIndex] + '" alt="' + product.name + '" onclick="openZoom(this.src)" style="cursor:zoom-in">';
+        mainMedia = '<img id="mainImg" src="' + unique[activeImgIndex] + '" alt="' + product.name + '"' +
+                    ' onclick="openZoom(this.src)" style="cursor:zoom-in">';
     }
 
-    const thumbsHTML = unique.map((img, i) =>
-        '<div class="gallery-thumb ' + (i === activeImgIndex ? 'active' : '') + '" onclick="setActiveImg(' + i + ')">' +
-            '<img src="' + img + '" alt="">' +
-        '</div>'
-    ).join('') + (hasVideo ? (function() {
-        const ytId = getYoutubeId(product.video);
-        const thumbUrl = ytId ? 'https://img.youtube.com/vi/' + ytId + '/default.jpg' : '';
-        return '<div class="gallery-thumb ' + (isVideoSlide ? 'active' : '') + '" onclick="setActiveImg(' + unique.length + ')" ' +
-            'style="position:relative;overflow:hidden;cursor:pointer;background:#111;display:flex;align-items:center;justify-content:center;">' +
-            (thumbUrl ? '<img src="' + thumbUrl + '" alt="Video" style="width:100%;height:100%;object-fit:cover;opacity:0.5;position:absolute;inset:0;" onerror="this.remove()">' : '') +
-            '<div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;">' +
-                '<div style="width:22px;height:22px;border-radius:50%;background:rgba(255,0,0,0.92);display:flex;align-items:center;justify-content:center;">' +
-                    '<svg width="9" height="9" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg>' +
-                '</div>' +
-                '<span style="color:#fff;font-size:9px;font-weight:600;">VIDEO</span>' +
-            '</div>' +
-        '</div>';
-    })() : '');
+    // ── Thumbnails ─────────────────────────────────────────────────────────
+    const imgThumbs = unique.map((src, i) =>
+        '<div class="gallery-thumb ' + (i === activeImgIndex ? 'active' : '') + '"' +
+        ' onclick="setActiveImg(' + i + ')">' +
+        '<img src="' + src + '" alt=""></div>'
+    ).join('');
 
-    const arrowsHTML = hasMultiple
-        ? '<button class="gallery-arrow left" onclick="changeImg(-1,' + totalSlides + ')">' + icons.chevronLeft + '</button>' +
-          '<button class="gallery-arrow right" onclick="changeImg(1,' + totalSlides + ')">' + icons.chevronRight + '</button>'
+    let videoThumb = '';
+    if (hasVideo) {
+        const ytId = (product.video.match(/embed\/([^?&\/]+)/) || [])[1] || '';
+        const tUrl = ytId ? 'https://img.youtube.com/vi/' + ytId + '/default.jpg' : '';
+        videoThumb =
+            '<div class="gallery-thumb ' + (isVideoSlide ? 'active' : '') + '"' +
+            ' onclick="setActiveImg(' + unique.length + ')"' +
+            ' style="background:#111;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">' +
+            (tUrl ? '<img src="' + tUrl + '" style="width:100%;height:100%;object-fit:cover;opacity:0.5;position:absolute;inset:0;" onerror="this.style.display=\'none\'">' : '') +
+            '<div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:2px;">' +
+            '<div style="width:22px;height:22px;border-radius:50%;background:rgba(255,0,0,0.9);display:flex;align-items:center;justify-content:center;">' +
+            '<svg width="9" height="9" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg></div>' +
+            '<span style="color:#fff;font-size:9px;font-weight:700;">VIDEO</span>' +
+            '</div></div>';
+    }
+
+    const arrowsHTML = (hasMultiple && !isVideoSlide)
+        ? '<button class="gallery-arrow left"  onclick="changeImg(-1,' + total + ')">' + icons.chevronLeft  + '</button>' +
+          '<button class="gallery-arrow right" onclick="changeImg(1,'  + total + ')">' + icons.chevronRight + '</button>'
         : '';
 
     let html = `
@@ -1767,7 +1739,7 @@ function renderDetail() {
                     ${mainMedia}
                 </div>
                 ${arrowsHTML}
-                ${hasMultiple ? '<div class="gallery-thumbs">' + thumbsHTML + '</div>' : ''}
+                ${hasMultiple ? '<div class="gallery-thumbs">' + imgThumbs + videoThumb + '</div>' : ''}
             </div>
             <div class="detail-info">
                 <p class="cat">${Array.isArray(product.category) ? product.category.join(' &middot; ') : product.category}</p>
@@ -1798,11 +1770,10 @@ function renderDetail() {
                 </div>
             </div>
         </div>
-
         <div class="related">
             <h3>${relatedTitle}</h3>
-            <button class="related-arrow left" onclick="slideRelated(-1)" style="top:55%">${icons.chevronLeft}</button>
-            <button class="related-arrow right" onclick="slideRelated(1)" style="top:55%">${icons.chevronRight}</button>
+            <button class="related-arrow left"  onclick="slideRelated(-1)" style="top:55%">${icons.chevronLeft}</button>
+            <button class="related-arrow right" onclick="slideRelated(1)"  style="top:55%">${icons.chevronRight}</button>
             <div class="related-scroll">
                 <div class="related-track" id="relatedTrack" style="transform:translateX(-${relatedOffset}px)">
                     ${related.map(r => `
@@ -1830,18 +1801,22 @@ function setActiveImg(i) {
     renderSection();
 }
 
-function loadVideo(videoUrl) {
+function loadVideo(embedSrc) {
     var wrap = document.getElementById('mainMediaWrap');
     if (!wrap) return;
-    var embedUrl = toEmbedUrl(videoUrl);
-    var shorts = isShorts(videoUrl);
-    // Shorts are vertical (9:16), regular videos are horizontal (16:9)
-    var h = shorts ? '480px' : '320px';
-    var maxW = shorts ? '270px' : '100%';
-    wrap.innerHTML = '<div style="display:flex;justify-content:center;">' +
-        '<iframe src="' + embedUrl + '?autoplay=1&rel=0" width="100%" style="max-width:' + maxW + ';height:' + h + ';border-radius:12px;display:block;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>' +
-        '</div>';
+    wrap.innerHTML =
+        '<iframe src="' + embedSrc + '" width="100%" height="320"' +
+        ' style="border-radius:12px;display:block;border:none;"' +
+        ' allow="autoplay; encrypted-media" allowfullscreen></iframe>';
 }
+
+// Click handler for the play button (reads data-src attribute)
+document.addEventListener('click', function(e) {
+    var btn = e.target.closest('#videoPlayBtn');
+    if (!btn) return;
+    var src = btn.getAttribute('data-src');
+    if (src) loadVideo(src);
+});
 
 function getRelated() {
     var product = products.find(function(p){ return p.id === selectedProductId; });
