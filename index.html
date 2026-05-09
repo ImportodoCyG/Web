@@ -1078,6 +1078,37 @@
             .related-track { cursor: grab; }
             .related-track:active { cursor: grabbing; }
         }
+
+        /* ===== SCROLL REVEAL ANIMATIONS ===== */
+        /* Cards start hidden; JS adds .revealed when they enter viewport */
+        .product-card {
+            opacity: 0;
+            transform: translateY(48px);
+            transition: opacity 0.55s ease, transform 0.55s ease;
+        }
+        /* Alternating: odd cards come from left, even from right */
+        .product-card.from-left  { transform: translate(-40px, 48px); }
+        .product-card.from-right { transform: translate( 40px, 48px); }
+
+        .product-card.revealed {
+            opacity: 1 !important;
+            transform: translate(0, 0) !important;
+        }
+
+        /* On desktop (4 cols) all cards just come from below — less chaotic */
+        @media (min-width: 769px) {
+            .product-card.from-left,
+            .product-card.from-right {
+                transform: translateY(48px);
+            }
+        }
+
+        /* Cards already seen never animate again (class added by JS) */
+        .product-card.no-anim {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+        }
     </style>
 </head>
 <body>
@@ -1313,27 +1344,27 @@ const products = [
 
     { id: 45, name: "Kit Térmico Cuello Cordon + Guantes Primera Piel", price: 10000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-1-46035953e994e7386317585530071957-1024-1024.webp", category: ["Deporte"] },
 
-    { id: 46, name: "Kit Térmico Guantes Primera Piel + Medias Primera Piel", price: 10000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-1-f1c55a6102c8a9146317585562652164-1024-1024.webp", category: ["Deporte"] },
+    { id: 46, name: "Kit Térmico Guantes Primera Piel + Medias Primera Piel", price: 10500, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-1-f1c55a6102c8a9146317585562652164-1024-1024.webp", category: ["Deporte"] },
 
-    { id: 47, name: "Conjunto Termico Completo Remera + Calza Frio Extremo Frizado Mujer", price: 25000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-f76f96b432b2be677b17549264208838-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-mujer-61a659b63efb53caa617750710496162-640-0.webp"], category: ["Deporte"] },
+    { id: 47, name: "Conjunto Termico Completo Remera + Calza Frio Extremo Frizado Mujer", price: 26000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-f76f96b432b2be677b17549264208838-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-mujer-61a659b63efb53caa617750710496162-640-0.webp"], category: ["Deporte"] },
 
-    { id: 48, name: "Conjunto Termico Completo Remera + Calza Frio Extremo Frizado Hombre", price: 25000, isOffer: false, specs: "Material de microfibra premium que absorbe la humedad. <br> Elasticidad gracias al 15% de lycra para un calce perfecto. <br> Diseño que se ajusta al cuerpo y maximiza la retención de calor. <br> Resistente, cómodo y de secado rápido.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-53956943716ba8621017549269935408-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-hombre-558571e2ae0200296017745385977737-640-0.webp"], category: ["Deporte"] },
+    { id: 48, name: "Conjunto Termico Completo Remera + Calza Frio Extremo Frizado Hombre", price: 26000, isOffer: false, specs: "Material de microfibra premium que absorbe la humedad. <br> Elasticidad gracias al 15% de lycra para un calce perfecto. <br> Diseño que se ajusta al cuerpo y maximiza la retención de calor. <br> Resistente, cómodo y de secado rápido.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-53956943716ba8621017549269935408-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-hombre-558571e2ae0200296017745385977737-640-0.webp"], category: ["Deporte"] },
 
     { id: 49, name: "Kit Cubre Manos Con Abrigo + Guantes Primera Piel", price: 15000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-c492d571994d6e961517545153428122-1024-1024.webp", category: ["Deporte"] },
 
     { id: 50, name: "Pasamontaña Primera Piel Termico Balaclava", price: 6500, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-6db380679f5f20787617544302048628-1024-1024.webp", category: ["Deporte"] },
 
-    { id: 51, name: "Kit Conjunto Termico + Guantes Pp + Medias Pp + Mascara Frio Extremo Deportivo Hombre", price: 32000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-2-1608b52a71d8b5cffc17745385528913-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-hombre-558571e2ae0200296017745385977737-640-0.webp"], category: ["Deporte"] },
+    { id: 51, name: "Kit Conjunto Termico + Guantes Pp + Medias Pp + Mascara Frio Extremo Deportivo Hombre", price: 36000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-2-1608b52a71d8b5cffc17745385528913-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-hombre-558571e2ae0200296017745385977737-640-0.webp"], category: ["Deporte"] },
 
-    { id: 52, name: "Kit Conjunto Termico + Medias PP + Pasamontañas Balaclava Frio Extremo Deportivo Mujer", price: 32000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-0b0e681da62c6881bb17750710777057-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-mujer-61a659b63efb53caa617750710496162-640-0.webp"], category: ["Deporte"] },
+    { id: 52, name: "Kit Conjunto Termico + Medias PP + Pasamontañas Balaclava Frio Extremo Deportivo Mujer", price: 33000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-0b0e681da62c6881bb17750710777057-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-mujer-61a659b63efb53caa617750710496162-640-0.webp"], category: ["Deporte"] },
 
-    { id: 53, name: "Botas Para La Lluvia Pvc Impermeables", price: 21000, isOffer: false, specs: "Ideal para el Trebajo diario", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-3-812de5ff7328091ea117547517450325-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/1905241749323922-b-e383e4662d4b9d12fc17547517540446-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-f-7378d9488c2aae220117547530519178-1024-1024.webp"], category: ["Hogar"] },
+    { id: 53, name: "Botas Para La Lluvia Pvc Impermeables", price: 22000, isOffer: false, specs: "Ideal para el Trebajo diario", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-3-812de5ff7328091ea117547517450325-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/1905241749323922-b-e383e4662d4b9d12fc17547517540446-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-f-7378d9488c2aae220117547530519178-1024-1024.webp"], category: ["Hogar"] },
 
-    { id: 54, name: "Zapatillas Cuero Ecológico c/Protecciones", price: 38300, isOffer: false, specs: "Pensado para motociclistas <br> Este modelo incorpora protector para la palanca de cambios y diseño anatómico con bandas reflectivas laterales y traseras, mejorando la visibilidad en condiciones de poca luz. Su suela de PVC ultra liviana y de alto grip asegura estabilidad y agarre óptimo, mientras que la plantilla de 4 mm ofrece un confort excepcional.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2011261804034479-a-47f6194aa8e8f1451617549117756693-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2011261804034479-e-b0d938dde262ea04b717549117771585-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-f-7378d9488c2aae220117547530519178-1024-1024.webp"], category: ["Hogar"] },
+    { id: 54, name: "Zapatillas Cuero Ecológico c/Protecciones", price: 44000, isOffer: false, specs: "(Talle Disponible 44) <br> Pensado para motociclistas <br> Este modelo incorpora protector para la palanca de cambios y diseño anatómico con bandas reflectivas laterales y traseras, mejorando la visibilidad en condiciones de poca luz. Su suela de PVC ultra liviana y de alto grip asegura estabilidad y agarre óptimo, mientras que la plantilla de 4 mm ofrece un confort excepcional.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2011261804034479-a-47f6194aa8e8f1451617549117756693-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2011261804034479-e-b0d938dde262ea04b717549117771585-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-f-7378d9488c2aae220117547530519178-1024-1024.webp"], category: ["Hogar"] },
 
     { id: 55, name: " Botas Moto Ruta Cuero Sintetico", price: 57000, isOffer: false, specs: "Cuenta con bandas reflectivas para mayor visibilidad, puntera y talonera reforzada, así como un protector para la palanca de cambios que evita el desgaste prematuro. Su canillera libre y menos reforzada proporciona ligereza, mientras que el sistema de cierre con doble fijación (cierre y abrojo) asegura un ajuste firme y cómodo.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2206041315319523-c-613dc75fe6971cd60417549108538405-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2206041315319523-f-07cbeeb8b52a7b677f17549108541379-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-f-7378d9488c2aae220117547530519178-1024-1024.webp"], category: ["Hogar"] },
 
-    { id: 56, name: "Botas Zapatillas Moto Cuerina Protecciones Trelew", price: 48000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-6-918992d0b8f76463d617547530462557-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-c-582b2a1b980b0a8a0417547530547425-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-f-7378d9488c2aae220117547530519178-640-0.webp"], category: ["Hogar"] },
+    { id: 56, name: "Botas Zapatillas Moto Cuerina Protecciones Trelew", price: 52000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-6-918992d0b8f76463d617547530462557-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-c-582b2a1b980b0a8a0417547530547425-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-f-7378d9488c2aae220117547530519178-640-0.webp"], category: ["Hogar"] },
 
     { id: 57, name: "Kit Impermeable", price: 49000, isOffer: false, specs: "Diseñado para quienes enfrentan días lluviosos en moto o al aire libre y necesitan protección total, confort y durabilidad. <br> Incluye un equipo de lluvia (campera + pantalón) fabricado en PVC de alta calidad y botas touring 100% impermeables, ideales para conducción urbana o uso diario.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-13-f99601c9674bef8b1017544993343567-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409281229232082-d-30240f7dd6c36067a817544993496548-640-0.webp"], category: ["Hogar"] },
 
@@ -1360,6 +1391,16 @@ const products = [
     { id: 68, name: "Estante Esquinero c/Autoadhesivo", price: 8000, isOffer: false, specs: "26cm = $9.000 <br> 24cm = $8.000", img: "https://http2.mlstatic.com/D_NQ_NP_662454-CBT105073739821_012026-O.webp", category: ["Hogar"] },
 
     { id: 69, name: "Bota de Silicona cubre Calzado", price:5500, isOffer: false, specs: "", img: "https://sc04.alicdn.com/kf/H537a312356c64a62b5c3459b5939c740d.png", category: ["Hogar"] },
+
+    { id: 70, name: "Set de Molinillo madera, Salero y Pimentero", price: 11000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_647079-MLA77817102643_072024-O.webp", category: ["Hogar"] },
+
+    { id: 71, name: "Kit Conjunto Termico + Guantes Pp + Cuello Cordon Microfibra Hombre", price: 28000, isOffer: false, specs: "El Conjunto Térmico Microfibra está diseñado para mantener la temperatura corporal en climas fríos, mejorar el rendimiento en entrenamientos, competiciones y actividades al aire libre. Su tejido de microfibra importada de alta calidad, compuesto por 85% jersey de poliéster y 15% elastano (lycra), proporciona un ajuste anatómico, absorbe la transpiración y ofrece máxima comodidad. <br> Ideal para actividades deportivas, recuperación física y uso diario en invierno. Reduce la fatiga muscular, mejora la circulación y ofrece excelente durabilidad. <br><br> Conjunto térmico Microfibra: remera y pantalón, color negro, talles XS/S, M/L, XL/XXL. <br> Guantes Primera Piel: 85% microfibra + 15% lycra, anatómicos y resistentes. Talle único universal. <br> Cuello en polar con cordón: 23x25 cm, ajustable y utilizable como gorro.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/microfibra-677d06a21a9f14634c17728245945098-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/31397_medium-09989fe39faabc788d17549437559056-640-0.webp"], category: ["Deporte"] },
+
+    { id: 72, name: "Kit Conjunto Termico + Guantes Pp + Medias Pp + Cuello Microfibra Hombre", price: 35000, isOffer: false, specs: "El Conjunto Térmico Microfibra está diseñado para mejorar el rendimiento en entrenamientos, mantener la temperatura corporal y optimizar la recuperación física. Reduce la fatiga muscular y mejora la circulación gracias a su confección en microfibra de altísima calidad con doble compuesto (85% jersey de poliéster / 15% elastano-lycra). Ofrece ajuste perfecto, confort y resistencia para un uso prolongado. <br><br> Conjunto térmico microfibra: remera y pantalón, color negro, talles XS/S, M/L, XL/XXL. <br> Medias Primera Piel: térmicas, anatómicas, cómodas y resistentes. Talle único universal. <br> Guantes Primera Piel: microfibra 85% + lycra 15%, anatómicos y cómodos. Talle único universal. <br> Cuello en polar con cordón: medidas 23x25 cm, ajustable, utilizable también como gorro.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-37be42d2cde0951a8517549427402320-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/31411_medium-c3675c61bd06d7cc0617549427663759-640-0.webp"], category: ["Deporte"] },
+
+    { id: 73, name: "Kit Conjunto Termico + Medias PP + Pasamontañas Balaclava Frio Extremo Deportivo Hombre", price: 33000, isOffer: false, specs: "Conjunto térmico (parte superior + inferior). <br> Medias primera piel. <br> Pasamontaña balaclava térmico.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/01-7031a81355285c277417750700923744-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-hombre-77383f118a9d07c1e017750701312806-640-0.webp"], category: ["Deporte"] },
+
+    { id: 74, name: "Kit Conjunto Termico + Guantes P Piel + Cuello Cordon Frio Extremo Deportivo Mujer", price: 33000, isOffer: false, specs: "Remera y Pantalón Térmico Frío Extremo: Microfibra de alta calidad, transpirables y de ajuste anatómico. <br> Guantes Primera Piel: Microfibra 85% y lycra 15%, anatómicos, resistentes y cómodos. Talle único universal. <br> Cuello de Polar con Cordón: Medidas 23x25 cm, con cordón y traba para usar también como gorro.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/mujer-d95ebe01ff1a0005a217728241148511-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/07-b25aef32cae2b1a6a117549361589502-640-0.webp"], category: ["Deporte"] },
 
 ];
 
@@ -1542,7 +1583,10 @@ function getFiltered() {
 function renderSection() {
     const main = document.getElementById('mainContent');
     switch (currentSection) {
-        case 'home': main.innerHTML = renderHome(); break;
+        case 'home':
+            main.innerHTML = renderHome();
+            setTimeout(initScrollReveal, 30);
+            break;
         case 'detail': main.innerHTML = renderDetail(); break;
         case 'cart': main.innerHTML = renderCart(); break;
         case 'about': main.innerHTML = renderAbout(); break;
@@ -1621,13 +1665,13 @@ function renderHome() {
         </div>`;
     } else {
         html += `<div class="product-grid">`;
-        filtered.forEach(p => {
+        filtered.forEach((p, idx) => {
             const allImgs = [p.img, ...(p.images || [])];
             const unique = [...new Set(allImgs)];
             const catLabel = Array.isArray(p.category) ? p.category.join(' · ') : p.category;
             const cardId = `card-${p.id}`;
             html += `
-            <div class="product-card fade-in" onclick="viewProduct(${p.id})">
+            <div class="product-card ${idx % 2 === 0 ? 'from-left' : 'from-right'}" data-card-id="${p.id}" onclick="viewProduct(${p.id})">
                 ${p.isOffer ? '<span class="offer-badge">OFERTA</span>' : ''}
                 <div class="product-img-wrap" style="position:relative;">
                     <div class="skeleton-box" id="sk-${p.id}"></div>
@@ -2203,6 +2247,55 @@ document.addEventListener('touchend', function(e) {
         return;
     }
 }, { passive: true });
+
+
+// ===== SCROLL REVEAL =====
+var _revealedCards = new Set(); // remembers which cards already animated
+
+function initScrollReveal() {
+    var cards = document.querySelectorAll('.product-card');
+    if (!cards.length) return;
+
+    // Cards already seen → show instantly, no animation
+    cards.forEach(function(card) {
+        var id = card.getAttribute('data-card-id');
+        if (id && _revealedCards.has(id)) {
+            card.classList.add('no-anim');
+        }
+    });
+
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (!entry.isIntersecting) return;
+            var card = entry.target;
+            var id = card.getAttribute('data-card-id');
+            if (id && _revealedCards.has(id)) {
+                card.classList.add('no-anim');
+                observer.unobserve(card);
+                return;
+            }
+            // Stagger: delay based on position in viewport row
+            var siblings = Array.from(document.querySelectorAll('.product-card'));
+            var pos = siblings.indexOf(card);
+            var delay = (pos % 2) * 80; // slight stagger between columns
+            setTimeout(function() {
+                card.classList.add('revealed');
+                if (id) _revealedCards.add(id);
+            }, delay);
+            observer.unobserve(card);
+        });
+    }, {
+        threshold: 0.12,   // trigger when 12% of card is visible
+        rootMargin: '0px 0px -30px 0px' // slight offset from bottom
+    });
+
+    cards.forEach(function(card) {
+        var id = card.getAttribute('data-card-id');
+        if (!id || !_revealedCards.has(id)) {
+            observer.observe(card);
+        }
+    });
+}
 
 setTimeout(initSlider, 100);
 
