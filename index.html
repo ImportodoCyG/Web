@@ -1109,6 +1109,42 @@
             transform: none !important;
             transition: none !important;
         }
+
+        /* ===== SEARCH DROPDOWN ===== */
+        .search-dropdown {
+            position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 16px; overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            z-index: 500;
+            animation: fadeInUp 0.18s ease-out;
+        }
+        .search-drop-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 14px; cursor: pointer;
+            transition: background 0.15s;
+            border-bottom: 1px solid var(--border);
+        }
+        .search-drop-item:last-child { border-bottom: none; }
+        .search-drop-item:hover { background: var(--muted); }
+        .search-drop-img {
+            width: 44px; height: 44px; object-fit: contain;
+            border-radius: 8px; background: var(--muted); flex-shrink: 0;
+        }
+        .search-drop-info { flex: 1; min-width: 0; }
+        .search-drop-name {
+            font-size: 13px; font-weight: 600;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .search-drop-name mark {
+            background: none; color: var(--accent, #e03131);
+            font-weight: 700;
+        }
+        .search-drop-cat  { font-size: 11px; color: var(--muted-fg); margin-top: 1px; }
+        .search-drop-price { font-size: 13px; font-weight: 700; flex-shrink: 0; }
+        .search-drop-empty {
+            padding: 14px 16px; font-size: 13px; color: var(--muted-fg); text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -1392,7 +1428,7 @@ const products = [
 
     { id: 69, name: "Bota de Silicona cubre Calzado", price:5500, isOffer: false, specs: "", img: "https://sc04.alicdn.com/kf/H537a312356c64a62b5c3459b5939c740d.png", category: ["Hogar"] },
 
-    { id: 70, name: "Set de Molinillo madera, Salero y Pimentero", price: 11000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_647079-MLA77817102643_072024-O.webp", category: ["Hogar"] },
+    { id: 70, name: "Parlante Mini Bluetooth X", price: 6500, isOffer: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_735484-MLA83557448030_042025-O.webp", category: ["Electronica"] },
 
     { id: 71, name: "Kit Conjunto Termico + Guantes Pp + Cuello Cordon Microfibra Hombre", price: 28000, isOffer: false, specs: "El Conjunto Térmico Microfibra está diseñado para mantener la temperatura corporal en climas fríos, mejorar el rendimiento en entrenamientos, competiciones y actividades al aire libre. Su tejido de microfibra importada de alta calidad, compuesto por 85% jersey de poliéster y 15% elastano (lycra), proporciona un ajuste anatómico, absorbe la transpiración y ofrece máxima comodidad. <br> Ideal para actividades deportivas, recuperación física y uso diario en invierno. Reduce la fatiga muscular, mejora la circulación y ofrece excelente durabilidad. <br><br> Conjunto térmico Microfibra: remera y pantalón, color negro, talles XS/S, M/L, XL/XXL. <br> Guantes Primera Piel: 85% microfibra + 15% lycra, anatómicos y resistentes. Talle único universal. <br> Cuello en polar con cordón: 23x25 cm, ajustable y utilizable como gorro.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/microfibra-677d06a21a9f14634c17728245945098-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/31397_medium-09989fe39faabc788d17549437559056-640-0.webp"], category: ["Deporte"] },
 
@@ -1401,6 +1437,10 @@ const products = [
     { id: 73, name: "Kit Conjunto Termico + Medias PP + Pasamontañas Balaclava Frio Extremo Deportivo Hombre", price: 33000, isOffer: false, specs: "Conjunto térmico (parte superior + inferior). <br> Medias primera piel. <br> Pasamontaña balaclava térmico.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/01-7031a81355285c277417750700923744-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-hombre-77383f118a9d07c1e017750701312806-640-0.webp"], category: ["Deporte"] },
 
     { id: 74, name: "Kit Conjunto Termico + Guantes P Piel + Cuello Cordon Frio Extremo Deportivo Mujer", price: 33000, isOffer: false, specs: "Remera y Pantalón Térmico Frío Extremo: Microfibra de alta calidad, transpirables y de ajuste anatómico. <br> Guantes Primera Piel: Microfibra 85% y lycra 15%, anatómicos, resistentes y cómodos. Talle único universal. <br> Cuello de Polar con Cordón: Medidas 23x25 cm, con cordón y traba para usar también como gorro.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/mujer-d95ebe01ff1a0005a217728241148511-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/07-b25aef32cae2b1a6a117549361589502-640-0.webp"], category: ["Deporte"] },
+
+    { id: 75, name: "Auricular Bluetooth Time Negro", price: 14000, isOffer: false, specs: "", img: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQpa2BYgY00bsDYVfwMsY9q0gsYx1rKDtUqrJT5k7dugVJb9OJU", category: ["Auriculares"] },
+
+    { id: 76, name: "Guante termico con táctil. Para Bici/Moto ", price: 9000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_928753-CBT105338160290_012026-O.webp", category: ["Hogar"] },
 
 ];
 
@@ -1597,15 +1637,110 @@ function renderSection() {
 
 function handleSearch(value) {
     searchQuery = value;
-    renderSection();
-
-    // devolver foco al input nuevo
-    const input = document.querySelector('.search-wrap input');
-    if (input) {
-        input.focus();
-        input.setSelectionRange(value.length, value.length);
-    }
+    showSearchDrop(value);
+    // Only re-render the full grid if dropdown is dismissed (Enter) or cleared
 }
+
+function showSearchDrop(value) {
+    const drop = document.getElementById('searchDrop');
+    if (!drop) return;
+    const q = value.trim().toLowerCase();
+
+    if (!q) { hideDrop(); return; }
+
+    // Match against name, category, specs
+    const matches = products.filter(p => {
+        const cats = Array.isArray(p.category) ? p.category.join(' ') : p.category;
+        return (p.name + ' ' + cats + ' ' + (p.specs || '')).toLowerCase().includes(q);
+    }).slice(0, 5);
+
+    // Highlight matching text
+    function highlight(text, query) {
+        const idx = text.toLowerCase().indexOf(query);
+        if (idx === -1) return text;
+        return text.slice(0, idx)
+            + '<mark>' + text.slice(idx, idx + query.length) + '</mark>'
+            + text.slice(idx + query.length);
+    }
+
+    if (matches.length === 0) {
+        drop.innerHTML = '<div class="search-drop-empty">Sin resultados para "' + value + '"</div>';
+    } else {
+        drop.innerHTML = matches.map((p, i) => {
+            const catLabel = Array.isArray(p.category) ? p.category.join(' · ') : p.category;
+            return '<div class="search-drop-item" data-drop-idx="' + i + '" onclick="pickDrop(' + p.id + ')">' +
+                '<img class="search-drop-img" src="' + p.img + '" alt="' + p.name + '">' +
+                '<div class="search-drop-info">' +
+                    '<div class="search-drop-name">' + highlight(p.name, q) + '</div>' +
+                    '<div class="search-drop-cat">' + catLabel + '</div>' +
+                '</div>' +
+                '<div class="search-drop-price">$' + p.price.toLocaleString() + '</div>' +
+            '</div>';
+        }).join('');
+    }
+
+    drop.style.display = 'block';
+    _dropActive = -1;
+}
+
+var _dropActive = -1;
+
+function hideDrop() {
+    var drop = document.getElementById('searchDrop');
+    if (drop) drop.style.display = 'none';
+    _dropActive = -1;
+}
+
+function pickDrop(productId) {
+    hideDrop();
+    searchQuery = '';
+    viewProduct(productId);
+}
+
+// Keyboard navigation inside dropdown
+function searchDropKey(e) {
+    var drop = document.getElementById('searchDrop');
+    if (!drop || drop.style.display === 'none') {
+        if (e.key === 'Enter') {
+            renderSection();
+            hideDrop();
+        }
+        return;
+    }
+    var items = drop.querySelectorAll('.search-drop-item');
+    if (!items.length) { if (e.key === 'Enter') { renderSection(); hideDrop(); } return; }
+
+    if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        _dropActive = (_dropActive + 1) % items.length;
+    } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        _dropActive = (_dropActive - 1 + items.length) % items.length;
+    } else if (e.key === 'Enter') {
+        if (_dropActive >= 0) {
+            items[_dropActive].click();
+        } else {
+            renderSection();
+            hideDrop();
+            // restore focus
+            var inp = document.querySelector('.search-wrap input');
+            if (inp) { inp.focus(); inp.setSelectionRange(searchQuery.length, searchQuery.length); }
+        }
+        return;
+    } else if (e.key === 'Escape') {
+        hideDrop();
+        return;
+    }
+
+    items.forEach(function(el, i) {
+        el.style.background = i === _dropActive ? 'var(--muted)' : '';
+    });
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.search-wrap')) hideDrop();
+});
 
 function renderHome() {
     const filtered = getFiltered();
@@ -1638,7 +1773,12 @@ function renderHome() {
         <div class="filters">
             <div class="search-wrap">
                 ${icons.search}
-                <input type="text" placeholder="Buscar productos..." value="${searchQuery}" oninput="handleSearch(this.value)">
+                <input type="text" placeholder="Buscar productos..." value="${searchQuery}"
+                       oninput="handleSearch(this.value)"
+                       onfocus="showSearchDrop(this.value)"
+                       onkeydown="searchDropKey(event)"
+                       autocomplete="off">
+                <div class="search-dropdown" id="searchDrop" style="display:none"></div>
             </div>
             <div class="filter-row">
                 <div class="cat-pills">
