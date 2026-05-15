@@ -51,20 +51,21 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    width: 100%;
-    box-sizing: border-box;
-    left: 0;
-    right: 0;
-    /* Color de fondo con transparencia */
-    background: rgba(0, 0, 0, 0.5);
-    /* Efecto glass */
+    
+    /* 1. Color de fondo con transparencia muy baja (0.1 o 0.2) */
+    background: rgba(0, 0, 0, 0.5); 
+    
+    /* 2. El efecto de desenfoque (Aumenta el px para más efecto 'glass') */
     backdrop-filter: blur(15px) saturate(180%);
-    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%); /* Para Safari */
+    
+    /* 3. Un borde muy sutil para dar sensación de grosor de vidrio */
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    
+    /* 4. Sombra suave para despegarlo del fondo */
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    
     color: #fff;
-    /* Prevent Chrome mobile from clipping navbar on scroll */
-    will-change: transform;
 }
         .navbar-inner {
             display: flex; align-items: center; justify-content: space-between;
@@ -364,7 +365,6 @@
         .filters { margin-bottom: 32px; }
         .search-wrap {
             position: relative; max-width: 400px; margin: 0 auto 16px;
-            width: 100%; box-sizing: border-box; overflow: visible;
         }
         .search-wrap svg {
             position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
@@ -1160,26 +1160,16 @@
             padding: 14px 16px; font-size: 13px; color: var(--muted-fg); text-align: center;
         }
 
-        /* ===== MOBILE OVERFLOW FIX ===== */
-        html {
-            overflow-x: hidden;
-            max-width: 100vw;
+        /* Black top strip for non-hero sections (so navbar glass looks black at top) */
+        .section-wrap, .cart-section, .about-section, .help-section, .contact-section, .fade-in {
+            background: transparent;
         }
-        body {
-            overflow-x: hidden;
-            max-width: 100vw;
-            width: 100%;
+        #mainContent {
+            background: var(--bg);
         }
-        /* Ensure search input padding-right doesn't cause overflow */
-        .search-wrap input {
-            box-sizing: border-box;
-            max-width: 100%;
-        }
-        /* Navbar-inner: clamp padding on small screens */
-        @media (max-width: 480px) {
-            .navbar-inner {
-                padding: 10px 16px;
-            }
+        /* Pad mainContent top so content isn't hidden under sticky navbar */
+        .container.main-content {
+            padding-top: 0;
         }
     </style>
 </head>
@@ -1396,7 +1386,7 @@ const products = [
 
     { id: 35, name: "Funda económica para Bici/Moto", price: 7000, isOffer: false, specs: "Protege tu vehículo de la lluvia sol polvo etc", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjNTlBAexaCnc5TIlifxnaKyBYYfUzMf2A9KhhCm7_aMTICGlM", category: ["Hogar"] },
 
-    { id: 36, name: "Camara Wifi Video Llamada", price: 35000, isOffer: false, specs: "El audio e imagen bidireccional facilita la comunicación a través de la cámara, permitiendo escuchar y hablar, además de realizar videollamadas.", img: "https://http2.mlstatic.com/D_NQ_NP_837372-MLA92687545995_092025-O.webp", video: "https://www.youtube.com/embed/VvEt7gHOqfU?si=YffPbDNdiD59uxbn", category: ["Hogar", "Electronica"] },
+    { id: 36, name: "Camara Wifi Video Llamada", price: 32000, isOffer: false, specs: "El audio e imagen bidireccional facilita la comunicación a través de la cámara, permitiendo escuchar y hablar, además de realizar videollamadas.", img: "https://http2.mlstatic.com/D_NQ_NP_837372-MLA92687545995_092025-O.webp", video: "https://www.youtube.com/embed/VvEt7gHOqfU?si=YffPbDNdiD59uxbn", category: ["Hogar", "Electronica"] },
 
     { id: 37, name: "Saca Pelusas", price: 9500, isOffer: false, specs: "Excelente cepillo quita pelusas y pelos de mascotas", img: "https://http2.mlstatic.com/D_NQ_NP_994426-CBT108641349886_032026-O.webp", video: "https://youtu.com/embed/CJRuAFAQXnE", category: ["Hogar"] },
 
@@ -1484,7 +1474,7 @@ const products = [
 
     { id: 79, name: "Kit De Lluvia Pvc Mujer Piloto + Botas", price: 55000, isOffer: false, specs: "Prepárate para cualquier clima con el combo impermeable, que incluye el traje de lluvia y las botas Touring de PVC. Diseñado para quienes se mueven en moto todos los días, este set combina protección, durabilidad y diseño funcional.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-63c8615e39adfd591d17545184328075-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-7267369cf33ae4d31c17545184419112-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/06-31140afea2fee1ad4417545184491244-640-0.webp"], category: ["Hogar", "Invierno"] },
 
-    { id: 80, name: "Kit De Lluvia Pvc Hombre Piloto + Botas + Cuello + Mascara", price: 55000, isOffer: false, specs: "El combo impermeable fue pensado para brindar protección total contra la lluvia, el viento y el frío. Ideal para motociclistas urbanos o usuarios exigentes que buscan calidad y durabilidad en cada salida. Incluye traje impermeable (campera y pantalón), botas touring de PVC, máscara polar y cuello térmico. <br> Con este kit, vas a poder enfrentar los días más complicados con comodidad, resistencia y estilo. Todos los productos están fabricados con materiales impermeables, térmicos y de alta durabilidad.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-10-f597c7ceb386c7ae4417544930860155-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409281249273215-c-e3d37a86358d77a76117544931140203-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409281249273215-i-1638b0fb9f0227487517544931127334-640-0.webp"], category: ["Hogar", "Invierno"] },
+    { id: 80, name: "Kit De Lluvia Pvc Hombre Piloto + Botas + Cuello + Mascara", price: 55000, isOffer: false, specs: "El combo fue pensado para brindar protección total contra la lluvia, el viento y el frío. Ideal para motociclistas urbanos o usuarios exigentes que buscan calidad y durabilidad en cada salida. Incluye traje impermeable (campera y pantalón), botas touring de PVC, máscara polar y cuello térmico. <br> Con este kit, vas a poder enfrentar los días más complicados con comodidad, resistencia y estilo. Todos los productos están fabricados con materiales impermeables, térmicos y de alta durabilidad. <br><br> Traje impermeable de PVC 0.28 con cierre YKK y velcro. <br> Pantalón con ajuste inferior y bolsillos internos y externos. <br> Botas touring de PVC, 100% impermeables, cómodas y con puntera reforzada.<br> Máscara de neoprene y polar, con cobertura de orejas y respirador lateral anti-empañe. <br> Cuello polar con cordón ajustable y traba, también usable como gorro.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-10-f597c7ceb386c7ae4417544930860155-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409281249273215-c-e3d37a86358d77a76117544931140203-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409281249273215-i-1638b0fb9f0227487517544931127334-640-0.webp"], category: ["Hogar", "Invierno"] },
 
     { id: 81, name: "Kit Medias Termicas + Medias Primera Piel Pro Ski Nieve Frio Pro", price: 18000, isOffer: false, specs: "Con este combo especial de Medias Pro vas a estar preparado para enfrentar el invierno con el máximo confort. Incluye 1 par de medias térmicas de caña alta y 1 par de medias primera piel, ideales para ski, nieve, trekking, moto o uso urbano en bajas temperaturas. <br> Ambas están confeccionadas con microfibra y elastano, lo que garantiza una excelente retención del calor, absorción de la humedad, calce anatómico y durabilidad superior. Perfectas para usarlas en conjunto o por separado, según la ocasión.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/01-ff8e55abcb18479e7f17649664904169-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-3de2104316ad41e90917649666540610-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-4aafe7bd87dfc16b5817649665274936-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-8f89c2b82ca999279a17649666038366-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-2bd7142b4085fed84417649665324599-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-f3690e41b14cf4329b17649666185591-640-0.webp"], category: ["Hogar", "Invierno"] },
 
@@ -1533,6 +1523,8 @@ const products = [
     { id: 103, name: "Camara Exterior c/WIFI IP68", price: 45000, isOffer: false, specs: "Alta Definición y Visión Nocturna: Captura imágenes en resolución de 4MP y cuenta con visión nocturna a todo color.Conectividad Inteligente. Resistencia y Funciones: Está clasificada con protección IP65, lo que la hace resistente al polvo y al agua para uso exterior", img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRu_wIXB-SCG_tGImTsjzc3Rc0QZM8Y3gNLxEA_CNK4vNL9fByf", category: ["Electronica"] },
 
     { id: 104, name: "Camara Inteligente de Seguridad", price: 27000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_960348-MLU79396704073_092024-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_962497-MLA89582044600_082025-O.webp"], category: ["Electronica"] },
+
+    { id: 105, name: "Kit Conjunto Termico Hombre + Guantes Pp + Medias Pp + Medias CA + Cuello Frio Extremo", price: 39000, isOffer: false, specs: "El Kit Térmico Frío Extremo está diseñado para brindarte máxima protección contra el frío extremo, combinando rendimiento, confort y calidad en un solo conjunto. Ideal para actividades deportivas, uso diario o trabajos en exteriores, este combo completo te mantiene abrigado sin perder movilidad. <br> Fabricado con material térmico de alta calidad, supera ampliamente a los conjuntos tradicionales de microfibra, ayudando a conservar el calor corporal, mejorar la circulación y reducir la fatiga muscular durante el uso.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/01-734780099c920e4bca17750570987872-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-hombre-683ca90e359435471617750571300523-640-0.webp"], category: ["Invierno"] },
 
 ];
 
