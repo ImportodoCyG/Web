@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Importodo CyG - Todo lo que necesitas en un solo lugar</title>
     <meta name="description" content="Importodo CyG - Todo lo que necesitas en un solo lugar, y al mejor precio. Productos para el Hogar, Regalos perfectos, electrónica y mucho, mucho más.">
+    <!-- Open Graph / WhatsApp / Facebook preview -->
+    <meta property="og:type"        content="website">
+    <meta property="og:site_name"   content="Importodo CyG">
+    <meta property="og:title"       content="Importodo CyG - Todo lo que necesitas en un solo lugar">
+    <meta property="og:description" content="Productos para el Hogar, Electrónica, Regalos y mucho más. ¡Todo al mejor precio!">
+    <meta property="og:image"       content="https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2026/01/proyector.webp">
+    <meta property="og:url"         content="https://darkseagreen-cheetah-381757.hostingersite.com">
+    <!-- Twitter/X card -->
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:title"       content="Importodo CyG">
+    <meta name="twitter:description" content="Productos para el Hogar, Electrónica, Regalos y mucho más.">
+    <meta name="twitter:image"       content="https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2026/01/proyector.webp">
     <link rel="icon" href="importodocyg-logo.jpg" type="image/jpeg">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -1220,6 +1232,46 @@
         .scroll-top-btn.visible { display: flex; }
         .scroll-top-btn:hover { background: rgba(0,0,0,0.65); transform: translateY(-3px); }
         .scroll-top-btn svg { width: 20px; height: 20px; }
+
+        /* ===== CART BADGE BOUNCE ===== */
+        @keyframes badgeBounce {
+            0%   { transform: scale(1); }
+            30%  { transform: scale(1.55); }
+            55%  { transform: scale(0.88); }
+            75%  { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .badge-bounce {
+            animation: badgeBounce 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+        }
+
+        /* ===== BLUR PLACEHOLDER for product images ===== */
+        .img-wrap-blur {
+            position: relative;
+            overflow: hidden;
+            background: rgba(0,0,0,0.02);
+        }
+        .img-wrap-blur .img-thumb {
+            position: absolute; inset: 0;
+            width: 100%; height: 100%;
+            object-fit: contain;
+            filter: blur(12px);
+            transform: scale(1.05);
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .img-wrap-blur .img-main {
+            position: relative; z-index: 1;
+            opacity: 0;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            width: 100%; height: 100%; object-fit: contain;
+        }
+        .img-wrap-blur .img-main.loaded {
+            opacity: 1;
+        }
+        .img-wrap-blur .img-thumb.hidden {
+            opacity: 0;
+        }
     </style>
 </head>
 <body>
@@ -1377,11 +1429,11 @@ const products = [
 
     { id: 6, name: "Auricular Bluetooth con Pantalla", price: 18000, isOffer: false, specs: "", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/12/JK-610.jpg", video: "https://www.youtube.com/embed/P5NcNGh3k3g", category: ["Auriculares", "Electronica"] },
 
-    { id: 7, name: "Portacepillo luz uv con dispensador de pasta", price: 11000, isOffer: false, specs: "Recargable Disponible en color negro.", img: "https://acdn-us.mitiendanube.com/stores/001/567/093/products/3_108dcfd7-dd89-49b2-904b-85846895e4ff-b1068e280c17e6a08917263206707694-640-0.webp", category: "Hogar" },
+    { id: 7, name: "Portacepillo Luz UV con Dispensador de Pasta", price: 11000, isOffer: false, specs: "Recargable Disponible en color negro.", img: "https://acdn-us.mitiendanube.com/stores/001/567/093/products/3_108dcfd7-dd89-49b2-904b-85846895e4ff-b1068e280c17e6a08917263206707694-640-0.webp", category: "Hogar" },
 
-    { id: 8, name: "Tapas de silicona x 6", price: 4800, isOffer: false, specs: "Set x 6 tapas de silicona de distintos tamaños. Lo más práctico.", img: "https://http2.mlstatic.com/D_NQ_NP_732694-MLU75008658458_032024-O.webp", category: "Hogar" },
+    { id: 8, name: "Tapas de Silicona x 6", price: 4800, isOffer: false, specs: "Set x 6 tapas de silicona de distintos tamaños. Lo más práctico.", img: "https://http2.mlstatic.com/D_NQ_NP_732694-MLU75008658458_032024-O.webp", category: "Hogar" },
 
-    { id: 9, name: "Super Valija para pintar", price: 25000, isOffer: true, specs: "Somos de Villa Bosch. Tenemos stock disponible. Últimas !!!", img: "https://http2.mlstatic.com/D_957088-MLA106485750159_022026-C.jpg", category: "Infantil" },
+    { id: 9, name: "Super Valija para Pintar", price: 25000, isOffer: true, specs: "Somos de Villa Bosch. Tenemos stock disponible. Últimas !!!", img: "https://http2.mlstatic.com/D_957088-MLA106485750159_022026-C.jpg", category: "Infantil" },
 
     { id: 10, name: "Calculadora Científica", price: 6500, isOffer: false, specs: "Calculadora Científica+ pilas.", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2026/01/calculadora.jpg", category: "Electronica" },
 
@@ -1391,49 +1443,49 @@ const products = [
 
     { id: 13, name: "Balde Mopa Centrifugador 360⁰", price: 18000, isOffer: false, specs: "", img:"https://images.fravega.com/f500/52c38a58e79478a8fe902cbf518ce622.png", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_902643-MLA82581799826_032025-F.webp", "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQwJ5CvAXVLcmlLDNvX5Mi6L6ivnoEkkX1-v1SNI7vhw4a5Z3ee"], category: "Hogar" },
 
-    { id: 14, name: "Tender de Ropa vertical 50kg", price: 26000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_751618-MLA79909584834_102024-O.webp", category: "Hogar" },
+    { id: 14, name: "Tender de Ropa Vertical 50kg", price: 26000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_751618-MLA79909584834_102024-O.webp", category: "Hogar" },
 
-    { id: 15, name: "Inflador de globos", price: 22000, isOffer: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_761487-MLA99564551334_122025-O.webp", category: "Infantil" },
+    { id: 15, name: "Inflador de Globos", price: 22000, isOffer: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_761487-MLA99564551334_122025-O.webp", category: "Infantil" },
 
-    { id: 16, name: "Cuchara coladora 29cm", price: 3500, isOffer: false, specs: "Ahora podes servir sopa y/o verduras por separado", img:"https://images.nexusapp.co/assets/ae/20/51/260363913.jpg", images: ["https://www.dspecialtystore.com/wp-content/uploads/2025/01/H10b3b82a383d44959ed5e59e2ef961efw.webp", "https://scontent.faep7-1.fna.fbcdn.net/v/t1.6435-9/122478377_3584366894916835_6878363035807118457_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=06a7ca&_nc_eui2=AeHsS7F1RCQvMrESCy8w0n4V41GiBzKNRDrjUaIHMo1EOsVVmSDX69CehztQWUqgiWA&_nc_ohc=TmngcDAH-84Q7kNvwE9sOAK&_nc_oc=Adq0bLCOxRzYWYQlKLVMm8t4Rsyvr0dSQ5-huAYB7IKa4p6-mPGhF5256bBbkBlpdMH5wE2rk-KgjLkxZ1Pm6A-n&_nc_zt=23&_nc_ht=scontent.faep7-1.fna&_nc_gid=7CnHKuGKTTjYN2Lq-qjU0Q&_nc_ss=7a3a8&oh=00_Af3yGPcJpgzxopffqWK8VuhAy6rz2h3JLmIRocFY423WcQ&oe=69FF6E36"], category: "Hogar" },
+    { id: 16, name: "Cuchara Coladora 29cm", price: 3500, isOffer: false, specs: "Ahora podes servir sopa y/o verduras por separado", img:"https://images.nexusapp.co/assets/ae/20/51/260363913.jpg", images: ["https://www.dspecialtystore.com/wp-content/uploads/2025/01/H10b3b82a383d44959ed5e59e2ef961efw.webp", "https://scontent.faep7-1.fna.fbcdn.net/v/t1.6435-9/122478377_3584366894916835_6878363035807118457_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=06a7ca&_nc_eui2=AeHsS7F1RCQvMrESCy8w0n4V41GiBzKNRDrjUaIHMo1EOsVVmSDX69CehztQWUqgiWA&_nc_ohc=TmngcDAH-84Q7kNvwE9sOAK&_nc_oc=Adq0bLCOxRzYWYQlKLVMm8t4Rsyvr0dSQ5-huAYB7IKa4p6-mPGhF5256bBbkBlpdMH5wE2rk-KgjLkxZ1Pm6A-n&_nc_zt=23&_nc_ht=scontent.faep7-1.fna&_nc_gid=7CnHKuGKTTjYN2Lq-qjU0Q&_nc_ss=7a3a8&oh=00_Af3yGPcJpgzxopffqWK8VuhAy6rz2h3JLmIRocFY423WcQ&oe=69FF6E36"], category: "Hogar" },
 
-    { id: 17, name: "Soporte para espejo retrovisor", price: 4500, isOffer: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/477/775/products/ogvjkswrgjgporjw-fd657cf11747f409da16980906830521-1024-1024.webp", category: ["Soportes", "Hogar"] },
+    { id: 17, name: "Soporte para Espejo Retrovisor", price: 4500, isOffer: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/477/775/products/ogvjkswrgjgporjw-fd657cf11747f409da16980906830521-1024-1024.webp", category: ["Soportes", "Hogar"] },
 
-    { id: 18, name: "Soporte para Notebook y tablet P2", price: 6000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_783501-MLA47857378138_102021-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_693134-MLA83439914618_042025-O.webp"], category: ["Electronica", "Soportes"] },
+    { id: 18, name: "Soporte para Notebook y Tablet P2", price: 6000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_783501-MLA47857378138_102021-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_693134-MLA83439914618_042025-O.webp"], category: ["Electronica", "Soportes"] },
 
-    { id: 19, name: "Set de Molinillo madera, Salero y Pimentero", price: 11000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_647079-MLA77817102643_072024-O.webp", category: ["Hogar"] },
+    { id: 19, name: "Set de Molinillo Madera, Salero y Pimentero", price: 11000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_647079-MLA77817102643_072024-O.webp", category: ["Hogar"] },
 
     { id: 20, name: "Pava Eléctrica Plegable", price: 19000, isOffer: false, specs: "(Por Pedido) <br> Pava Eléctrica Plegable Ideal para Viaje, una solución práctica y eficiente para tus aventuras. Con una capacidad de 600ml, es perfecta para preparar café o mate  en cualquier lugar. Su diseño compacto y ligero la hace fácil de transportar, ideal para cualquier viaje", img: "https://http2.mlstatic.com/D_NQ_NP_825751-MLA95633512196_102025-O.webp", category: ["Hogar"] },
 
-    { id: 21, name: "Pizarra LED neon usb 30 × 20", price: 13000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_825603-MLA101159527877_122025-O.webp", category: ["Infantil"] },
+    { id: 21, name: "Pizarra LED Neon USB 30 × 20", price: 13000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_825603-MLA101159527877_122025-O.webp", category: ["Infantil"] },
 
     { id: 22, name: "Organizador Multifuncional P/ Baño", price: 5500, isOffer: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_644268-MLA79993731546_102024-F.webp", category: ["Hogar"] },
 
     { id: 23, name: "Pava eléctrica con corte de Mate", price: 24000, isOffer: false, specs: "", img: "https://maxihogar.vtexassets.com/arquivos/ids/167054-800-auto?v=638705908365470000&width=800&height=auto&aspect=true", category: ["Hogar"] },
 
-    { id: 24, name: "Auriculares Deporte  Bluetooth Gafas De Sol Inteligente", price: 21000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_766147-CBT81011851840_122024-O.webp", category: ["Electronica", "Auriculares"] },
+    { id: 24, name: "Auriculares Deporte  Bluetooth Gafas de Sol Inteligente", price: 21000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_766147-CBT81011851840_122024-O.webp", category: ["Electronica", "Auriculares"] },
 
-    { id: 25, name: "Sofa inflable 116cm x 98cm x 83 cm", price: 35000, isOffer: false, specs: "Con apoyapies de 62cm x 62 cm x 31cm <br> Incluye inflador de pie", img: "https://http2.mlstatic.com/D_NQ_NP_718294-MLA86028238326_062025-O.webp", category: ["Hogar"] },
+    { id: 25, name: "Sofa Inflable 116cm x 98cm x 83 cm", price: 35000, isOffer: false, specs: "Con apoyapies de 62cm x 62 cm x 31cm <br> Incluye inflador de pie", img: "https://http2.mlstatic.com/D_NQ_NP_718294-MLA86028238326_062025-O.webp", category: ["Hogar"] },
 
     { id: 26, name: "Auriculares Bolsita", price: 3500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_665171-MLA92675856009_092025-O.webp", category: ["Auriculares"] },
 
-    { id: 27, name: "Auricular bolsita Time M/L", price: 3500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_716376-MLA97025350731_112025-O.webp", category: ["Auriculares"] },
+    { id: 27, name: "Auricular Bolsita Time M/L", price: 3500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_716376-MLA97025350731_112025-O.webp", category: ["Auriculares"] },
 
     { id: 28, name: "Proyector LED ULTRA HD", price: 80000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_834810-MLA85558716745_062025-O.webp", video: "https://www.youtube.com/embed/rUXbaPKYeYE", category: ["Hogar", "Elctronica"] },
 
-    { id: 29, name: "Cargador rápido. Tipo C. 45w + 20w", price: 15000, isOffer: false, specs: "Marca Time", img: "https://http2.mlstatic.com/D_NQ_NP_928761-MLA95527063900_102025-O.webp", category: ["Cables y Adaptadores"] },
+    { id: 29, name: "Cargador Rápido. Tipo C. 45w + 20w", price: 15000, isOffer: false, specs: "Marca Time", img: "https://http2.mlstatic.com/D_NQ_NP_928761-MLA95527063900_102025-O.webp", category: ["Cables y Adaptadores"] },
 
     { id: 30, name: "Inflador", price: 6500, isOffer: false, specs: "Inflador con pico para ruedas y pico para pelotas.", img: "https://http2.mlstatic.com/D_NQ_NP_911733-MLA83441574562_042025-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_688336-MLA96618237117_102025-O.webp"], category: ["Hogar"] },
 
     { id: 31, name: "Tira LED 50x50", price: 11000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_909336-MLA96402140577_102025-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_901014-MLA82327399244_022025-O.webp"], category: ["Luces"] },
 
-    { id: 32, name: "Lámpara Velador proyector de estrellas", price: 9000, isOffer: false, specs: "Proyector de estrellas giratorio con varios colores de luz. <br> Se puede usar con un color fijo o que vaya cambiando de colores.", img: "https://dcdn-us.mitiendanube.com/stores/674/724/products/star-master-21-b0ca48f34004e7de9f15406113159174-1024-1024.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_623997-MLA107518491767_022026-O.webp"], category: ["Luces"] },
+    { id: 32, name: "Lámpara Velador Proyector de Estrellas", price: 9000, isOffer: false, specs: "Proyector de estrellas giratorio con varios colores de luz. <br> Se puede usar con un color fijo o que vaya cambiando de colores.", img: "https://dcdn-us.mitiendanube.com/stores/674/724/products/star-master-21-b0ca48f34004e7de9f15406113159174-1024-1024.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_623997-MLA107518491767_022026-O.webp"], category: ["Luces"] },
 
     { id: 33, name: "Batidora de 7 Velocidades", price: 19000, isOffer: false, specs: "", img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTmCLle1t9PBnpw5pbvMLO7KI4gelxVWdZsXRPUDUOUtusXE44I", category: ["Hogar"] },
 
-    { id: 34, name: "Liston LED con tecla", price: 13000, isOffer: false, specs: "Ideal para iluminar tu mesada y tambien tan versatil que lo podes colocar donde necesites una mejor iluminacion. <br> 60cm 9w $9500 <br> 90cm 12w $11000 <br> 120cm 18w $13000", img: "https://http2.mlstatic.com/D_NQ_NP_967840-MLU78801139759_082024-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_966952-MLU74983232604_032024-O.webp", "https://http2.mlstatic.com/D_NQ_NP_782726-MLU78047383739_072024-O.webp", "https://http2.mlstatic.com/D_NQ_NP_895356-MLA81445976633_122024-O.webp", "https://www.eclairage-design.com/14258-large_default/tira-de-led-t5-31-cm-para-mueble-de-cocina-conectable-4000k.jpg"], category: ["Luces"] },
+    { id: 34, name: "Liston LED con Tecla", price: 13000, isOffer: false, specs: "Ideal para iluminar tu mesada y tambien tan versatil que lo podes colocar donde necesites una mejor iluminacion. <br> 60cm 9w $9500 <br> 90cm 12w $11000 <br> 120cm 18w $13000", img: "https://http2.mlstatic.com/D_NQ_NP_967840-MLU78801139759_082024-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_966952-MLU74983232604_032024-O.webp", "https://http2.mlstatic.com/D_NQ_NP_782726-MLU78047383739_072024-O.webp", "https://http2.mlstatic.com/D_NQ_NP_895356-MLA81445976633_122024-O.webp", "https://www.eclairage-design.com/14258-large_default/tira-de-led-t5-31-cm-para-mueble-de-cocina-conectable-4000k.jpg"], category: ["Luces"] },
 
-    { id: 35, name: "Funda económica para Bici/Moto", price: 7000, isOffer: false, specs: "Protege tu vehículo de la lluvia sol polvo etc", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjNTlBAexaCnc5TIlifxnaKyBYYfUzMf2A9KhhCm7_aMTICGlM", category: ["Hogar"] },
+    { id: 35, name: "Funda Económica para Bici/Moto", price: 7000, isOffer: false, specs: "Protege tu vehículo de la lluvia sol polvo etc", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjNTlBAexaCnc5TIlifxnaKyBYYfUzMf2A9KhhCm7_aMTICGlM", category: ["Hogar"] },
 
     { id: 36, name: "Cámara Wifi Video Llamada", price: 32000, isOffer: false, specs: "El audio e imagen bidireccional facilita la comunicación a través de la cámara, permitiendo escuchar y hablar, además de realizar videollamadas.", img: "https://http2.mlstatic.com/D_NQ_NP_837372-MLA92687545995_092025-O.webp", video: "https://www.youtube.com/embed/VvEt7gHOqfU?si=YffPbDNdiD59uxbn", category: ["Hogar", "Electronica"] },
 
@@ -1555,7 +1607,7 @@ const products = [
 
     { id: 95, name: "Mochila Bolsa Viaje Trekking 527", price: 19000, isOffer: false, specs: "La Mochila 527 es tu compañera ideal para salidas de trekking, escapadas al aire libre o viajes urbanos. Diseñada en poliéster impermeable, combina resistencia, liviandad y practicidad, ocupando muy poco espacio cuando no la necesitás. <br> A pesar de su peso reducido, ofrece una capacidad de 25 litros y cuenta con compartimento para notebook, bolsillo lateral para botella y costuras reforzadas para acompañarte en todas tus aventuras.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120723238458-a-183ef37b2a4213aa7f17543992811673-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120723235844-a-18df4e03749b08c6a917543992730338-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120719276553-f-55a2ec112cbce34db717543992566543-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120719276553-e-9385efcad637acae2717543992571900-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120719276553-d-0953bab7d7daaa6c2717543992560444-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120719276553-g-60cd35100d45543f1517543992558699-640-0.webp"], category: ["Hogar"] },
 
-    { id: 96, name: "Guantes Térmicos Primera Piel", price: 6000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-d2cbbee15ce5a77a9917545170172344-1024-1024.webp", category: ["Invierno"] },
+    { id: 96, name: "Guantes Térmicos Primera Piel", price: 4000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-d2cbbee15ce5a77a9917545170172344-1024-1024.webp", category: ["Invierno"] },
 
     { id: 97, name: "Cubre Manos Doble Abrigo", price: 9500, isOffer: true, specs: "Los puños térmicos están diseñados para brindarte una experiencia de manejo más cómoda y segura, incluso en climas fríos. Gracias a su material aislante y su diseño adaptable, son compatibles con manubrios de 1 pulgada y pueden colocarse tanto en el lado izquierdo como derecho.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2000-x-2000-ale2-1-3b9310be37563c643417546651672765-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/1604131442141578-c-d31dd8a92e16ea9edf17546651718998-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1604131442141578-d-87cf003ae87a200f9e17546651718722-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1604131442141578-b-fc853ca9179a6deec117546651738883-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1604131651425142-d-7fbf1be50fb2674b8217545951313145-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1604131442141578-e-d96ff53788da31632217546651734619-640-0.webp"], category: ["Invierno"] },
 
@@ -1575,7 +1627,7 @@ const products = [
 
     { id: 105, name: "Kit Conjunto Térmico Hombre + Guantes Pp + Medias Pp + Medias CA + Cuello Frio Extremo", price: 39000, isOffer: false, specs: "El Kit Térmico Frío Extremo está diseñado para brindarte máxima protección contra el frío extremo, combinando rendimiento, confort y calidad en un solo conjunto. Ideal para actividades deportivas, uso diario o trabajos en exteriores, este combo completo te mantiene abrigado sin perder movilidad. <br> Fabricado con material térmico de alta calidad, supera ampliamente a los conjuntos tradicionales de microfibra, ayudando a conservar el calor corporal, mejorar la circulación y reducir la fatiga muscular durante el uso.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/01-734780099c920e4bca17750570987872-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-hombre-683ca90e359435471617750571300523-640-0.webp"], category: ["Invierno"] },
 
-    { id: 106, name: "Parlante velador con carga inalámbrica", price: 15000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_806197-MLA99989882323_112025-O.webp", images: ["https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSxYA1xumRfECqDHtlEGvRfQywAx42m9BJHsxk_LSmp5siQAEuE"], category: ["Parlantes"] },
+    { id: 106, name: "Parlante Velador con Carga Inalámbrica", price: 15000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_806197-MLA99989882323_112025-O.webp", images: ["https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSxYA1xumRfECqDHtlEGvRfQywAx42m9BJHsxk_LSmp5siQAEuE"], category: ["Parlantes"] },
 
     { id: 107, name: "Parlante de 3 pulgadas", price: 8000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/001/797/787/products/parlante-greatnice-gts-1349-1-f07fef49695e3901a317153619912597-640-0.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_793770-MLA73436918478_122023-O.webp"], category: ["Parlantes"] },
 
@@ -1685,7 +1737,7 @@ const products = [
 
     { id: 160, name: "Super Consola de Juegos R36S Portatil ARK OS", price: 82000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_605468-MLA92122670852_092025-O.webp", category: ["Electronica", "Infantil"] },
 
-    { id: 161, name: "Juego de Mesa ¡Basta!", price: 1000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_Q_NP_666943-MLA99435823748_112025-O.webp", category: ["Infantil"] },
+    { id: 161, name: "Juego de Mesa ¡Basta!", price: 19000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_Q_NP_666943-MLA99435823748_112025-O.webp", category: ["Infantil"] },
 
     { id: 162, name: "Cabezal de Ducha con Luz", price: 11500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_787234-MLA100082023853_122025-O.webp", images: ["https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQ1hjQf3fVJiguz8O8upeh97cA958TqucTKPEXYGSq4myqEMKTO"], category: ["Hogar"] },
 
@@ -1696,6 +1748,26 @@ const products = [
     { id: 165, name: "Pistola de Riego c/Boquillas Ajustables", price: 10000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_917753-CBT109201449392_042026-O.webp", images: ["https://greemos.com.ar/wp-content/uploads/JK-4411.jpg"], category: ["Hogar"] },
 
     { id: 166, name: "Pistola de Riego p/Manguera", price: 10000, isOffer: false, specs: "", img: "https://oncealpormayor.com.ar/wp-content/uploads/2024/08/P550.jpg", category: ["Hogar"] },
+
+    { id: 167, name: "Pelota Voladora", price: 9500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_634741-MLA90741663064_082025-O.webp", category: ["Infantil"] },
+
+    { id: 168, name: "Cargador Portatil Magsafe - Iphone", price: 16000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_994025-MLU71094997228_082023-F.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_769274-MLU71094929530_082023-F.webp"], category: ["Electronica"] },
+
+    { id: 169, name: "Reloj SmartWatch T900 Pro Max 11 - 2.3\"", price: 17000, isOffer: false, specs: "", img: "https://images.fravega.com/f1000/f21418e8b3b0b21b8d88dfb7103ee198.jpg", images: ["https://www.oestech.com.ar/fotos/PROMAX-T900.jpg"], category: ["Electronica"] },
+
+    { id: 170, name: "Reloj SmartWatch Hello 1 Malla Silicona", price: 14000, isOffer: false, specs: "", img: "https://www.oestech.com.ar/fotos/REL-HELLO.jpg", category: ["Electronica"] },
+
+    { id: 171, name: "Kit Auric y Reloj Smart c/Malla Intercambiable", price: 24000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/TH7-1.jpg", category: ["Electronica", "Auriculares"] },
+
+    { id: 172, name: "Combo Reloj SmartWatch + Auric + Parlante", price: 32000, isOffer: false, specs: "", img: "https://www.oestech.com.ar/fotos/H01-MAX.jpg", category: ["Auriculares", "Parlantes"] },
+
+    { id: 173, name: "Reloj Smart D20", price: 8000, isOffer: false, specs: "", img: "https://www.oestech.com.ar/fotos/RELD20.jpg", video: "https://vimeo.com/560444008?fl=pl&fe=cm", category: ["Electronica"] },
+
+    { id: 174, name: "Reloj SmartWatch + Auric + Parlante + 7 Mallas", price: 31000, isOffer: false, specs: "", img: "https://www.oestech.com.ar/fotos/REL-PAR.jpg", category: ["Auriculares", "Parlantes"] },
+
+    { id: 175, name: "Combo Reloj smartWatch W26 Pro + Auricular + 2 Mallas", price: 19000, isOffer: false, specs: "", img: "https://www.oestech.com.ar/fotos/W26-PROMAX.jpg", category: ["Electronica", "Auriculares"] },
+
+    { id: 176, name: "Combo 3 en 1 Parlante + Auric + Reloj", price: 25000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/B-21016.jpg", category: ["Parlantes", "Auriculares"] },
 
 ];
 
@@ -1782,8 +1854,26 @@ function updateCartBadge() {
     const count = cartCount();
     const nb = document.getElementById('navCartBadge');
     const mb = document.getElementById('mobileCartBadge');
-    if (nb) { nb.textContent = count; nb.style.display = count > 0 ? 'inline-flex' : 'none'; }
-    if (mb) { mb.textContent = count; mb.style.display = count > 0 ? 'flex' : 'none'; }
+    if (nb) {
+        nb.textContent = count;
+        nb.style.display = count > 0 ? 'inline-flex' : 'none';
+        if (count > 0) { nb.classList.remove('badge-bounce'); void nb.offsetWidth; nb.classList.add('badge-bounce'); }
+    }
+    if (mb) {
+        mb.textContent = count;
+        mb.style.display = count > 0 ? 'flex' : 'none';
+        if (count > 0) { mb.classList.remove('badge-bounce'); void mb.offsetWidth; mb.classList.add('badge-bounce'); }
+    }
+}
+
+function hapticFeedback(style) {
+    // style: 'light' | 'medium' | 'heavy'
+    try {
+        if (navigator.vibrate) {
+            var pattern = style === 'heavy' ? [30] : style === 'medium' ? [15] : [8];
+            navigator.vibrate(pattern);
+        }
+    } catch(e) {}
 }
 
 function clearCart() { cart = []; updateCartBadge(); renderSection(); }
@@ -1909,6 +1999,7 @@ function getFiltered() {
 // ===== RENDER =====
 function renderSection() {
     const main = document.getElementById('mainContent');
+    updatePageTitle(currentSection, selectedProductId);
     switch (currentSection) {
         case 'home':
             main.innerHTML = renderHome();
@@ -1998,17 +2089,37 @@ function pickDrop(productId) {
 }
 
 // Keyboard navigation inside dropdown
-function searchDropKey(e) {
+// Called when user confirms search (Enter on desktop, Search btn on mobile)
+function commitSearch() {
     var drop = document.getElementById('searchDrop');
-    if (!drop || drop.style.display === 'none') {
-        if (e.key === 'Enter') {
-            renderSection();
-            hideDrop();
-        }
+    var items = drop ? drop.querySelectorAll('.search-drop-item') : [];
+    if (items.length && _dropActive >= 0) {
+        items[_dropActive].click();
         return;
     }
+    hideDrop();
+    // Re-render only if not already showing results
+    var inp = document.querySelector('.search-wrap input');
+    if (inp) inp.blur(); // dismiss keyboard on mobile
+}
+
+function searchDropKey(e) {
+    var drop = document.getElementById('searchDrop');
+
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        commitSearch();
+        return;
+    }
+
+    if (e.key === 'Escape') {
+        hideDrop();
+        return;
+    }
+
+    if (!drop || drop.style.display === 'none') return;
     var items = drop.querySelectorAll('.search-drop-item');
-    if (!items.length) { if (e.key === 'Enter') { renderSection(); hideDrop(); } return; }
+    if (!items.length) return;
 
     if (e.key === 'ArrowDown') {
         e.preventDefault();
@@ -2016,20 +2127,6 @@ function searchDropKey(e) {
     } else if (e.key === 'ArrowUp') {
         e.preventDefault();
         _dropActive = (_dropActive - 1 + items.length) % items.length;
-    } else if (e.key === 'Enter') {
-        if (_dropActive >= 0) {
-            items[_dropActive].click();
-        } else {
-            renderSection();
-            hideDrop();
-            // restore focus
-            var inp = document.querySelector('.search-wrap input');
-            if (inp) { inp.focus(); inp.setSelectionRange(searchQuery.length, searchQuery.length); }
-        }
-        return;
-    } else if (e.key === 'Escape') {
-        hideDrop();
-        return;
     }
 
     items.forEach(function(el, i) {
@@ -2064,6 +2161,7 @@ function renderHome() {
                        oninput="handleSearch(this.value)"
                        onfocus="showSearchDrop(this.value)"
                        onkeydown="searchDropKey(event)"
+                       onsearch="commitSearch()"
                        autocomplete="off"
                        inputmode="search"
                        enterkeyhint="search">
@@ -2103,11 +2201,10 @@ function renderHome() {
             html += `
             <div class="product-card ${idx % 2 === 0 ? 'from-left' : 'from-right'}" data-card-id="${p.id}" onclick="viewProduct(${p.id})">
                 ${p.isOffer ? '<span class="offer-badge">OFERTA</span>' : ''}
-                <div class="product-img-wrap" style="position:relative;">
-                    <div class="skeleton-box" id="sk-${p.id}"></div>
-                    <img src="${p.img}" alt="${p.name}" loading="lazy"
-                         style="position:relative;z-index:1;"
-                         onload="(function(){var s=document.getElementById('sk-${p.id}');if(s)s.remove();})()">
+                <div class="product-img-wrap img-wrap-blur" style="position:relative;">
+                    <img class="img-thumb" src="${p.img}" alt="" aria-hidden="true" loading="lazy">
+                    <img class="img-main" src="${p.img}" alt="${p.name}" loading="lazy"
+                         onload="this.classList.add('loaded');var t=this.previousElementSibling;if(t)t.classList.add('hidden');">
                 </div>
                 <p class="product-cat">${catLabel}</p>
                 <h3 class="product-name">${p.name}</h3>
@@ -2235,12 +2332,13 @@ function renderDetail() {
                     <button class="detail-add-btn" id="detailAddBtn" onclick="addToCartDetail(${product.id})">
                         ${icons.cart} Añadir al Carrito
                     </button>
-                    <a class="detail-wa-btn"
-                       href="https://wa.me/5491530646881?text=${encodeURIComponent('Hola, queria consultarte por esto: ' + product.name + ' - $' + product.price.toLocaleString())}"
-                       target="_blank" rel="noopener">
-                        <svg viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/></svg>
-                        Consultar por WhatsApp
-                    </a>
+                    <button class="detail-wa-btn" onclick="shareProduct(${product.id})">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                        </svg>
+                        Compartir / Consultar
+                    </button>
                 </div>
             </div>
         </div>
@@ -2488,6 +2586,7 @@ function addToCartDetail(productId) {
     if (existing) { existing.quantity += detailQty; }
     else { cart.push({ product, quantity: detailQty }); }
     updateCartBadge();
+    hapticFeedback('medium');
     showToast((detailQty > 1 ? detailQty + 'x ' : '') + product.name + ' añadido al carrito');
     const btn = document.getElementById('detailAddBtn');
     if (btn) flyToCart(btn);
@@ -2504,6 +2603,7 @@ function addToCartCard(productId, btnEl) {
     if (existing) { existing.quantity++; }
     else { cart.push({ product, quantity: 1 }); }
     updateCartBadge();
+    hapticFeedback('medium');
     showToast(product.name + ' añadido al carrito');
     flyToCart(btnEl);
 }
@@ -2758,6 +2858,46 @@ function initScrollReveal() {
 
 setTimeout(initSlider, 100);
 
+
+// ===== SHARE PRODUCT (native share API) =====
+function shareProduct(productId) {
+    var product = products.find(function(p){ return p.id === productId; });
+    if (!product) return;
+    hapticFeedback('light');
+    var url = window.location.href.split('#')[0] + '#producto-' + productId;
+    var text = '¡Mirá este producto! ' + product.name + ' - $' + product.price.toLocaleString();
+    if (navigator.share) {
+        navigator.share({
+            title: product.name + ' — Importodo CyG',
+            text: text,
+            url: url
+        }).catch(function(){});
+    } else {
+        // Fallback: open WhatsApp with the link
+        var waUrl = 'https://wa.me/5491530646881?text=' + encodeURIComponent('Hola, queria consultarte por esto: ' + product.name + ' - $' + product.price.toLocaleString() + ' ' + url);
+        window.open(waUrl, '_blank');
+    }
+}
+
+// ===== DYNAMIC PAGE TITLE =====
+function updatePageTitle(section, productId) {
+    var base = 'Importodo CyG';
+    var title = base;
+    if (section === 'detail' && productId) {
+        var p = products.find(function(x){ return x.id === productId; });
+        if (p) title = p.name + ' — ' + base;
+    } else if (section === 'cart') {
+        title = 'Carrito — ' + base;
+    } else if (section === 'about') {
+        title = 'Conócenos — ' + base;
+    } else if (section === 'help') {
+        title = 'Ayuda — ' + base;
+    } else if (section === 'contact') {
+        title = 'Contacto — ' + base;
+    }
+    document.title = title;
+}
+
 // ===== INIT =====
 renderSection();
 
@@ -2778,7 +2918,7 @@ window.addEventListener('scroll', function() {
 </div>
 
 <!-- Scroll to top button -->
-<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Volver arriba">
+<button class="scroll-top-btn" id="scrollTopBtn" onclick="var c=document.getElementById('catalogo');if(c)c.scrollIntoView({behavior:'smooth'});" title="Ir al catálogo">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="18 15 12 9 6 15"/>
     </svg>
