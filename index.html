@@ -10,13 +10,13 @@
     <meta property="og:site_name"   content="Importodo CyG">
     <meta property="og:title"       content="Importodo CyG - Todo lo que necesitas en un solo lugar">
     <meta property="og:description" content="Productos para el Hogar, Electrónica, Regalos y mucho más. ¡Todo al mejor precio!">
-    <meta property="og:image"       content="https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2026/01/proyector.webp">
+    <meta property="og:image"       content="https://i.postimg.cc/ZqKw6RxL/Captura-de-pantalla-2026-06-02-174332.png">
     <meta property="og:url"         content="https://darkseagreen-cheetah-381757.hostingersite.com">
     <!-- Twitter/X card -->
     <meta name="twitter:card"        content="summary_large_image">
     <meta name="twitter:title"       content="Importodo CyG">
     <meta name="twitter:description" content="Productos para el Hogar, Electrónica, Regalos y mucho más.">
-    <meta name="twitter:image"       content="https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2026/01/proyector.webp">
+    <meta name="twitter:image"       content="https://i.postimg.cc/ZqKw6RxL/Captura-de-pantalla-2026-06-02-174332.png">
     <link rel="icon" href="importodocyg-logo.jpg" type="image/jpeg">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -436,7 +436,7 @@
         }
         .product-img-wrap {
             width: 100%; height: 176px; display: flex; align-items: center; justify-content: center;
-            margin-bottom: 16px; overflow: hidden; border-radius: 12px; background: rgba(0,0,0,0.02);
+            margin-bottom: 16px; overflow: hidden; border-radius: 12px; background: rgba(0,0,0,0);
         }
         .product-img-wrap img {
             max-width: 100%; max-height: 100%; object-fit: contain;
@@ -1245,32 +1245,15 @@
             animation: badgeBounce 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97);
         }
 
-        /* ===== BLUR PLACEHOLDER for product images ===== */
-        .img-wrap-blur {
-            position: relative;
-            overflow: hidden;
-            background: rgba(0,0,0,0.02);
+        /* ===== BLUR PLACEHOLDER — single img approach (no layout shift) ===== */
+        .product-img-wrap img {
+            filter: blur(6px);
+            transform: scale(1.04);
+            transition: filter 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
         }
-        .img-wrap-blur .img-thumb {
-            position: absolute; inset: 0;
-            width: 100%; height: 100%;
-            object-fit: contain;
-            filter: blur(12px);
-            transform: scale(1.05);
-            transition: opacity 0.3s;
-            pointer-events: none;
-        }
-        .img-wrap-blur .img-main {
-            position: relative; z-index: 1;
-            opacity: 0;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            width: 100%; height: 100%; object-fit: contain;
-        }
-        .img-wrap-blur .img-main.loaded {
-            opacity: 1;
-        }
-        .img-wrap-blur .img-thumb.hidden {
-            opacity: 0;
+        .product-img-wrap img.loaded {
+            filter: none;
+            transform: scale(1);
         }
     </style>
 </head>
@@ -2201,10 +2184,9 @@ function renderHome() {
             html += `
             <div class="product-card ${idx % 2 === 0 ? 'from-left' : 'from-right'}" data-card-id="${p.id}" onclick="viewProduct(${p.id})">
                 ${p.isOffer ? '<span class="offer-badge">OFERTA</span>' : ''}
-                <div class="product-img-wrap img-wrap-blur" style="position:relative;">
-                    <img class="img-thumb" src="${p.img}" alt="" aria-hidden="true" loading="lazy">
-                    <img class="img-main" src="${p.img}" alt="${p.name}" loading="lazy"
-                         onload="this.classList.add('loaded');var t=this.previousElementSibling;if(t)t.classList.add('hidden');">
+     <div class="product-img-wrap">
+                    <img src="${p.img}" alt="${p.name}" loading="lazy"
+                         onload="this.classList.add('loaded')">
                 </div>
                 <p class="product-cat">${catLabel}</p>
                 <h3 class="product-name">${p.name}</h3>
