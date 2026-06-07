@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Importodo CyG - Todo lo que necesitas en un solo lugar</title>
     <meta name="description" content="Importodo CyG - Todo lo que necesitas en un solo lugar, y al mejor precio. Productos para el Hogar, Regalos perfectos, electrónica y mucho, mucho más.">
     <!-- Open Graph / WhatsApp / Facebook preview -->
@@ -22,6 +22,11 @@
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* Catch any element wider than the screen on mobile */
+        @media (max-width: 768px) {
+            img, video, iframe, embed, object { max-width: 100% !important; }
+        }
 
         :root {
             --bg: #f5f5f7;
@@ -363,6 +368,13 @@
     } 
 }
 
+@media (max-width: 640px) { 
+    .why-grid { 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 14px;
+    } 
+}
+
 @media (max-width: 450px) { 
     .why-grid { 
         grid-template-columns: 1fr; 
@@ -692,6 +704,13 @@
 .footer-col {
     flex: 1;
     min-width: 250px;
+}
+
+@media (max-width: 640px) {
+    .footer-col {
+        min-width: 0;
+        width: 100%;
+    }
 }
 
 /* Columna Marca */
@@ -1295,6 +1314,9 @@
     </div>
 </nav>
 
+<!-- CLIP WRAPPER: prevents horizontal overflow without breaking sticky navbar -->
+<div style="overflow-x:clip;width:100%;">
+
 <!-- HERO -->
 <div class="hero" id="heroSection">
     
@@ -1392,6 +1414,7 @@
 </a>
 
 <!-- TOAST -->
+</div><!-- end clip wrapper -->
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1478,7 +1501,7 @@ const products = [
 
     { id: 39, name: "Control Aire Acondicionado", price: 6000, isOffer: false, specs: "Control universal... excelente calidad.", img: "https://http2.mlstatic.com/D_NQ_NP_922366-MLA48822052768_012022-O.webp", category: ["Hogar"] },
 
-    { id: 40, name: "Adaptador portalamparas", price: 2800, isOffer: false, specs: "Adaptador para focos con interruptor de encendido. Las patas se giran según sea conveniente.", img: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTnpx1Jy-LNLlNGqM3MqvpATqqtxbbyc9AbrMsYASIgiXKcN2Bi", category: ["Hogar"] },
+    { id: 40, name: "Adaptador portalamparas", price: 2800, isOffer: false, specs: "Adaptador para focos con interruptor de encendido. Las patas se giran según sea conveniente.", img: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTnpx1Jy-LNLlNGqM3MqvpATqqtxbbyc9AbrMsYASIgiXKcN2Bi", category: ["Cables y Adaptadores"] },
 
     { id: 41, name: "Bicicleta 2.0 Pro Mountain Bike", price: 260000, isOffer: false, specs: "Rodado 29 21 Vel Shimano Freno Disco <br> (Consultar colores y talles disponibles).", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2502271416075526-a-05df3ac13c3caa314a17539907078295-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2502191317291214-a-2adc0b4e74e724612f17539900801641-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2501231413406723-a-7899a0c0c40e8fa79a17539904061515-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2501231413177635-a-c74172cce4a68ce04c17539907559346-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/5-hombre-a5bf44580b6c43720f17605333614572-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/4-hombre-39c7e91e334086584817605333565658-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-3f5cfd7c897a9c5c1917605333660857-640-0.webp"], category: ["Deporte"] },
 
@@ -1751,6 +1774,30 @@ const products = [
     { id: 175, name: "Combo Reloj smartWatch W26 Pro + Auricular + 2 Mallas", price: 19000, isOffer: false, specs: "", img: "https://www.oestech.com.ar/fotos/W26-PROMAX.jpg", category: ["Electronica", "Auriculares"] },
 
     { id: 176, name: "Combo 3 en 1 Parlante + Auric + Reloj", price: 25000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/B-21016.jpg", category: ["Parlantes", "Auriculares"] },
+
+    { id: 177, name: "Cable HDMI de 1.5M Mallado", price: 3500, isOffer: false, specs: "", img: "https://oncealpormayor.com.ar/wp-content/uploads/2022/07/TMCB6552-removebg-preview.png", category: ["Cables y Adaptadores", "Electronica"] },
+
+    { id: 178, name: "Linga para Bici 15x90", price: 8000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_624232-MLA82605197960_032025-O.webp", category: ["Hogar"] },
+
+    { id: 179, name: "Tira LED 28x35 RGB 5M", price: 9500, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/LED-9727.jpg", category: ["Luces", "Electronica"] },
+
+    { id: 180, name: "Aplicador de Strass para Cabello", price: 9500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_Q_NP_982770-CBT96779844469_102025-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_948617-MLA81429010283_122024-O.webp"], category: ["Infantil"] },
+
+    { id: 181, name: "Mouse Inalambrico Yelandar", price: 7000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_784247-MLA79450754724_102024-O.webp", images: ["https://www.oestech.com.ar/fotos/MOU-LED8.jpg"], category: ["Electronica"] },
+
+    { id: 182, name: "Lampara de Escritorio 60W con Soporte", price: 13000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_781960-MLA83296554736_042025-O.webp", images: ["https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSmM-zqSsElEhjw_FGOVVtSXN0uqDPwSocIsvfz-o5gkKQSlLTM"], category: ["Hogar", "Luces"] },
+
+    { id: 183, name: "Aspiradora Portatil Vaccun", price: 10000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_754924-MLU74823965022_032024-O.webp", images: ["https://www.impotekno.com/fotos/AS-228.jpg"], category: ["Hogar", "Electronica"] },
+
+    { id: 184, name: "Aspiradora de Auto Portatil 120W", price: 35000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/OG-A3.jpg", category: ["Hogar", "Electronica"] },
+
+    { id: 185, name: "Escurridor Secaplatos Acero Inoxidable de 2 Niveles", price: 35000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/08-081bf80fa58eec3b7417789567480707-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-d379189259c0c9113e17789567483674-640-0.webp"], category: ["Hogar"] },
+
+    { id: 186, name: "Escurridor Secaplatos con Bandeja y Cubiertero", price: 31000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/07-8f1e508147bba3970117789482982144-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/06-532b2795db39c7d24a17789482981292-640-0.webp"], category: ["Hogar"] },
+
+    { id: 187, name: "Buzo Softshell Termico Micropolar", price: 25000, isOffer: false, specs: "(Consultar disponibilidad de Colores y Talles). <br> Colores: Azul Marino - Gris Topo - Verde Militar - Negro. <br> (Los primeros ejemplos son Con Logo y los ultimos Sin Logo) <br><br> •Exterior confeccionado en Softshell resistente. <br> •Interior de micropolar suave y térmico. <br> •Cuello alto para mayor protección contra el frío. <br> •Calce recto cómodo y versátil. <br> •Bolsillos laterales funcionales. <br> •Diseño sin capucha para mayor practicidad.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-copia-59b6382b467e9cb16017805871190162-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-copia-1077a8db9d2320cdd117805871467314-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/4-copia-7826ae27fec439144817805871602756-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-copia-d84b89d753d324716717805871531907-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/5-4d003709ad2af9ed8b17805873108818-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2-ce8973baedcae9185017805873248126-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/4-84538e733061643dad17805873179561-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/talles-buzos-11d049104f1c2b1c1b17805816779885-640-0.webp"], category: ["Invierno"] },
+
+    { id: 188, name: "Campera Softshell Termica Micropolar", price: 28000, isOffer: false, specs: "(Consultar disponibilidad de Colores y Talles). <br> Colores: Verde Militar - Azul Marino - Gris Topo - Negro. <br><br> •Exterior confeccionado en Softshell resistente. <br> •Interior térmico de micropolar suave y confortable. <br> •Diseño cortaviento para una mejor protección. <br> •Repelente al agua para soportar lloviznas y salpicaduras. <br> •Material respirable que ayuda a evacuar la humedad. <br> •Cuello alto para mayor protección térmica. <br> •Cierre frontal completo. <br> •Dos bolsillos externos funcionales.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-9553de285fe51794e917806014819931-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/3-f515ed86d17a24f43417806014892984-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-aecc7b2c67a3995cf717806015159004-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-42fda8f0012f9b6db817806015216436-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-5a857456ea0fd326f017806015249339-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/talles-camperas-526726d8b93bdc1b3a17806014994176-640-0.webp"], category: ["Invierno"] },
 
 ];
 
