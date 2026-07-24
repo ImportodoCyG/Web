@@ -17,7 +17,7 @@
     <meta name="twitter:title"       content="Importodo CyG">
     <meta name="twitter:description" content="Productos para el Hogar, Electrónica, Regalos y mucho más.">
     <meta name="twitter:image"       content="https://i.postimg.cc/ZqKw6RxL/Captura-de-pantalla-2026-06-02-174332.png">
-    <link rel="icon" href="importodocyg-logo.jpg" type="image/jpeg">
+    <link rel="icon" href="Prueba-favicon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap');
@@ -211,18 +211,46 @@
         .hero-buttons { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
         .hero-btn-primary {
             background: #fff; color: #000; padding: 14px 32px; border-radius: 999px;
-            font-weight: 700; font-size: 14px; transition: opacity 0.2s;
+            font-weight: 700; font-size: 14px;
+            --fill-bg: var(--fg); --fill-text: #fff;
         }
-        .hero-btn-primary:hover { opacity: 0.9; }
         .hero-btn-secondary {
             border: 2px solid rgba(255,255,255,0.5); color: #fff;
             padding: 14px 32px; border-radius: 999px; font-weight: 700; font-size: 14px;
-            background: none; transition: background 0.2s;
+            background: none;
+            --fill-bg: #fff; --fill-text: #000;
         }
-        .hero-btn-secondary:hover { background: rgba(255,255,255,0.1); }
         .hero-fade {
             position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
             background: linear-gradient(to top, var(--bg), transparent);
+        }
+
+        /* ===== BOTONES: EFECTO DE RELLENO EXPANSIVO (estilo whatsapp.com) ===== */
+        .btn-fill {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+            transition: color 0.4s ease;
+        }
+        .btn-fill::before {
+            content: '';
+            position: absolute;
+            left: 50%; bottom: 0;
+            width: 220%; padding-top: 220%; height: 0;
+            background: var(--fill-bg, #fff);
+            border-radius: 50%;
+            transform: translate(-50%, 45%) scale(0);
+            transition: transform 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+            z-index: -1;
+            pointer-events: none;
+        }
+        .btn-fill:hover::before,
+        .btn-fill:focus-visible::before {
+            transform: translate(-50%, 45%) scale(1);
+        }
+        .btn-fill:hover,
+        .btn-fill:focus-visible {
+            color: var(--fill-text, #000);
         }
 
 	.hero-slide {
@@ -446,6 +474,18 @@
             background: var(--destructive); color: #fff; font-size: 11px; font-weight: 700;
             padding: 4px 12px; border-radius: 999px; z-index: 5;
         }
+        .stock-badge {
+            position: absolute; top: 12px; right: 12px;
+            background: #16a34a; color: #fff; font-size: 11px; font-weight: 700;
+            padding: 4px 12px; border-radius: 999px; z-index: 5;
+        }
+        .add-cart-btn.disabled-btn, .detail-add-btn.disabled-btn {
+            background: #c7c7c7 !important; color: #6b6b6b !important;
+            cursor: not-allowed; border-color: transparent !important;
+        }
+        .add-cart-btn.disabled-btn:hover, .detail-add-btn.disabled-btn:hover {
+            background: #c7c7c7 !important; color: #6b6b6b !important;
+        }
         .product-img-wrap {
             width: 100%; height: 176px; display: flex; align-items: center; justify-content: center;
             margin-bottom: 16px; overflow: hidden; border-radius: 12px; background: rgba(0,0,0,0);
@@ -590,17 +630,123 @@
         .cart-total { display: flex; justify-content: space-between; font-size: 20px; font-weight: 700; margin-bottom: 16px; }
         .checkout-btn {
             width: 100%; padding: 16px; border-radius: 12px; font-size: 16px; font-weight: 600;
-            background: var(--fg); color: var(--bg); transition: opacity 0.2s;
+            background: var(--fg); color: var(--bg);
+            --fill-bg: #fff; --fill-text: var(--fg);
         }
-        .checkout-btn:hover { opacity: 0.9; }
 
         /* ===== ABOUT ===== */
         .about-section {
-            background: var(--card); border-radius: 16px; padding: 40px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06); line-height: 1.8;
+            display: flex; flex-direction: column; gap: 40px;
         }
-        .about-section h2 { font-size: 24px; font-weight: 700; margin-bottom: 16px; }
-        .about-section h3 { margin-top: 40px; color: var(--destructive); font-weight: 700; font-size: 18px; }
+
+        /* --- Hero intro con reveal de palabras --- */
+        .about-hero {
+            background: var(--card); border-radius: 24px; padding: 56px 32px;
+            text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .about-eyebrow {
+            display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 1.5px;
+            text-transform: uppercase; color: var(--muted-fg); margin-bottom: 18px;
+            padding: 6px 16px; border-radius: 999px; background: var(--muted);
+        }
+        .about-hero-title {
+            font-size: clamp(24px, 5vw, 46px); font-weight: 800; line-height: 1.25;
+            max-width: 760px; margin: 0 auto;
+        }
+        .about-hero-title .word-mask { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 6px; }
+        .about-hero-title .word {
+            display: inline-block; opacity: 0; transform: translateY(115%);
+            transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+            transition-delay: calc(var(--i, 0) * 45ms);
+        }
+        .about-hero-title .word.accent { color: var(--destructive); }
+        .about-hero.in-view .word { opacity: 1; transform: translateY(0); }
+
+        /* --- Historia: imagen + texto con parallax --- */
+        .about-split {
+            display: flex; align-items: stretch; gap: 0;
+            background: var(--card); border-radius: 24px; overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .about-split-media {
+            flex: 1 1 42%; position: relative; overflow: hidden; min-height: 320px;
+        }
+        .about-split-media img {
+            position: absolute; inset: -12% -12%; width: 124%; height: 124%; object-fit: cover;
+            transform: scale(1.08); transition: transform .1s linear;
+        }
+        .about-split-text {
+            flex: 1 1 58%; padding: 40px 44px; display: flex; flex-direction: column; justify-content: center;
+            opacity: 0; transform: translateY(30px);
+            transition: opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1);
+        }
+        .about-split-text.in-view { opacity: 1; transform: none; }
+        .about-split-text h2 { font-size: 24px; font-weight: 700; margin-bottom: 16px; }
+        .about-split-text p { margin-bottom: 14px; color: var(--fg); }
+        .about-split-text p:last-child { margin-bottom: 0; }
+        @media (max-width: 768px) {
+            .about-split { flex-direction: column; }
+            .about-split-media { min-height: 220px; }
+            .about-split-text { padding: 28px 24px 32px; }
+        }
+
+        /* --- Contadores animados --- */
+        .about-stats {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+            background: var(--fg); color: var(--bg); border-radius: 24px; padding: 40px 24px;
+            opacity: 0; transform: translateY(30px);
+            transition: opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1);
+        }
+        .about-stats.in-view { opacity: 1; transform: none; }
+        .stat { text-align: center; }
+        .stat-number { font-size: clamp(26px, 5vw, 42px); font-weight: 800; font-family: 'Space Grotesk', sans-serif; }
+        .stat-label { font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 6px; font-weight: 500; }
+        @media (max-width: 640px) {
+            .about-stats { gap: 8px; padding: 28px 10px; }
+            .stat-number { font-size: 21px; }
+            .stat-label { font-size: 10.5px; }
+        }
+
+        /* --- Cinta de texto infinita --- */
+        .about-marquee-wrap {
+            overflow: hidden; background: var(--card); border-radius: 999px;
+            padding: 18px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .about-marquee-track {
+            display: flex; width: max-content; gap: 28px;
+            animation: aboutMarquee 26s linear infinite;
+        }
+        .about-marquee-track span {
+            font-size: 15px; font-weight: 700; white-space: nowrap; color: var(--muted-fg);
+            display: flex; align-items: center; gap: 28px;
+        }
+        .about-marquee-track span.dot { color: var(--destructive); }
+        @keyframes aboutMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .about-marquee-wrap:hover .about-marquee-track { animation-play-state: paused; }
+
+        /* --- Grid "por qué elegirnos" con stagger --- */
+        @keyframes whyCardIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .why-section .why-card { opacity: 0; }
+        .why-section.in-view .why-card { animation: whyCardIn .6s cubic-bezier(.22,1,.36,1) forwards; }
+        .why-section.in-view .why-card:nth-child(1) { animation-delay: .05s; }
+        .why-section.in-view .why-card:nth-child(2) { animation-delay: .15s; }
+        .why-section.in-view .why-card:nth-child(3) { animation-delay: .25s; }
+        .why-section.in-view .why-card:nth-child(4) { animation-delay: .35s; }
+
+        /* --- Redes con efecto magnético --- */
+        .about-social {
+            background: var(--card); border-radius: 24px; padding: 40px; text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            opacity: 0; transform: translateY(30px);
+            transition: opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1);
+        }
+        .about-social.in-view { opacity: 1; transform: none; }
+        .about-social h3 { font-size: 18px; font-weight: 700; margin-bottom: 20px; color: var(--fg); }
+        .about-social .social-links-grid { justify-content: center; }
+        .social-icon-link.magnetic { transition: transform .15s ease-out, background .3s ease; will-change: transform; }
 
         /* ===== HELP ===== */
         .help-section h2 { font-size: 24px; font-weight: 700; margin-bottom: 32px; }
@@ -1340,8 +1486,8 @@
             <h1>Agendanos y mira nuestros estados <br> Subimos ofertas exclusivas y productos nuevos todos los días</h1>
             <p>Encontrá lo que estas buscando al mejor precio. Una variedad de productos, y todo de calidad.</p>
             <div class="hero-buttons">
-                <button class="hero-btn-primary" onclick="document.getElementById('catalogo').scrollIntoView({behavior:'smooth'})">Ver Catálogo</button>
-                <a href="https://wa.me/5491530646881" target="_blank" class="hero-btn-secondary">Contactanos</a>
+                <button class="hero-btn-primary btn-fill" onclick="document.getElementById('catalogo').scrollIntoView({behavior:'smooth'})">Ver Catálogo</button>
+                <a href="https://wa.me/5491530646881" target="_blank" class="hero-btn-secondary btn-fill">Contactanos</a>
             </div>
         </div>
     </div>
@@ -1354,7 +1500,7 @@
             <h1>Excelentes regalos, incluso para uno mismo</h1>
             <p>No te quedes sin tu "experiencia Importodo".</p>
             <div class="hero-buttons">
-	    	<button class="hero-btn-primary" onclick="verOfertas()">Ver Ofertas</button>           
+	    	<button class="hero-btn-primary btn-fill" onclick="verOfertas()">Ver Ofertas</button>           
 	 </div>
         </div>
     </div>
@@ -1429,9 +1575,9 @@ const products = [
 
     { id: 3, name: "Combo Auricular + Parlante Astronauta + Velador", price: 24000, isOffer: true, specs: "", img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQB59LwOW9z3dJk-CBJwcRuDktvbZq7ZymmJ1HpAgtfKmzB6q4L", images: ["https://acdn-us.mitiendanube.com/stores/001/131/056/products/ultrpod-25b69f8566aeed484017311936142468-640-0.webp", "https://http2.mlstatic.com/D_NQ_NP_958161-MLA99653095869_112025-O.webp", "https://http2.mlstatic.com/D_Q_NP_943437-MLA94687605859_102025-O.webp"], category: ["Infantil", "Auriculares", "Parlantes"] },
 
-    { id: 4, name: "Ventilador de Techo", price: 120000, isOffer: false, specs: "VENTILADOR DE TECHO C/LUZ CALIDA/FRIO 60W.", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/11/ventecho.jpg", category: "Hogar" },
+    { id: 4, name: "Ventilador de Techo", price: 120000, isOffer: false, outOfStock: true, specs: "VENTILADOR DE TECHO C/LUZ CALIDA/FRIO 60W.", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/11/ventecho.jpg", category: "Hogar" },
 
-    { id: 5, name: "Taza Infusión y Mezclador Recargable", price: 12500, isOffer: false, specs: "(Ingresan por Pedido).", img: "https://http2.mlstatic.com/D_Q_NP_837557-MLA86057134583_062025-O.webp", category: ["Electronica", "Hogar"] },
+    { id: 5, name: "Taza Infusión y Mezclador Recargable", price: 12500, isOffer: false, outOfStock: true, specs: "(Ingresan por Pedido).", img: "https://http2.mlstatic.com/D_Q_NP_837557-MLA86057134583_062025-O.webp", category: ["Electronica", "Hogar"] },
 
     { id: 6, name: "Auricular Bluetooth con Pantalla", price: 18000, isOffer: false, specs: "", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/12/JK-610.jpg", video: "https://www.youtube.com/embed/P5NcNGh3k3g", category: ["Auriculares", "Electronica"] },
 
@@ -1443,7 +1589,7 @@ const products = [
 
     { id: 10, name: "Calculadora Científica", price: 6500, isOffer: false, specs: "Calculadora Científica+ pilas.", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2026/01/calculadora.jpg", category: "Electronica" },
 
-    { id: 11, name: "Mini Parlante Bluetooth", price: 8500, isOffer: true, specs: "", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/12/parlan-4led.webp", category: ["Electronica", "Parlantes"] },
+    { id: 11, name: "Mini Parlante Bluetooth", price: 8500, isOffer: true, outOfStock: true, specs: "", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/12/parlan-4led.webp", category: ["Electronica", "Parlantes"] },
 
     { id: 12, name: "Soporte Móvil TV 14 a 42", price: 15000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_816926-MLA100089974977_122025-F.webp", category: ["Soportes", "Hogar"] },
 
@@ -1453,7 +1599,7 @@ const products = [
 
     { id: 15, name: "Inflador de Globos", price: 23000, isOffer: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_761487-MLA99564551334_122025-O.webp", category: "Infantil" },
 
-    { id: 16, name: "Cuchara Coladora 29cm", price: 3500, isOffer: false, specs: "Ahora podes servir sopa y/o verduras por separado", img:"https://images.nexusapp.co/assets/ae/20/51/260363913.jpg", images: ["https://www.dspecialtystore.com/wp-content/uploads/2025/01/H10b3b82a383d44959ed5e59e2ef961efw.webp", "https://scontent.faep7-1.fna.fbcdn.net/v/t1.6435-9/122478377_3584366894916835_6878363035807118457_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=06a7ca&_nc_eui2=AeHsS7F1RCQvMrESCy8w0n4V41GiBzKNRDrjUaIHMo1EOsVVmSDX69CehztQWUqgiWA&_nc_ohc=TmngcDAH-84Q7kNvwE9sOAK&_nc_oc=Adq0bLCOxRzYWYQlKLVMm8t4Rsyvr0dSQ5-huAYB7IKa4p6-mPGhF5256bBbkBlpdMH5wE2rk-KgjLkxZ1Pm6A-n&_nc_zt=23&_nc_ht=scontent.faep7-1.fna&_nc_gid=7CnHKuGKTTjYN2Lq-qjU0Q&_nc_ss=7a3a8&oh=00_Af3yGPcJpgzxopffqWK8VuhAy6rz2h3JLmIRocFY423WcQ&oe=69FF6E36"], category: "Hogar" },
+    { id: 16, name: "Cuchara Coladora 29cm", price: 3500, isOffer: false, outOfStock: true, specs: "Ahora podes servir sopa y/o verduras por separado", img:"https://images.nexusapp.co/assets/ae/20/51/260363913.jpg", images: ["https://www.dspecialtystore.com/wp-content/uploads/2025/01/H10b3b82a383d44959ed5e59e2ef961efw.webp", "https://scontent.faep7-1.fna.fbcdn.net/v/t1.6435-9/122478377_3584366894916835_6878363035807118457_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=06a7ca&_nc_eui2=AeHsS7F1RCQvMrESCy8w0n4V41GiBzKNRDrjUaIHMo1EOsVVmSDX69CehztQWUqgiWA&_nc_ohc=TmngcDAH-84Q7kNvwE9sOAK&_nc_oc=Adq0bLCOxRzYWYQlKLVMm8t4Rsyvr0dSQ5-huAYB7IKa4p6-mPGhF5256bBbkBlpdMH5wE2rk-KgjLkxZ1Pm6A-n&_nc_zt=23&_nc_ht=scontent.faep7-1.fna&_nc_gid=7CnHKuGKTTjYN2Lq-qjU0Q&_nc_ss=7a3a8&oh=00_Af3yGPcJpgzxopffqWK8VuhAy6rz2h3JLmIRocFY423WcQ&oe=69FF6E36"], category: "Hogar" },
 
     { id: 17, name: "Soporte para Espejo Retrovisor", price: 4500, isOffer: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/477/775/products/ogvjkswrgjgporjw-fd657cf11747f409da16980906830521-1024-1024.webp", category: ["Soportes", "Hogar"] },
 
@@ -1461,7 +1607,7 @@ const products = [
 
     { id: 19, name: "Set de Molinillo Madera, Salero y Pimentero", price: 11000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_647079-MLA77817102643_072024-O.webp", category: ["Hogar"] },
 
-    { id: 20, name: "Pava Eléctrica Plegable", price: 19000, isOffer: false, specs: "(Por Pedido) <br> Pava Eléctrica Plegable Ideal para Viaje, una solución práctica y eficiente para tus aventuras. Con una capacidad de 600ml, es perfecta para preparar café o mate  en cualquier lugar. Su diseño compacto y ligero la hace fácil de transportar, ideal para cualquier viaje", img: "https://http2.mlstatic.com/D_NQ_NP_825751-MLA95633512196_102025-O.webp", category: ["Hogar"] },
+    { id: 20, name: "Pava Eléctrica Plegable", price: 19000, isOffer: false, outOfStock: true, specs: "(Por Pedido) <br> Pava Eléctrica Plegable Ideal para Viaje, una solución práctica y eficiente para tus aventuras. Con una capacidad de 600ml, es perfecta para preparar café o mate  en cualquier lugar. Su diseño compacto y ligero la hace fácil de transportar, ideal para cualquier viaje", img: "https://http2.mlstatic.com/D_NQ_NP_825751-MLA95633512196_102025-O.webp", category: ["Hogar"] },
 
     { id: 21, name: "Pizarra LED Neon USB 30 × 20", price: 13000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_825603-MLA101159527877_122025-O.webp", category: ["Infantil"] },
 
@@ -1471,7 +1617,7 @@ const products = [
 
     { id: 24, name: "Auriculares Deporte  Bluetooth Gafas de Sol Inteligente", price: 21000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_766147-CBT81011851840_122024-O.webp", category: ["Electronica", "Auriculares"] },
 
-    { id: 25, name: "Sofa Inflable 116cm x 98cm x 83 cm", price: 35000, isOffer: false, specs: "Con apoyapies de 62cm x 62 cm x 31cm <br> Incluye inflador de pie", img: "https://http2.mlstatic.com/D_NQ_NP_718294-MLA86028238326_062025-O.webp", category: ["Hogar"] },
+    { id: 25, name: "Sofa Inflable 116cm x 98cm x 83 cm", price: 35000, isOffer: false, outOfStock: true, specs: "Con apoyapies de 62cm x 62 cm x 31cm <br> Incluye inflador de pie", img: "https://http2.mlstatic.com/D_NQ_NP_718294-MLA86028238326_062025-O.webp", category: ["Hogar"] },
 
     { id: 26, name: "Auriculares Bolsita", price: 3500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_665171-MLA92675856009_092025-O.webp", category: ["Auriculares"] },
 
@@ -1487,7 +1633,7 @@ const products = [
 
     { id: 32, name: "Lámpara Velador Proyector de Estrellas", price: 9000, isOffer: false, specs: "Proyector de estrellas giratorio con varios colores de luz. <br> Se puede usar con un color fijo o que vaya cambiando de colores.", img: "https://dcdn-us.mitiendanube.com/stores/674/724/products/star-master-21-b0ca48f34004e7de9f15406113159174-1024-1024.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_623997-MLA107518491767_022026-O.webp"], category: ["Luces"] },
 
-    { id: 33, name: "Batidora de 7 Velocidades", price: 19000, isOffer: false, specs: "", img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTmCLle1t9PBnpw5pbvMLO7KI4gelxVWdZsXRPUDUOUtusXE44I", category: ["Hogar"] },
+    { id: 33, name: "Batidora de 7 Velocidades", price: 19000, isOffer: false, outOfStock: true, specs: "", img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTmCLle1t9PBnpw5pbvMLO7KI4gelxVWdZsXRPUDUOUtusXE44I", category: ["Hogar"] },
 
     { id: 34, name: "Liston LED con Tecla", price: 13000, isOffer: false, specs: "Ideal para iluminar tu mesada y tambien tan versatil que lo podes colocar donde necesites una mejor iluminacion. <br> 60cm 9w $9500 <br> 90cm 12w $11000 <br> 120cm 18w $13000", img: "https://http2.mlstatic.com/D_NQ_NP_967840-MLU78801139759_082024-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_966952-MLU74983232604_032024-O.webp", "https://http2.mlstatic.com/D_NQ_NP_782726-MLU78047383739_072024-O.webp", "https://http2.mlstatic.com/D_NQ_NP_895356-MLA81445976633_122024-O.webp", "https://www.eclairage-design.com/14258-large_default/tira-de-led-t5-31-cm-para-mueble-de-cocina-conectable-4000k.jpg"], category: ["Luces"] },
 
@@ -1503,39 +1649,39 @@ const products = [
 
     { id: 40, name: "Adaptador portalamparas", price: 2800, isOffer: false, specs: "Adaptador para focos con interruptor de encendido. Las patas se giran según sea conveniente.", img: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTnpx1Jy-LNLlNGqM3MqvpATqqtxbbyc9AbrMsYASIgiXKcN2Bi", category: ["Cables y Adaptadores"] },
 
-    { id: 41, name: "Bicicleta 2.0 Pro Mountain Bike", price: 260000, isOffer: false, specs: "Rodado 29 21 Vel Shimano Freno Disco <br> (Consultar colores y talles disponibles).", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2502271416075526-a-05df3ac13c3caa314a17539907078295-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2502191317291214-a-2adc0b4e74e724612f17539900801641-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2501231413406723-a-7899a0c0c40e8fa79a17539904061515-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2501231413177635-a-c74172cce4a68ce04c17539907559346-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/5-hombre-a5bf44580b6c43720f17605333614572-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/4-hombre-39c7e91e334086584817605333565658-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-3f5cfd7c897a9c5c1917605333660857-640-0.webp"], category: ["Deporte"] },
+    { id: 41, name: "Bicicleta 2.0 Pro Mountain Bike", price: 260000, isOffer: false, outOfStock: true, specs: "Rodado 29 21 Vel Shimano Freno Disco <br> (Consultar colores y talles disponibles).", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2502271416075526-a-05df3ac13c3caa314a17539907078295-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2502191317291214-a-2adc0b4e74e724612f17539900801641-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2501231413406723-a-7899a0c0c40e8fa79a17539904061515-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2501231413177635-a-c74172cce4a68ce04c17539907559346-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/5-hombre-a5bf44580b6c43720f17605333614572-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/4-hombre-39c7e91e334086584817605333565658-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-3f5cfd7c897a9c5c1917605333660857-640-0.webp"], category: ["Deporte"] },
 
-    { id: 42, name: "Bicicleta 1.0 Pro Mountain Bike", price: 250000, isOffer: false, specs: "Rodado 29 21 Vel Freno Disco Suspension Delantera <br> (Consultar colores y talles disponibles).", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/7-copia-6807a592665486dee017623601875283-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/4-copia-7bd8693e072104a9b917623602381745-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/10-copia-c0a210442a838b7a3617623602408988-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/4-hombre-ec6438e3de73cf325717631221588463-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/5-hombre-3800fc1aaa0e15745117631221653939-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-6ffb7b3ab9ed26f3a417631221463579-640-0.webp"], category: ["Deporte"] },
+    { id: 42, name: "Bicicleta 1.0 Pro Mountain Bike", price: 250000, isOffer: false, outOfStock: true, specs: "Rodado 29 21 Vel Freno Disco Suspension Delantera <br> (Consultar colores y talles disponibles).", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/7-copia-6807a592665486dee017623601875283-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/4-copia-7bd8693e072104a9b917623602381745-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/10-copia-c0a210442a838b7a3617623602408988-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/4-hombre-ec6438e3de73cf325717631221588463-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/5-hombre-3800fc1aaa0e15745117631221653939-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-6ffb7b3ab9ed26f3a417631221463579-640-0.webp"], category: ["Deporte"] },
 
-    { id: 43, name: "Barra Dominadas Pared", price: 65000, isOffer: false, specs: "Crossfit Paralela 200k Iron Bar", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/d-c3e267e3d426ff842417655488958710-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/d_nq_np_2x_985460-mla100665471970_122025-f-57c17472ac5852794617655488963009-640-0.webp"], category: ["Deporte"] },
+    { id: 43, name: "Barra Dominadas Pared", price: 65000, isOffer: false, outOfStock: true, specs: "Crossfit Paralela 200k Iron Bar", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/d-c3e267e3d426ff842417655488958710-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/d_nq_np_2x_985460-mla100665471970_122025-f-57c17472ac5852794617655488963009-640-0.webp"], category: ["Deporte"] },
 
-    { id: 44, name: "Kit Mancuernas Y Barra", price: 65000, isOffer: false, specs: "ope A Rosca 25 Kg Discos Pvc Force Pack 25", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/01-cb0c4a15a0651f447317614047110994-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/07-d43f5fb5abc15e194717614047307701-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/08-0283229fc3f9ccd87417614047339445-640-0.webp"], category: ["Deporte"] },
+    { id: 44, name: "Kit Mancuernas Y Barra", price: 65000, isOffer: false, outOfStock: true, specs: "ope A Rosca 25 Kg Discos Pvc Force Pack 25", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/01-cb0c4a15a0651f447317614047110994-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/07-d43f5fb5abc15e194717614047307701-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/08-0283229fc3f9ccd87417614047339445-640-0.webp"], category: ["Deporte"] },
 
-    { id: 45, name: "Kit Térmico Cuello Cordon + Guantes Primera Piel", price: 10000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-1-46035953e994e7386317585530071957-1024-1024.webp", category: ["Invierno"] },
+    { id: 45, name: "Kit Térmico Cuello Cordon + Guantes Primera Piel", price: 10000, isOffer: false, outOfStock: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-1-46035953e994e7386317585530071957-1024-1024.webp", category: ["Invierno"] },
 
-    { id: 46, name: "Kit Térmico Guantes Primera Piel + Medias Primera Piel", price: 10500, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-1-f1c55a6102c8a9146317585562652164-1024-1024.webp", category: ["Invierno"] },
+    { id: 46, name: "Kit Térmico Guantes Primera Piel + Medias Primera Piel", price: 10500, isOffer: false, outOfStock: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-1-f1c55a6102c8a9146317585562652164-1024-1024.webp", category: ["Invierno"] },
 
-    { id: 47, name: "Conjunto Térmico Completo Remera + Calza Frio Extremo Frizado Mujer", price: 26000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-f76f96b432b2be677b17549264208838-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-mujer-61a659b63efb53caa617750710496162-640-0.webp"], category: ["Invierno"] },
+    { id: 47, name: "Conjunto Térmico Completo Remera + Calza Frio Extremo Frizado Mujer", price: 26000, isOffer: false, outOfStock: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-f76f96b432b2be677b17549264208838-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-mujer-61a659b63efb53caa617750710496162-640-0.webp"], category: ["Invierno"] },
 
-    { id: 48, name: "Conjunto Térmico Completo Remera + Calza Frio Extremo Frizado Hombre", price: 26000, isOffer: false, specs: "Material de microfibra premium que absorbe la humedad. <br> Elasticidad gracias al 15% de lycra para un calce perfecto. <br> Diseño que se ajusta al cuerpo y maximiza la retención de calor. <br> Resistente, cómodo y de secado rápido.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-53956943716ba8621017549269935408-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-hombre-558571e2ae0200296017745385977737-640-0.webp"], category: ["Invierno"] },
+    { id: 48, name: "Conjunto Térmico Completo Remera + Calza Frio Extremo Frizado Hombre", price: 26000, isOffer: false, outOfStock: true, specs: "Material de microfibra premium que absorbe la humedad. <br> Elasticidad gracias al 15% de lycra para un calce perfecto. <br> Diseño que se ajusta al cuerpo y maximiza la retención de calor. <br> Resistente, cómodo y de secado rápido.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-53956943716ba8621017549269935408-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-hombre-558571e2ae0200296017745385977737-640-0.webp"], category: ["Invierno"] },
 
-    { id: 49, name: "Kit Cubre Manos Con Abrigo + Guantes Primera Piel", price: 15000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-c492d571994d6e961517545153428122-1024-1024.webp", category: ["Invierno"] },
+    { id: 49, name: "Kit Cubre Manos Con Abrigo + Guantes Primera Piel", price: 15000, isOffer: false, outOfStock: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-c492d571994d6e961517545153428122-1024-1024.webp", category: ["Invierno"] },
 
-    { id: 50, name: "Pasamontaña", price: 4000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_612564-MLA111646969817_052026-O.webp", category: ["Invierno"] },
+    { id: 50, name: "Pasamontaña", price: 4000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_612564-MLA111646969817_052026-O.webp", category: ["Invierno"] },
 
-    { id: 51, name: "Kit Conjunto Térmico + Guantes Pp + Medias Pp + Mascara Frio Extremo Deportivo Hombre", price: 36000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-2-1608b52a71d8b5cffc17745385528913-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-hombre-558571e2ae0200296017745385977737-640-0.webp"], category: ["Invierno"] },
+    { id: 51, name: "Kit Conjunto Térmico + Guantes Pp + Medias Pp + Mascara Frio Extremo Deportivo Hombre", price: 36000, isOffer: false, outOfStock: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-2-1608b52a71d8b5cffc17745385528913-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-hombre-558571e2ae0200296017745385977737-640-0.webp"], category: ["Invierno"] },
 
-    { id: 52, name: "Kit Conjunto Térmico + Medias PP + Pasamontañas Balaclava Frio Extremo Deportivo Mujer", price: 33000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-0b0e681da62c6881bb17750710777057-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-mujer-61a659b63efb53caa617750710496162-640-0.webp"], category: ["Invierno"] },
+    { id: 52, name: "Kit Conjunto Térmico + Medias PP + Pasamontañas Balaclava Frio Extremo Deportivo Mujer", price: 33000, isOffer: false, outOfStock: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-0b0e681da62c6881bb17750710777057-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-mujer-61a659b63efb53caa617750710496162-640-0.webp"], category: ["Invierno"] },
 
-    { id: 53, name: "Botas Para La Lluvia Pvc Impermeables", price: 22000, isOffer: false, specs: "Ideal para el Trebajo diario", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-3-812de5ff7328091ea117547517450325-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/1905241749323922-b-e383e4662d4b9d12fc17547517540446-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-f-7378d9488c2aae220117547530519178-1024-1024.webp"], category: ["Hogar", "Invierno"] },
+    { id: 53, name: "Botas Para La Lluvia Pvc Impermeables", price: 22000, isOffer: false, outOfStock: true, specs: "Ideal para el Trebajo diario", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-3-812de5ff7328091ea117547517450325-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/1905241749323922-b-e383e4662d4b9d12fc17547517540446-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-f-7378d9488c2aae220117547530519178-1024-1024.webp"], category: ["Hogar", "Invierno"] },
 
-    { id: 54, name: "Zapatillas Cuero Ecológico c/Protecciones", price: 44000, isOffer: false, specs: "(Talle Disponible 44) <br> Pensado para motociclistas <br> Este modelo incorpora protector para la palanca de cambios y diseño anatómico con bandas reflectivas laterales y traseras, mejorando la visibilidad en condiciones de poca luz. Su suela de PVC ultra liviana y de alto grip asegura estabilidad y agarre óptimo, mientras que la plantilla de 4 mm ofrece un confort excepcional.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2011261804034479-a-47f6194aa8e8f1451617549117756693-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2011261804034479-e-b0d938dde262ea04b717549117771585-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-f-7378d9488c2aae220117547530519178-1024-1024.webp"], category: ["Hogar"] },
+    { id: 54, name: "Zapatillas Cuero Ecológico c/Protecciones", price: 44000, isOffer: false, outOfStock: true, specs: "(Talle Disponible 44) <br> Pensado para motociclistas <br> Este modelo incorpora protector para la palanca de cambios y diseño anatómico con bandas reflectivas laterales y traseras, mejorando la visibilidad en condiciones de poca luz. Su suela de PVC ultra liviana y de alto grip asegura estabilidad y agarre óptimo, mientras que la plantilla de 4 mm ofrece un confort excepcional.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2011261804034479-a-47f6194aa8e8f1451617549117756693-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2011261804034479-e-b0d938dde262ea04b717549117771585-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-f-7378d9488c2aae220117547530519178-1024-1024.webp"], category: ["Hogar"] },
 
-    { id: 55, name: " Botas Moto Ruta Cuero Sintetico", price: 57000, isOffer: false, specs: "Cuenta con bandas reflectivas para mayor visibilidad, puntera y talonera reforzada, así como un protector para la palanca de cambios que evita el desgaste prematuro. Su canillera libre y menos reforzada proporciona ligereza, mientras que el sistema de cierre con doble fijación (cierre y abrojo) asegura un ajuste firme y cómodo.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2206041315319523-c-613dc75fe6971cd60417549108538405-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2206041315319523-f-07cbeeb8b52a7b677f17549108541379-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-f-7378d9488c2aae220117547530519178-1024-1024.webp"], category: ["Hogar"] },
+    { id: 55, name: " Botas Moto Ruta Cuero Sintetico", price: 57000, isOffer: false, outOfStock: true, specs: "Cuenta con bandas reflectivas para mayor visibilidad, puntera y talonera reforzada, así como un protector para la palanca de cambios que evita el desgaste prematuro. Su canillera libre y menos reforzada proporciona ligereza, mientras que el sistema de cierre con doble fijación (cierre y abrojo) asegura un ajuste firme y cómodo.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2206041315319523-c-613dc75fe6971cd60417549108538405-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2206041315319523-f-07cbeeb8b52a7b677f17549108541379-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-f-7378d9488c2aae220117547530519178-1024-1024.webp"], category: ["Hogar"] },
 
-    { id: 56, name: "Botas Zapatillas Moto Cuerina Protecciones Trelew", price: 52000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-6-918992d0b8f76463d617547530462557-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-c-582b2a1b980b0a8a0417547530547425-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-f-7378d9488c2aae220117547530519178-640-0.webp"], category: ["Hogar"] },
+    { id: 56, name: "Botas Zapatillas Moto Cuerina Protecciones Trelew", price: 52000, isOffer: false, outOfStock: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-6-918992d0b8f76463d617547530462557-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-c-582b2a1b980b0a8a0417547530547425-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2208181835425728-f-7378d9488c2aae220117547530519178-640-0.webp"], category: ["Hogar"] },
 
-    { id: 57, name: "Kit Impermeable", price: 49000, isOffer: false, specs: "Diseñado para quienes enfrentan días lluviosos en moto o al aire libre y necesitan protección total, confort y durabilidad. <br> Incluye un equipo de lluvia (campera + pantalón) fabricado en PVC de alta calidad y botas touring 100% impermeables, ideales para conducción urbana o uso diario.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-13-f99601c9674bef8b1017544993343567-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409281229232082-d-30240f7dd6c36067a817544993496548-640-0.webp"], category: ["Hogar", "Invierno"] },
+    { id: 57, name: "Kit Impermeable", price: 49000, isOffer: false, outOfStock: true, specs: "Diseñado para quienes enfrentan días lluviosos en moto o al aire libre y necesitan protección total, confort y durabilidad. <br> Incluye un equipo de lluvia (campera + pantalón) fabricado en PVC de alta calidad y botas touring 100% impermeables, ideales para conducción urbana o uso diario.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-13-f99601c9674bef8b1017544993343567-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409281229232082-d-30240f7dd6c36067a817544993496548-640-0.webp"], category: ["Hogar", "Invierno"] },
 
     { id: 58, name: "Cortapelo Profesional Recargable X31", price: 29000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_892705-MLA93991989291_102025-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_870005-MLA82254666003_022025-O.webp", "https://http2.mlstatic.com/D_NQ_NP_653076-MLA94653116622_102025-O.webp"], category: ["Electronica"] },
 
@@ -1545,7 +1691,7 @@ const products = [
 
     { id: 61, name: "Pelota Mundial N°5 FIFA", price: 9000, isOffer: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_689132-MLA93300217531_092025-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_926277-MLA101687787744_122025-O.webp", "https://assets.adidas.com/images/w_600,f_auto,q_auto/14165d04c80b4a769d4b667f9c878666_9366/Pelota_Trionda_Competition_Copa_Mundial_de_la_FIFA_26tm_Blanco_JD8031_44_detail.jpg"], category: ["Deporte", "Infantil"] },
 
-    { id: 62, name: "Vaso Térmico", price: 17000, isOffer: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_800184-CBT93126100604_092025-O.webp", images: ["https://tu-vendes.sfo3.digitaloceanspaces.com/products/2963_2963-fp-webp.webp", "https://i0.wp.com/recargasrafaela.com.ar/wp-content/uploads/2025/04/vaso_quencher_02.jpg?fit=800,800&ssl=1", "https://acdn-us.mitiendanube.com/stores/741/031/products/5-a63bd44cca7562e5ea17737572818359-1024-1024.webp"], category: ["Hogar"] },
+    { id: 62, name: "Vaso Térmico", price: 17000, isOffer: true, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_800184-CBT93126100604_092025-O.webp", images: ["https://tu-vendes.sfo3.digitaloceanspaces.com/products/2963_2963-fp-webp.webp", "https://i0.wp.com/recargasrafaela.com.ar/wp-content/uploads/2025/04/vaso_quencher_02.jpg?fit=800,800&ssl=1", "https://acdn-us.mitiendanube.com/stores/741/031/products/5-a63bd44cca7562e5ea17737572818359-1024-1024.webp"], category: ["Hogar"] },
 
     { id: 63, name: "Joystick PS4", price: 27000, isOffer: false, specs: "", img: "https://greemos.com.ar/wp-content/uploads/12098.jpg", category: ["Electronica", "Infantil"] },
 
@@ -1559,69 +1705,69 @@ const products = [
 
     { id: 68, name: "Estante Esquinero c/Autoadhesivo", price: 8000, isOffer: false, specs: "26cm = $9.000 <br> 24cm = $8.000", img: "https://http2.mlstatic.com/D_NQ_NP_662454-CBT105073739821_012026-O.webp", category: ["Hogar"] },
 
-    { id: 69, name: "Bota de Silicona cubre Calzado", price:5500, isOffer: false, specs: "", img: "https://sc04.alicdn.com/kf/H537a312356c64a62b5c3459b5939c740d.png", category: ["Hogar"] },
+    { id: 69, name: "Bota de Silicona cubre Calzado", price:5500, isOffer: false, outOfStock: true, specs: "", img: "https://sc04.alicdn.com/kf/H537a312356c64a62b5c3459b5939c740d.png", category: ["Hogar"] },
 
     { id: 70, name: "Parlante Mini Bluetooth X", price: 6500, isOffer: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_735484-MLA83557448030_042025-O.webp", category: ["Electronica", "Parlantes"] },
 
-    { id: 71, name: "Kit Conjunto Térmico + Guantes Pp + Cuello Cordon Microfibra Hombre", price: 28000, isOffer: false, specs: "El Conjunto Térmico Microfibra está diseñado para mantener la temperatura corporal en climas fríos, mejorar el rendimiento en entrenamientos, competiciones y actividades al aire libre. Su tejido de microfibra importada de alta calidad, compuesto por 85% jersey de poliéster y 15% elastano (lycra), proporciona un ajuste anatómico, absorbe la transpiración y ofrece máxima comodidad. <br> Ideal para actividades deportivas, recuperación física y uso diario en invierno. Reduce la fatiga muscular, mejora la circulación y ofrece excelente durabilidad. <br><br> Conjunto térmico Microfibra: remera y pantalón, color negro, talles XS/S, M/L, XL/XXL. <br> Guantes Primera Piel: 85% microfibra + 15% lycra, anatómicos y resistentes. Talle único universal. <br> Cuello en polar con cordón: 23x25 cm, ajustable y utilizable como gorro.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/microfibra-677d06a21a9f14634c17728245945098-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/31397_medium-09989fe39faabc788d17549437559056-640-0.webp"], category: ["Invierno"] },
+    { id: 71, name: "Kit Conjunto Térmico + Guantes Pp + Cuello Cordon Microfibra Hombre", price: 28000, isOffer: false, outOfStock: true, specs: "El Conjunto Térmico Microfibra está diseñado para mantener la temperatura corporal en climas fríos, mejorar el rendimiento en entrenamientos, competiciones y actividades al aire libre. Su tejido de microfibra importada de alta calidad, compuesto por 85% jersey de poliéster y 15% elastano (lycra), proporciona un ajuste anatómico, absorbe la transpiración y ofrece máxima comodidad. <br> Ideal para actividades deportivas, recuperación física y uso diario en invierno. Reduce la fatiga muscular, mejora la circulación y ofrece excelente durabilidad. <br><br> Conjunto térmico Microfibra: remera y pantalón, color negro, talles XS/S, M/L, XL/XXL. <br> Guantes Primera Piel: 85% microfibra + 15% lycra, anatómicos y resistentes. Talle único universal. <br> Cuello en polar con cordón: 23x25 cm, ajustable y utilizable como gorro.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/microfibra-677d06a21a9f14634c17728245945098-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/31397_medium-09989fe39faabc788d17549437559056-640-0.webp"], category: ["Invierno"] },
 
-    { id: 72, name: "Kit Conjunto Térmico + Guantes Pp + Medias Pp + Cuello Microfibra Hombre", price: 35000, isOffer: false, specs: "El Conjunto Térmico Microfibra está diseñado para mejorar el rendimiento en entrenamientos, mantener la temperatura corporal y optimizar la recuperación física. Reduce la fatiga muscular y mejora la circulación gracias a su confección en microfibra de altísima calidad con doble compuesto (85% jersey de poliéster / 15% elastano-lycra). Ofrece ajuste perfecto, confort y resistencia para un uso prolongado. <br><br> Conjunto térmico microfibra: remera y pantalón, color negro, talles XS/S, M/L, XL/XXL. <br> Medias Primera Piel: térmicas, anatómicas, cómodas y resistentes. Talle único universal. <br> Guantes Primera Piel: microfibra 85% + lycra 15%, anatómicos y cómodos. Talle único universal. <br> Cuello en polar con cordón: medidas 23x25 cm, ajustable, utilizable también como gorro.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-37be42d2cde0951a8517549427402320-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/31411_medium-c3675c61bd06d7cc0617549427663759-640-0.webp"], category: ["Invierno"] },
+    { id: 72, name: "Kit Conjunto Térmico + Guantes Pp + Medias Pp + Cuello Microfibra Hombre", price: 35000, isOffer: false, outOfStock: true, specs: "El Conjunto Térmico Microfibra está diseñado para mejorar el rendimiento en entrenamientos, mantener la temperatura corporal y optimizar la recuperación física. Reduce la fatiga muscular y mejora la circulación gracias a su confección en microfibra de altísima calidad con doble compuesto (85% jersey de poliéster / 15% elastano-lycra). Ofrece ajuste perfecto, confort y resistencia para un uso prolongado. <br><br> Conjunto térmico microfibra: remera y pantalón, color negro, talles XS/S, M/L, XL/XXL. <br> Medias Primera Piel: térmicas, anatómicas, cómodas y resistentes. Talle único universal. <br> Guantes Primera Piel: microfibra 85% + lycra 15%, anatómicos y cómodos. Talle único universal. <br> Cuello en polar con cordón: medidas 23x25 cm, ajustable, utilizable también como gorro.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-37be42d2cde0951a8517549427402320-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/31411_medium-c3675c61bd06d7cc0617549427663759-640-0.webp"], category: ["Invierno"] },
 
-    { id: 73, name: "Kit Conjunto Térmico + Medias PP + Pasamontañas Balaclava Frio Extremo Deportivo Hombre", price: 33000, isOffer: false, specs: "Conjunto térmico (parte superior + inferior). <br> Medias primera piel. <br> Pasamontaña balaclava térmico.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/01-7031a81355285c277417750700923744-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-hombre-77383f118a9d07c1e017750701312806-640-0.webp"], category: ["Invierno"] },
+    { id: 73, name: "Kit Conjunto Térmico + Medias PP + Pasamontañas Balaclava Frio Extremo Deportivo Hombre", price: 33000, isOffer: false, outOfStock: true, specs: "Conjunto térmico (parte superior + inferior). <br> Medias primera piel. <br> Pasamontaña balaclava térmico.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/01-7031a81355285c277417750700923744-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-hombre-77383f118a9d07c1e017750701312806-640-0.webp"], category: ["Invierno"] },
 
-    { id: 74, name: "Kit Conjunto Térmico + Guantes P Piel + Cuello Cordon Frio Extremo Deportivo Mujer", price: 33000, isOffer: false, specs: "Remera y Pantalón Térmico Frío Extremo: Microfibra de alta calidad, transpirables y de ajuste anatómico. <br> Guantes Primera Piel: Microfibra 85% y lycra 15%, anatómicos, resistentes y cómodos. Talle único universal. <br> Cuello de Polar con Cordón: Medidas 23x25 cm, con cordón y traba para usar también como gorro.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/mujer-d95ebe01ff1a0005a217728241148511-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/07-b25aef32cae2b1a6a117549361589502-640-0.webp"], category: ["Invierno"] },
+    { id: 74, name: "Kit Conjunto Térmico + Guantes P Piel + Cuello Cordon Frio Extremo Deportivo Mujer", price: 33000, isOffer: false, outOfStock: true, specs: "Remera y Pantalón Térmico Frío Extremo: Microfibra de alta calidad, transpirables y de ajuste anatómico. <br> Guantes Primera Piel: Microfibra 85% y lycra 15%, anatómicos, resistentes y cómodos. Talle único universal. <br> Cuello de Polar con Cordón: Medidas 23x25 cm, con cordón y traba para usar también como gorro.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/mujer-d95ebe01ff1a0005a217728241148511-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/07-b25aef32cae2b1a6a117549361589502-640-0.webp"], category: ["Invierno"] },
 
     { id: 75, name: "Auricular Bluetooth Time Negro", price: 14000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/JS370.jpg", images: ["https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQpa2BYgY00bsDYVfwMsY9q0gsYx1rKDtUqrJT5k7dugVJb9OJU"], category: ["Auriculares"] },
 
     { id: 76, name: "Guante Térmico con táctil. Para Bici/Moto ", price: 9000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_928753-CBT105338160290_012026-O.webp", category: ["Hogar", "Invierno"] },
 
-    { id: 77, name: "Kit Conjunto Térmico + Guantes Pp + Medias Pp + Mascara Frio Extremo Deportivo Mujer", price: 36000, isOffer: false, specs: "El Kit Térmico Frío Extremo está diseñado para brindarte máxima protección, confort y rendimiento en condiciones de bajas temperaturas. Este kit completo incluye conjunto térmico, guantes, medias y máscara, ideal para actividades deportivas, motociclismo o uso diario en climas exigentes. <br> Su conjunto térmico incorpora frisa interna de alta densidad, superando a los tejidos tradicionales de microfibra, logrando una mejor conservación del calor corporal y mayor comodidad durante el uso prolongado.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-1-71ab9e88112ba95e0f17745398611734-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-mujer-49ac81c4aa0090dcc017745398913203-640-0.webp"], category: ["Invierno"] },
+    { id: 77, name: "Kit Conjunto Térmico + Guantes Pp + Medias Pp + Mascara Frio Extremo Deportivo Mujer", price: 36000, isOffer: false, outOfStock: true, specs: "El Kit Térmico Frío Extremo está diseñado para brindarte máxima protección, confort y rendimiento en condiciones de bajas temperaturas. Este kit completo incluye conjunto térmico, guantes, medias y máscara, ideal para actividades deportivas, motociclismo o uso diario en climas exigentes. <br> Su conjunto térmico incorpora frisa interna de alta densidad, superando a los tejidos tradicionales de microfibra, logrando una mejor conservación del calor corporal y mayor comodidad durante el uso prolongado.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-1-71ab9e88112ba95e0f17745398611734-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-mujer-49ac81c4aa0090dcc017745398913203-640-0.webp"], category: ["Invierno"] },
 
-    { id: 78, name: "Kit Conjunto Térmico + Guantes Pp + Medias Pp + Cuello Frio Extremo Deportivo Mujer", price: 35000, isOffer: false, specs: "El Conjunto Térmico Frío Extremo está pensado para rendir en temperaturas muy bajas. Confeccionado en microfibra importada (85% poliéster / 15% elastano-lycra), absorbe la transpiración y queda bien ajustado al cuerpo para conservar el calor sin perder movilidad. <br><br> Remera y Pantalón térmico Frío Extremo: misma tela, espesor y peso; ajuste anatómico y secado rápido. <br> Medias Primera Piel / Tubo Abrigadas Nepal: mantienen la temperatura, anatómicas, eliminan la humedad. Talle único universal. <br> Guantes Primera Piel: doble compuesto Microfibra 85% + Lycra 15%, anatómicos y confortables. Talle único universal. <br> Cuello en Polar con cordón: 23 × 25 cm, con cordón y traba; puede usarse como gorro.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-7d1ca3e0f9445bcf7217549382503897-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-mujer-49ac81c4aa0090dcc017745398913203-640-0.webp"], category: ["Invierno"] },
+    { id: 78, name: "Kit Conjunto Térmico + Guantes Pp + Medias Pp + Cuello Frio Extremo Deportivo Mujer", price: 35000, isOffer: false, outOfStock: true, specs: "El Conjunto Térmico Frío Extremo está pensado para rendir en temperaturas muy bajas. Confeccionado en microfibra importada (85% poliéster / 15% elastano-lycra), absorbe la transpiración y queda bien ajustado al cuerpo para conservar el calor sin perder movilidad. <br><br> Remera y Pantalón térmico Frío Extremo: misma tela, espesor y peso; ajuste anatómico y secado rápido. <br> Medias Primera Piel / Tubo Abrigadas Nepal: mantienen la temperatura, anatómicas, eliminan la humedad. Talle único universal. <br> Guantes Primera Piel: doble compuesto Microfibra 85% + Lycra 15%, anatómicos y confortables. Talle único universal. <br> Cuello en Polar con cordón: 23 × 25 cm, con cordón y traba; puede usarse como gorro.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-7d1ca3e0f9445bcf7217549382503897-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-mujer-49ac81c4aa0090dcc017745398913203-640-0.webp"], category: ["Invierno"] },
 
-    { id: 79, name: "Kit De Lluvia Pvc Mujer Piloto + Botas", price: 55000, isOffer: false, specs: "Prepárate para cualquier clima con el combo impermeable, que incluye el traje de lluvia y las botas Touring de PVC. Diseñado para quienes se mueven en moto todos los días, este set combina protección, durabilidad y diseño funcional.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-63c8615e39adfd591d17545184328075-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-7267369cf33ae4d31c17545184419112-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/06-31140afea2fee1ad4417545184491244-640-0.webp"], category: ["Hogar", "Invierno"] },
+    { id: 79, name: "Kit De Lluvia Pvc Mujer Piloto + Botas", price: 55000, isOffer: false, outOfStock: true, specs: "Prepárate para cualquier clima con el combo impermeable, que incluye el traje de lluvia y las botas Touring de PVC. Diseñado para quienes se mueven en moto todos los días, este set combina protección, durabilidad y diseño funcional.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-63c8615e39adfd591d17545184328075-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-7267369cf33ae4d31c17545184419112-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/06-31140afea2fee1ad4417545184491244-640-0.webp"], category: ["Hogar", "Invierno"] },
 
-    { id: 80, name: "Kit De Lluvia Pvc Hombre Piloto + Botas + Cuello + Mascara", price: 55000, isOffer: false, specs: "El combo fue pensado para brindar protección total contra la lluvia, el viento y el frío. Ideal para motociclistas urbanos o usuarios exigentes que buscan calidad y durabilidad en cada salida. Incluye traje impermeable (campera y pantalón), botas touring de PVC, máscara polar y cuello térmico. <br> Con este kit, vas a poder enfrentar los días más complicados con comodidad, resistencia y estilo. Todos los productos están fabricados con materiales impermeables, térmicos y de alta durabilidad. <br><br> Traje impermeable de PVC 0.28 con cierre YKK y velcro. <br> Pantalón con ajuste inferior y bolsillos internos y externos. <br> Botas touring de PVC, 100% impermeables, cómodas y con puntera reforzada.<br> Máscara de neoprene y polar, con cobertura de orejas y respirador lateral anti-empañe. <br> Cuello polar con cordón ajustable y traba, también usable como gorro.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-10-f597c7ceb386c7ae4417544930860155-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409281249273215-c-e3d37a86358d77a76117544931140203-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409281249273215-i-1638b0fb9f0227487517544931127334-640-0.webp"], category: ["Hogar", "Invierno"] },
+    { id: 80, name: "Kit De Lluvia Pvc Hombre Piloto + Botas + Cuello + Mascara", price: 55000, isOffer: false, outOfStock: true, specs: "El combo fue pensado para brindar protección total contra la lluvia, el viento y el frío. Ideal para motociclistas urbanos o usuarios exigentes que buscan calidad y durabilidad en cada salida. Incluye traje impermeable (campera y pantalón), botas touring de PVC, máscara polar y cuello térmico. <br> Con este kit, vas a poder enfrentar los días más complicados con comodidad, resistencia y estilo. Todos los productos están fabricados con materiales impermeables, térmicos y de alta durabilidad. <br><br> Traje impermeable de PVC 0.28 con cierre YKK y velcro. <br> Pantalón con ajuste inferior y bolsillos internos y externos. <br> Botas touring de PVC, 100% impermeables, cómodas y con puntera reforzada.<br> Máscara de neoprene y polar, con cobertura de orejas y respirador lateral anti-empañe. <br> Cuello polar con cordón ajustable y traba, también usable como gorro.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-10-f597c7ceb386c7ae4417544930860155-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409281249273215-c-e3d37a86358d77a76117544931140203-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409281249273215-i-1638b0fb9f0227487517544931127334-640-0.webp"], category: ["Hogar", "Invierno"] },
 
-    { id: 81, name: "Kit Medias Termicas + Medias Primera Piel Pro Ski Nieve Frio Pro", price: 18000, isOffer: false, specs: "Con este combo especial de Medias Pro vas a estar preparado para enfrentar el invierno con el máximo confort. Incluye 1 par de medias térmicas de caña alta y 1 par de medias primera piel, ideales para ski, nieve, trekking, moto o uso urbano en bajas temperaturas. <br> Ambas están confeccionadas con microfibra y elastano, lo que garantiza una excelente retención del calor, absorción de la humedad, calce anatómico y durabilidad superior. Perfectas para usarlas en conjunto o por separado, según la ocasión.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/01-ff8e55abcb18479e7f17649664904169-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-3de2104316ad41e90917649666540610-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-4aafe7bd87dfc16b5817649665274936-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-8f89c2b82ca999279a17649666038366-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-2bd7142b4085fed84417649665324599-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-f3690e41b14cf4329b17649666185591-640-0.webp"], category: ["Hogar", "Invierno"] },
+    { id: 81, name: "Kit Medias Termicas + Medias Primera Piel Pro Ski Nieve Frio Pro", price: 18000, isOffer: false, outOfStock: true, specs: "Con este combo especial de Medias Pro vas a estar preparado para enfrentar el invierno con el máximo confort. Incluye 1 par de medias térmicas de caña alta y 1 par de medias primera piel, ideales para ski, nieve, trekking, moto o uso urbano en bajas temperaturas. <br> Ambas están confeccionadas con microfibra y elastano, lo que garantiza una excelente retención del calor, absorción de la humedad, calce anatómico y durabilidad superior. Perfectas para usarlas en conjunto o por separado, según la ocasión.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/01-ff8e55abcb18479e7f17649664904169-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-3de2104316ad41e90917649666540610-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-4aafe7bd87dfc16b5817649665274936-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-8f89c2b82ca999279a17649666038366-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-2bd7142b4085fed84417649665324599-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-f3690e41b14cf4329b17649666185591-640-0.webp"], category: ["Hogar", "Invierno"] },
 
-    { id: 82, name: "Cuello Térmico Polar", price: 6000, isOffer: false, specs: "Preparate para el frío con el clásico gorro, diseñado para ofrecer protección térmica y confort durante los días de otoño e invierno. Su diseño funcional con cordón ajustable y traba permite adaptarlo cómodamente a tu cabeza o cuello, brindando mayor versatilidad en el uso diario.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2000-x-2000-ale2-090130aa19cab1af2b17545945550256-1024-1024.webp", category: ["Invierno"] },
+    { id: 82, name: "Cuello Térmico Polar", price: 6000, isOffer: false, outOfStock: true, specs: "Preparate para el frío con el clásico gorro, diseñado para ofrecer protección térmica y confort durante los días de otoño e invierno. Su diseño funcional con cordón ajustable y traba permite adaptarlo cómodamente a tu cabeza o cuello, brindando mayor versatilidad en el uso diario.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2000-x-2000-ale2-090130aa19cab1af2b17545945550256-1024-1024.webp", category: ["Invierno"] },
 
-    { id: 83, name: "Campera Inflable Con Corderito Hombre", price: 37000, isOffer: false, specs: "Talles: S - M - L. <br> Colores: Negro - Verde Claro - Gris Topo - Verde Militar. <br> La Campera Simil Pluma está diseñada para ofrecerte abrigo, comodidad y estilo en la temporada Otoño/Invierno. Confeccionada con materiales de alta calidad y corderito en el interior, proporciona un aislamiento térmico superior sin perder ligereza.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404111748197815-a-6dbe6617d918e53c5617546801193761-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2506271357362034-a-e7c09c7ba95a49d78f17546801303203-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2505201751394776-a-015bb43d23784fecd517546801128221-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404111748203627-a-b2c894f377e636174517546801393101-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404111748191120-g-7a351ca77ff7ee74e017546800365266-640-0.webp"], category: ["Invierno"] },
+    { id: 83, name: "Campera Inflable Con Corderito Hombre", price: 37000, isOffer: false, outOfStock: true, specs: "Talles: S - M - L. <br> Colores: Negro - Verde Claro - Gris Topo - Verde Militar. <br> La Campera Simil Pluma está diseñada para ofrecerte abrigo, comodidad y estilo en la temporada Otoño/Invierno. Confeccionada con materiales de alta calidad y corderito en el interior, proporciona un aislamiento térmico superior sin perder ligereza.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404111748197815-a-6dbe6617d918e53c5617546801193761-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2506271357362034-a-e7c09c7ba95a49d78f17546801303203-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2505201751394776-a-015bb43d23784fecd517546801128221-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404111748203627-a-b2c894f377e636174517546801393101-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404111748191120-g-7a351ca77ff7ee74e017546800365266-640-0.webp"], category: ["Invierno"] },
 
-    { id: 84, name: "Campera Inflable Con Capucha Corderito Mujer", price: 36000, isOffer: false, specs: "Talles: S - M - L - XL - XXL. <br> La Campera Simil Pluma está diseñada para ofrecerte abrigo, comodidad y estilo en la temporada Otoño/Invierno. Confeccionada con materiales de alta calidad y corderito en el interior, proporciona un aislamiento térmico superior sin perder ligereza. <br> Su diseño importado y de calidad premium garantiza durabilidad y un excelente calce. La combinación de simil pluma, poliéster y corderito ofrece una textura suave y confortable, ideal para el uso diario. Además, su capucha integrada y bolsillos con cierre brindan mayor practicidad y protección en días fríos. <br> Material simil pluma con interior de corderito para máximo abrigo. <br> Capucha fija para resguardo adicional. <br> Bolsillos laterales con cierre. <br> Diseño liviano y cómodo. <br><br> Recomendación de talles: Los talles son reales pero no amplios. Recomendamos adquirir el talle habitual que uses. Si estás entre dos talles, elegí uno más grande para mayor comodidad.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2505201840018375-a-414566efb17fe30f1f17546810089075-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404111748199498-a-a5451590fd0ddf8eb817546811249852-1024-1024.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404111748181932-a-db3e2ac77f2e32026517546811325836-1024-1024.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2505201851083163-a-b8dd98df325d7c876017546811509606-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2505201840018375-d-4d36c860336551d13c17546810117386-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2505201840018375-g-740cc46679a2938d5d17546810063031-640-0.webp"], category: ["Invierno"] },
+    { id: 84, name: "Campera Inflable Con Capucha Corderito Mujer", price: 36000, isOffer: false, outOfStock: true, specs: "Talles: S - M - L - XL - XXL. <br> La Campera Simil Pluma está diseñada para ofrecerte abrigo, comodidad y estilo en la temporada Otoño/Invierno. Confeccionada con materiales de alta calidad y corderito en el interior, proporciona un aislamiento térmico superior sin perder ligereza. <br> Su diseño importado y de calidad premium garantiza durabilidad y un excelente calce. La combinación de simil pluma, poliéster y corderito ofrece una textura suave y confortable, ideal para el uso diario. Además, su capucha integrada y bolsillos con cierre brindan mayor practicidad y protección en días fríos. <br> Material simil pluma con interior de corderito para máximo abrigo. <br> Capucha fija para resguardo adicional. <br> Bolsillos laterales con cierre. <br> Diseño liviano y cómodo. <br><br> Recomendación de talles: Los talles son reales pero no amplios. Recomendamos adquirir el talle habitual que uses. Si estás entre dos talles, elegí uno más grande para mayor comodidad.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2505201840018375-a-414566efb17fe30f1f17546810089075-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404111748199498-a-a5451590fd0ddf8eb817546811249852-1024-1024.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404111748181932-a-db3e2ac77f2e32026517546811325836-1024-1024.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2505201851083163-a-b8dd98df325d7c876017546811509606-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2505201840018375-d-4d36c860336551d13c17546810117386-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2505201840018375-g-740cc46679a2938d5d17546810063031-640-0.webp"], category: ["Invierno"] },
 
     { id: 85, name: "Juego Herramientas De Tubo 46 Piezas", price: 13000, isOffer: false, specs: "Equipá tu hogar, vehículo o taller con este completo set de herramientas de 46 piezas. Ideal para tareas cotidianas, armado de muebles o mecánica ligera, incluye todo lo necesario en un práctico estuche organizador portátil. <br> Diseñado con acero de alta resistencia y acabado cromado, este kit ofrece durabilidad, precisión y comodidad gracias a su mango antideslizante y componentes ergonómicos. Viene en un estuche plástico organizador para un transporte seguro y ordenado. <br> Incluye: 13 llaves tubo, 21 puntas, llave criquet reversible, llaves Allen, adaptadores y extensiones. <br> Mango tipo destornillador: ergonómico, ideal para los bits. <br> Extensión flexible: de 6\" para zonas de difícil acceso. <br> Movimiento en ángulo: para tareas mecánicas versátiles. <br> Material: acero cromado de alta resistencia. <br> Organización total: estuche plástico resistente incluido. <br> Ideal para: automóviles, bicicletas, trabajos de precisión y mantenimiento general.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-28e9822f68ab45e98d17544286606739-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/platilla_herramientas_4-e1344c20a2f9e8a41117761698633401-640-0.webp", "https://http2.mlstatic.com/D_Q_NP_863131-MLA97103448300_112025-O.webp"], category: ["Hogar"] },
 
-    { id: 86, name: "Carrito de Compras", price: 18000, isOffer: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_654419-MLA83235301908_042025-O.webp", images: ["https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRZpD6cM6P_TJ4M9NhBDNO6Fc4fcUD-xe3uLMPKS6jqgRoVVQBs"], category: ["Hogar"] },
+    { id: 86, name: "Carrito de Compras", price: 18000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_654419-MLA83235301908_042025-O.webp", images: ["https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRZpD6cM6P_TJ4M9NhBDNO6Fc4fcUD-xe3uLMPKS6jqgRoVVQBs"], category: ["Hogar"] },
 
-    { id: 87, name: "Mochila Porta Notebook 212", price: 28000, isOffer: false, specs: "La Mochila 212 está diseñada para acompañarte a todas partes, combinando practicidad, estilo y materiales resistentes. Su diseño ergonómico, su capacidad de 35 litros y su tejido antidesgarro la hacen ideal tanto para el uso diario como para viajes o actividades al aire libre. <br> Además de ser impermeable, cuenta con bolsillos funcionales, compartimento para notebook y salida para auriculares, todo pensado para brindarte la mayor comodidad durante el día. <br><br> Capacidad de 35 litros con diseño ergonómico. <br> Material antidesgarro e impermeable de alta resistencia. <br> Compartimento para notebook y salida para auriculares. <br> Bolsillos laterales de red, perfectos para botellas o bebidas. <br> Estructura reforzada y cómoda para llevar todo el día.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021638589830-b-54ecc87edd13f47f0117544193388034-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021638589830-a-ced06db6efc5c6466917544193324874-1024-1024.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021638589830-c-cf9ed6b224dc87af8c17544193383422-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021638589830-d-5f622118911fe7dd8217544193376056-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021638589830-e-6af5866574fbc01dc417544193380234-640-0.webp"], category: ["Hogar"] },
+    { id: 87, name: "Mochila Porta Notebook 212", price: 28000, isOffer: false, outOfStock: true, specs: "La Mochila 212 está diseñada para acompañarte a todas partes, combinando practicidad, estilo y materiales resistentes. Su diseño ergonómico, su capacidad de 35 litros y su tejido antidesgarro la hacen ideal tanto para el uso diario como para viajes o actividades al aire libre. <br> Además de ser impermeable, cuenta con bolsillos funcionales, compartimento para notebook y salida para auriculares, todo pensado para brindarte la mayor comodidad durante el día. <br><br> Capacidad de 35 litros con diseño ergonómico. <br> Material antidesgarro e impermeable de alta resistencia. <br> Compartimento para notebook y salida para auriculares. <br> Bolsillos laterales de red, perfectos para botellas o bebidas. <br> Estructura reforzada y cómoda para llevar todo el día.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021638589830-b-54ecc87edd13f47f0117544193388034-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021638589830-a-ced06db6efc5c6466917544193324874-1024-1024.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021638589830-c-cf9ed6b224dc87af8c17544193383422-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021638589830-d-5f622118911fe7dd8217544193376056-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021638589830-e-6af5866574fbc01dc417544193380234-640-0.webp"], category: ["Hogar"] },
 
-    { id: 89, name: "Mochila Urbana Porta Notebook 2217", price: 23000, isOffer: false, specs: "Diseñada para quienes buscan practicidad y protección, la Mochila 2217 ofrece el equilibrio justo entre capacidad, ligereza y resistencia. Confeccionada en tela antidesgarro y con estructura reforzada, se adapta perfectamente a tu rutina diaria, viajes cortos o salidas de estudio. <br> Gracias a su diseño ergonómico, compartimento para notebook y múltiples bolsillos, esta mochila te permite mantener todo bien organizado, protegido y al alcance en todo momento. <br><br> Capacidad de 30 litros. <br> Compartimento para notebook de hasta 16”. <br> Tejido Oxford antidesgarro y resistente a salpicaduras. <br> 6 bolsillos funcionales con cierre resistente. <br> Diseño ergonómico con estructura reforzada. <br> Tela liviana, suave y cómoda al uso diario. <br> Espalda acolchada y tiras ajustables.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2000x2000-juve-3-ba7ebb7c664fc46a2b17544158178562-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404121429594959-b-b2fcec9c52c78622fb17544158362287-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404121429594959-b-b2fcec9c52c78622fb17544158362287-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404121429594959-d-77c7565edc786a47dc17544158375799-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404121429594959-d-77c7565edc786a47dc17544158375799-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404121429594959-f-0671eb785c84ad726317544158373514-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404121429594959-h-18601caaecb2eff18717544158362321-640-0.webp"], category: ["Hogar"] },
+    { id: 89, name: "Mochila Urbana Porta Notebook 2217", price: 23000, isOffer: false, outOfStock: true, specs: "Diseñada para quienes buscan practicidad y protección, la Mochila 2217 ofrece el equilibrio justo entre capacidad, ligereza y resistencia. Confeccionada en tela antidesgarro y con estructura reforzada, se adapta perfectamente a tu rutina diaria, viajes cortos o salidas de estudio. <br> Gracias a su diseño ergonómico, compartimento para notebook y múltiples bolsillos, esta mochila te permite mantener todo bien organizado, protegido y al alcance en todo momento. <br><br> Capacidad de 30 litros. <br> Compartimento para notebook de hasta 16”. <br> Tejido Oxford antidesgarro y resistente a salpicaduras. <br> 6 bolsillos funcionales con cierre resistente. <br> Diseño ergonómico con estructura reforzada. <br> Tela liviana, suave y cómoda al uso diario. <br> Espalda acolchada y tiras ajustables.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2000x2000-juve-3-ba7ebb7c664fc46a2b17544158178562-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404121429594959-b-b2fcec9c52c78622fb17544158362287-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404121429594959-b-b2fcec9c52c78622fb17544158362287-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404121429594959-d-77c7565edc786a47dc17544158375799-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404121429594959-d-77c7565edc786a47dc17544158375799-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404121429594959-f-0671eb785c84ad726317544158373514-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2404121429594959-h-18601caaecb2eff18717544158362321-640-0.webp"], category: ["Hogar"] },
 
-    { id: 90, name: "Mochila Antirrobo Porta Notebook 1322", price: 32000, isOffer: false, specs: "Transportá todo lo que necesitás con comodidad y estilo gracias a la Mochila 1322. Confeccionada en tejido Oxford antidesgarro, resistente al agua y de gran durabilidad, es ideal para uso urbano, laboral o de estudio. <br> Esta mochila ofrece gran capacidad de organización con compartimentos múltiples y espacio exclusivo para notebook de hasta 15.6\". Sus detalles ergonómicos brindan una postura cómoda durante el uso diario. Incorpora bolsillo con cierre en la correa para tarjetas, tiras reflectivas, y una correa de fijación para valijas con ruedas, ideal para quienes están en constante movimiento. <br><br> Capacidad: 30 litros. <br> Material: Oxford antidesgarro resistente al agua. <br> Diseño ergonómico: pensado para uso urbano diario. <br> Compartimento para notebook: de hasta 15.6\". <br> Correa de fijación: se adapta a maletas con ruedas. <br> Bolsillo con cierre en correa: ideal para tarjetas o llaves. <br> Salidas de auriculares: integradas. <br> Tiras reflectivas: mayor visibilidad en la vía pública. <br> Medidas: 46 cm alto x 33 cm ancho x 18 cm profundidad.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-98f613ca6c2d63b6ce17545108905846-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021230409583-a-6cd9616b389aa0db7617545109474849-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-b-1195b4620c25201c3f17545109013831-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-c-4185def3b1a55f250817545109102373-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-d-12515a4b1cfb3b15a517545109144418-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-f-e37918c2570a51556d17545109209936-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-g-e3ff5495e4ad9f7c1a17545109249507-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-h-64a4c41f841fc4c90e17545109279076-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-i-cad426d8950442cd1d17545109315915-640-0.webp"], category: ["Hogar"] },
+    { id: 90, name: "Mochila Antirrobo Porta Notebook 1322", price: 32000, isOffer: false, outOfStock: true, specs: "Transportá todo lo que necesitás con comodidad y estilo gracias a la Mochila 1322. Confeccionada en tejido Oxford antidesgarro, resistente al agua y de gran durabilidad, es ideal para uso urbano, laboral o de estudio. <br> Esta mochila ofrece gran capacidad de organización con compartimentos múltiples y espacio exclusivo para notebook de hasta 15.6\". Sus detalles ergonómicos brindan una postura cómoda durante el uso diario. Incorpora bolsillo con cierre en la correa para tarjetas, tiras reflectivas, y una correa de fijación para valijas con ruedas, ideal para quienes están en constante movimiento. <br><br> Capacidad: 30 litros. <br> Material: Oxford antidesgarro resistente al agua. <br> Diseño ergonómico: pensado para uso urbano diario. <br> Compartimento para notebook: de hasta 15.6\". <br> Correa de fijación: se adapta a maletas con ruedas. <br> Bolsillo con cierre en correa: ideal para tarjetas o llaves. <br> Salidas de auriculares: integradas. <br> Tiras reflectivas: mayor visibilidad en la vía pública. <br> Medidas: 46 cm alto x 33 cm ancho x 18 cm profundidad.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-98f613ca6c2d63b6ce17545108905846-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021230409583-a-6cd9616b389aa0db7617545109474849-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-b-1195b4620c25201c3f17545109013831-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-c-4185def3b1a55f250817545109102373-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-d-12515a4b1cfb3b15a517545109144418-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-f-e37918c2570a51556d17545109209936-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-g-e3ff5495e4ad9f7c1a17545109249507-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-h-64a4c41f841fc4c90e17545109279076-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-i-cad426d8950442cd1d17545109315915-640-0.webp"], category: ["Hogar"] },
 
-    { id: 90, name: "Mochila Porta Notebook c/Carga USB 1803", price: 22000, isOffer: false, specs: "La Mochila 1803 combina funcionalidad, diseño moderno y materiales resistentes en un formato compacto. Ideal para el trabajo, la universidad o escapadas rápidas, esta mochila ofrece comodidad, seguridad y conectividad en cada movimiento. <br> Está confeccionada con tela antidesgarro impermeable, cuenta con puerto USB, salida para auriculares y un compartimento acolchado para notebook, todo en una estructura liviana y reforzada. <br><br> Capacidad de 20 litros con múltiples compartimientos. <br> Puerto USB y salida para auriculares integrados. <br> Compartimento para notebook de hasta 16”. <br> Tela Oxford impermeable y antidesgarro. <br> Cierre reforzado y costuras elegantes. <br> Diseño ergonómico, liviano y cómodo.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-1-8691404f8a0ec771b917544772429066-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161848256815-a-2796d14753c362e33f17544773262111-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-b-c46be07fc2aacd4aac17544773045202-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-e-64d16ee70c6689550817544773059259-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-d-64611fa89e603e158617544773065227-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-c-8bac3c739150c0abaa17544773062400-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-i-b3488d587ee8453c7b17544773101176-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-h-dd2c69e60d320591a817544773088080-640-0.webp"], category: ["Hogar"] },
+    { id: 90, name: "Mochila Porta Notebook c/Carga USB 1803", price: 22000, isOffer: false, outOfStock: true, specs: "La Mochila 1803 combina funcionalidad, diseño moderno y materiales resistentes en un formato compacto. Ideal para el trabajo, la universidad o escapadas rápidas, esta mochila ofrece comodidad, seguridad y conectividad en cada movimiento. <br> Está confeccionada con tela antidesgarro impermeable, cuenta con puerto USB, salida para auriculares y un compartimento acolchado para notebook, todo en una estructura liviana y reforzada. <br><br> Capacidad de 20 litros con múltiples compartimientos. <br> Puerto USB y salida para auriculares integrados. <br> Compartimento para notebook de hasta 16”. <br> Tela Oxford impermeable y antidesgarro. <br> Cierre reforzado y costuras elegantes. <br> Diseño ergonómico, liviano y cómodo.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-1-8691404f8a0ec771b917544772429066-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161848256815-a-2796d14753c362e33f17544773262111-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-b-c46be07fc2aacd4aac17544773045202-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-e-64d16ee70c6689550817544773059259-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-d-64611fa89e603e158617544773065227-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-c-8bac3c739150c0abaa17544773062400-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-i-b3488d587ee8453c7b17544773101176-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-h-dd2c69e60d320591a817544773088080-640-0.webp"], category: ["Hogar"] },
 
-    { id: 91, name: "Mochila Deportiva 2327", price: 27000, isOffer: false, specs: "La Mochila 2327 es la aliada perfecta para quienes buscan capacidad, resistencia y funcionalidad en sus salidas diarias, viajes o actividades deportivas. Con un diseño moderno y ultra liviano, combina estilo con practicidad en cada detalle. <br> Su confección en Oxford 100% impermeable y reforzado ofrece durabilidad y protección en cualquier clima. Incluye amplio compartimento principal, bolsillo porta notebook, bolsillos frontales con cierre y espalda acolchada que brinda mayor comodidad. Todo pensado para tu comodidad y seguridad. <br><br> Compartimento para notebook: ideal para laptops de hasta 17\". <br> Tiras acolchadas: que reducen la carga sobre los hombros. <br> Diseño ergonómico: con espalda acolchada para mayor confort. <br> Modelo liviano: fácil de transportar en cualquier ocasión.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120826354346-a-9ed51a496699f3107017544108127668-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120826354346-c-5d14f126dcdd116e0117544108129013-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120826354346-b-61de471dc4f6c7da2317544108130880-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120826354346-d-766a746cc024532af017544108138259-640-0.webp"], category: ["Hogar"] },
+    { id: 91, name: "Mochila Deportiva 2327", price: 27000, isOffer: false, outOfStock: true, specs: "La Mochila 2327 es la aliada perfecta para quienes buscan capacidad, resistencia y funcionalidad en sus salidas diarias, viajes o actividades deportivas. Con un diseño moderno y ultra liviano, combina estilo con practicidad en cada detalle. <br> Su confección en Oxford 100% impermeable y reforzado ofrece durabilidad y protección en cualquier clima. Incluye amplio compartimento principal, bolsillo porta notebook, bolsillos frontales con cierre y espalda acolchada que brinda mayor comodidad. Todo pensado para tu comodidad y seguridad. <br><br> Compartimento para notebook: ideal para laptops de hasta 17\". <br> Tiras acolchadas: que reducen la carga sobre los hombros. <br> Diseño ergonómico: con espalda acolchada para mayor confort. <br> Modelo liviano: fácil de transportar en cualquier ocasión.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120826354346-a-9ed51a496699f3107017544108127668-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120826354346-c-5d14f126dcdd116e0117544108129013-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120826354346-b-61de471dc4f6c7da2317544108130880-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120826354346-d-766a746cc024532af017544108138259-640-0.webp"], category: ["Hogar"] },
 
-    { id: 92, name: "Mochila Porta Notebook 17\" c/Carga USB 1327", price: 27000, isOffer: false, specs: "La Mochila 1327 es la compañera ideal para tu día a día. Su tamaño compacto y diseño moderno te permite transportar todo lo necesario, ya sea para ir al trabajo, a la universidad o en viajes cortos. Fabricada en tela Oxford antidesgarro y con compartimento especial para notebook de hasta 17 pulgadas, combina funcionalidad, resistencia y confort. <br><br> Capacidad de 20 litros ideal para uso diario u oficina. <br> Puerto USB externo para carga portátil. <br> Compartimento acolchado para notebook de hasta 17\". <br> Tela Oxford impermeable y antidesgarro. <br> Diseño urbano con bolsillos funcionales y detalles reflectivos.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161921045394-b-03f032aa14188bb61117544218885639-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161918375413-a-618cbc44fdff32758917544219057227-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161921045394-j-0a57deb04c60bc22e517544218882417-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161921045394-d-54b6b0d92f9861e3a417544218886624-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161921045394-b-03f032aa14188bb61117544218885639-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161921045394-i-a090c25dd9cb09af7a17544218887899-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161921045394-h-a33c1c7f5e06d2be3517544218884169-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161921045394-g-9a7a6905139736b87417544218889060-640-0.webp"], category: ["Hogar"] },
+    { id: 92, name: "Mochila Porta Notebook 17\" c/Carga USB 1327", price: 27000, isOffer: false, outOfStock: true, specs: "La Mochila 1327 es la compañera ideal para tu día a día. Su tamaño compacto y diseño moderno te permite transportar todo lo necesario, ya sea para ir al trabajo, a la universidad o en viajes cortos. Fabricada en tela Oxford antidesgarro y con compartimento especial para notebook de hasta 17 pulgadas, combina funcionalidad, resistencia y confort. <br><br> Capacidad de 20 litros ideal para uso diario u oficina. <br> Puerto USB externo para carga portátil. <br> Compartimento acolchado para notebook de hasta 17\". <br> Tela Oxford impermeable y antidesgarro. <br> Diseño urbano con bolsillos funcionales y detalles reflectivos.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161921045394-b-03f032aa14188bb61117544218885639-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161918375413-a-618cbc44fdff32758917544219057227-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161921045394-j-0a57deb04c60bc22e517544218882417-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161921045394-d-54b6b0d92f9861e3a417544218886624-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161921045394-b-03f032aa14188bb61117544218885639-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161921045394-i-a090c25dd9cb09af7a17544218887899-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161921045394-h-a33c1c7f5e06d2be3517544218884169-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161921045394-g-9a7a6905139736b87417544218889060-640-0.webp"], category: ["Hogar"] },
 
-    { id: 93, name: "Mochila 802", price: 26000, isOffer: false, specs: "Perfecta para estudio, oficina o uso urbano, ofrece comodidad y estilo sin renunciar a la durabilidad. <br> Su estructura liviana de Oxford reforzado permite llevar lo esencial con total seguridad. Cuenta con compartimento acolchado para notebook de hasta 17\", bolsillos externos y portabotellas laterales. Además, su repelencia al agua protege tus objetos personales ante imprevistos climáticos. <br><br> Capacidad: 20 litros, ideal para uso diario. <br> Diseño urbano: simple, cómodo y funcional. <br> Redes laterales: portabotellas o accesorios.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2000x2000-juve-6a1959e81736018fbb17544055923175-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409170851452585-a-82c836e9d00fbaf8c017544057833443-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409170858362248-a-3cd3031cd8c3dd3c4617544057638238-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409170858361176-a-55bee0336b98515f4f17544057728684-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409170858355909-i-f5463f9303ca9cd09717544056356281-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409170858355909-j-9afc53aad1e8a9be1217544056360312-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409170858355909-d-1a0c122d378d431c5217544056363210-640-0.webp"], category: ["Hogar"] },
+    { id: 93, name: "Mochila 802", price: 26000, isOffer: false, outOfStock: true, specs: "Perfecta para estudio, oficina o uso urbano, ofrece comodidad y estilo sin renunciar a la durabilidad. <br> Su estructura liviana de Oxford reforzado permite llevar lo esencial con total seguridad. Cuenta con compartimento acolchado para notebook de hasta 17\", bolsillos externos y portabotellas laterales. Además, su repelencia al agua protege tus objetos personales ante imprevistos climáticos. <br><br> Capacidad: 20 litros, ideal para uso diario. <br> Diseño urbano: simple, cómodo y funcional. <br> Redes laterales: portabotellas o accesorios.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2000x2000-juve-6a1959e81736018fbb17544055923175-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409170851452585-a-82c836e9d00fbaf8c017544057833443-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409170858362248-a-3cd3031cd8c3dd3c4617544057638238-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409170858361176-a-55bee0336b98515f4f17544057728684-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409170858355909-i-f5463f9303ca9cd09717544056356281-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409170858355909-j-9afc53aad1e8a9be1217544056360312-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409170858355909-d-1a0c122d378d431c5217544056363210-640-0.webp"], category: ["Hogar"] },
 
-    { id: 94, name: "Mochila Plegable 608", price: 12000, isOffer: false, specs: "La Mochila 608 es ideal para quienes buscan practicidad, ligereza y versatilidad. Con su diseño plegable y estructura liviana, se convierte en la compañera perfecta para escapadas, caminatas, paseos al aire libre o simplemente para tenerla siempre a mano como mochila auxiliar. <br> Fabricada en poliéster impermeable y con diseño ergonómico, brinda una experiencia de uso cómoda, incluso en actividades prolongadas o bajo condiciones climáticas adversas. <br><br> Capacidad de 15 litros.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120729041577-a-a103049d5c49a37f4c17544171169536-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120729041577-c-08a0c772f3d4ec9f7b17544171167880-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120729041577-d-d4db113db08e97fd3a17544171181169-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120729041577-i-bdd43c97cb1bcb6dab17544171164479-640-0.webp"], category: ["Hogar"] },
+    { id: 94, name: "Mochila Plegable 608", price: 12000, isOffer: false, outOfStock: true, specs: "La Mochila 608 es ideal para quienes buscan practicidad, ligereza y versatilidad. Con su diseño plegable y estructura liviana, se convierte en la compañera perfecta para escapadas, caminatas, paseos al aire libre o simplemente para tenerla siempre a mano como mochila auxiliar. <br> Fabricada en poliéster impermeable y con diseño ergonómico, brinda una experiencia de uso cómoda, incluso en actividades prolongadas o bajo condiciones climáticas adversas. <br><br> Capacidad de 15 litros.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120729041577-a-a103049d5c49a37f4c17544171169536-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120729041577-c-08a0c772f3d4ec9f7b17544171167880-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120729041577-d-d4db113db08e97fd3a17544171181169-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120729041577-i-bdd43c97cb1bcb6dab17544171164479-640-0.webp"], category: ["Hogar"] },
 
-    { id: 95, name: "Mochila Bolsa Viaje Trekking 527", price: 19000, isOffer: false, specs: "La Mochila 527 es tu compañera ideal para salidas de trekking, escapadas al aire libre o viajes urbanos. Diseñada en poliéster impermeable, combina resistencia, liviandad y practicidad, ocupando muy poco espacio cuando no la necesitás. <br> A pesar de su peso reducido, ofrece una capacidad de 25 litros y cuenta con compartimento para notebook, bolsillo lateral para botella y costuras reforzadas para acompañarte en todas tus aventuras.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120723238458-a-183ef37b2a4213aa7f17543992811673-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120723235844-a-18df4e03749b08c6a917543992730338-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120719276553-f-55a2ec112cbce34db717543992566543-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120719276553-e-9385efcad637acae2717543992571900-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120719276553-d-0953bab7d7daaa6c2717543992560444-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120719276553-g-60cd35100d45543f1517543992558699-640-0.webp"], category: ["Hogar"] },
+    { id: 95, name: "Mochila Bolsa Viaje Trekking 527", price: 19000, isOffer: false, outOfStock: true, specs: "La Mochila 527 es tu compañera ideal para salidas de trekking, escapadas al aire libre o viajes urbanos. Diseñada en poliéster impermeable, combina resistencia, liviandad y practicidad, ocupando muy poco espacio cuando no la necesitás. <br> A pesar de su peso reducido, ofrece una capacidad de 25 litros y cuenta con compartimento para notebook, bolsillo lateral para botella y costuras reforzadas para acompañarte en todas tus aventuras.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120723238458-a-183ef37b2a4213aa7f17543992811673-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120723235844-a-18df4e03749b08c6a917543992730338-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120719276553-f-55a2ec112cbce34db717543992566543-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120719276553-e-9385efcad637acae2717543992571900-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120719276553-d-0953bab7d7daaa6c2717543992560444-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120719276553-g-60cd35100d45543f1517543992558699-640-0.webp"], category: ["Hogar"] },
 
-    { id: 96, name: "Guantes Térmicos Primera Piel", price: 4000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-d2cbbee15ce5a77a9917545170172344-1024-1024.webp", category: ["Invierno"] },
+    { id: 96, name: "Guantes Térmicos Primera Piel", price: 4000, isOffer: false, outOfStock: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-d2cbbee15ce5a77a9917545170172344-1024-1024.webp", category: ["Invierno"] },
 
-    { id: 97, name: "Cubre Manos Doble Abrigo", price: 9500, isOffer: true, specs: "Los puños térmicos están diseñados para brindarte una experiencia de manejo más cómoda y segura, incluso en climas fríos. Gracias a su material aislante y su diseño adaptable, son compatibles con manubrios de 1 pulgada y pueden colocarse tanto en el lado izquierdo como derecho.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2000-x-2000-ale2-1-3b9310be37563c643417546651672765-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/1604131442141578-c-d31dd8a92e16ea9edf17546651718998-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1604131442141578-d-87cf003ae87a200f9e17546651718722-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1604131442141578-b-fc853ca9179a6deec117546651738883-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1604131651425142-d-7fbf1be50fb2674b8217545951313145-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1604131442141578-e-d96ff53788da31632217546651734619-640-0.webp"], category: ["Invierno"] },
+    { id: 97, name: "Cubre Manos Doble Abrigo", price: 9500, isOffer: false, outOfStock: true, specs: "Los puños térmicos están diseñados para brindarte una experiencia de manejo más cómoda y segura, incluso en climas fríos. Gracias a su material aislante y su diseño adaptable, son compatibles con manubrios de 1 pulgada y pueden colocarse tanto en el lado izquierdo como derecho.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2000-x-2000-ale2-1-3b9310be37563c643417546651672765-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/1604131442141578-c-d31dd8a92e16ea9edf17546651718998-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1604131442141578-d-87cf003ae87a200f9e17546651718722-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1604131442141578-b-fc853ca9179a6deec117546651738883-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1604131651425142-d-7fbf1be50fb2674b8217545951313145-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1604131442141578-e-d96ff53788da31632217546651734619-640-0.webp"], category: ["Invierno"] },
 
-    { id: 98, name: "Kit Guantes Pp + Medias Caña Alta + Medias Pp", price: 18000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-1-335c20960b653e082417585557544291-1024-1024.webp", category: ["Invierno"] },
+    { id: 98, name: "Kit Guantes Pp + Medias Caña Alta + Medias Pp", price: 18000, isOffer: false, outOfStock: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-1-335c20960b653e082417585557544291-1024-1024.webp", category: ["Invierno"] },
 
-    { id: 99, name: "Kit Máscara Respirador + Guantes Pp + Medias Caña Alta + Medias Pp", price: 22000, isOffer: false, specs: "Máscara Neoprene Polar con Respirador y Orejera: fabricada en polar y neoprene, con toma de aire lateral anti-empañe y cobertura de orejas. <br> Guantes Primera Piel: microfibra 85% y lycra 15%, mantienen la temperatura corporal, eliminan la humedad y ofrecen calce anatómico. Talle único universal. <br> Medias Térmicas Invierno Caña Alta: talle único (40 al 46), brindan agarre bajo confortable, absorben la transpiración y protegen contra la fricción. <br> Medias Primera Piel: talle único universal, cómodas, resistentes y adaptables a la forma del pie.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-1-1740ba53d97ad3cd2d17585546203363-1024-1024.webp", category: ["Invierno"] },
+    { id: 99, name: "Kit Máscara Respirador + Guantes Pp + Medias Caña Alta + Medias Pp", price: 22000, isOffer: false, outOfStock: true, specs: "Máscara Neoprene Polar con Respirador y Orejera: fabricada en polar y neoprene, con toma de aire lateral anti-empañe y cobertura de orejas. <br> Guantes Primera Piel: microfibra 85% y lycra 15%, mantienen la temperatura corporal, eliminan la humedad y ofrecen calce anatómico. Talle único universal. <br> Medias Térmicas Invierno Caña Alta: talle único (40 al 46), brindan agarre bajo confortable, absorben la transpiración y protegen contra la fricción. <br> Medias Primera Piel: talle único universal, cómodas, resistentes y adaptables a la forma del pie.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/sin-titulo-1-1740ba53d97ad3cd2d17585546203363-1024-1024.webp", category: ["Invierno"] },
 
-    { id: 100, name: "Kit Mascara Respirador + Guantes Pp + Medias Caña Alta o Pp", price: 20000, isOffer: false, specs: "(Aclarar elección en la compra) <br> Primera Imagen: Kit Máscara Neoprene + Guantes Primera Piel + Medias Caña Alta. <br> Segunda Imagen: Kit Mascara Respirador + Guantes Primera Piel + Medias Primera Piel.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-ccc6f26bf3606f92bf17545160585372-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-a2f62487c937566fa417545134427047-1024-1024.webp"], category: ["Invierno"] },
+    { id: 100, name: "Kit Mascara Respirador + Guantes Pp + Medias Caña Alta o Pp", price: 20000, isOffer: false, outOfStock: true, specs: "(Aclarar elección en la compra) <br> Primera Imagen: Kit Máscara Neoprene + Guantes Primera Piel + Medias Caña Alta. <br> Segunda Imagen: Kit Mascara Respirador + Guantes Primera Piel + Medias Primera Piel.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-ccc6f26bf3606f92bf17545160585372-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-a2f62487c937566fa417545134427047-1024-1024.webp"], category: ["Invierno"] },
 
     { id: 101, name: "Candado con Alarma", price: 10000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_791716-MLA71275775369_082023-F.webp", category: ["Electronica"] },
 
@@ -1631,29 +1777,29 @@ const products = [
 
     { id: 104, name: "Cámara Inteligente de Seguridad", price: 27000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_960348-MLU79396704073_092024-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_962497-MLA89582044600_082025-O.webp"], category: ["Electronica"] },
 
-    { id: 105, name: "Kit Conjunto Térmico Hombre + Guantes Pp + Medias Pp + Medias CA + Cuello Frio Extremo", price: 39000, isOffer: false, specs: "El Kit Térmico Frío Extremo está diseñado para brindarte máxima protección contra el frío extremo, combinando rendimiento, confort y calidad en un solo conjunto. Ideal para actividades deportivas, uso diario o trabajos en exteriores, este combo completo te mantiene abrigado sin perder movilidad. <br> Fabricado con material térmico de alta calidad, supera ampliamente a los conjuntos tradicionales de microfibra, ayudando a conservar el calor corporal, mejorar la circulación y reducir la fatiga muscular durante el uso.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/01-734780099c920e4bca17750570987872-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-hombre-683ca90e359435471617750571300523-640-0.webp"], category: ["Invierno"] },
+    { id: 105, name: "Kit Conjunto Térmico Hombre + Guantes Pp + Medias Pp + Medias CA + Cuello Frio Extremo", price: 39000, isOffer: false, outOfStock: true, specs: "El Kit Térmico Frío Extremo está diseñado para brindarte máxima protección contra el frío extremo, combinando rendimiento, confort y calidad en un solo conjunto. Ideal para actividades deportivas, uso diario o trabajos en exteriores, este combo completo te mantiene abrigado sin perder movilidad. <br> Fabricado con material térmico de alta calidad, supera ampliamente a los conjuntos tradicionales de microfibra, ayudando a conservar el calor corporal, mejorar la circulación y reducir la fatiga muscular durante el uso.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/01-734780099c920e4bca17750570987872-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/deportivo-hombre-683ca90e359435471617750571300523-640-0.webp"], category: ["Invierno"] },
 
     { id: 106, name: "Parlante Velador con Carga Inalámbrica", price: 15000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_806197-MLA99989882323_112025-O.webp", images: ["https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSxYA1xumRfECqDHtlEGvRfQywAx42m9BJHsxk_LSmp5siQAEuE"], category: ["Parlantes"] },
 
-    { id: 107, name: "Parlante de 3 pulgadas", price: 8000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/001/797/787/products/parlante-greatnice-gts-1349-1-f07fef49695e3901a317153619912597-640-0.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_793770-MLA73436918478_122023-O.webp"], category: ["Parlantes"] },
+    { id: 107, name: "Parlante de 3 pulgadas", price: 8000, isOffer: false, outOfStock: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/001/797/787/products/parlante-greatnice-gts-1349-1-f07fef49695e3901a317153619912597-640-0.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_793770-MLA73436918478_122023-O.webp"], category: ["Parlantes"] },
 
-    { id: 108, name: "Parlante 3 pulgadas", price: 8000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_884387-MLA85109801990_052025-O.webp", category: ["Parlantes"] },
+    { id: 108, name: "Parlante 3 pulgadas", price: 8000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_884387-MLA85109801990_052025-O.webp", category: ["Parlantes"] },
 
     { id: 109, name: "Auriculares tipo C", price: 7000, isOffer: false, specs: "Auriculares manos libres tipoC ecxelente calidad", img: "https://http2.mlstatic.com/D_NQ_NP_885306-MLA99542109256_122025-O.webp", category: ["Auriculares"] },
 
     { id: 110, name: "Bomba Dispenser", price: 7500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_680833-MLA79135164174_092024-O.webp", images: ["https://greemos.com.ar/wp-content/uploads/AW693-2.jpg"], category: ["Hogar"] },
 
-    { id: 111, name: "Colchón Inflable con Inflador Automático", price: 60000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_813235-MLA90172537638_082025-O.webp", images: ["https://cdn.v2.tiendanegocio.com/gallery/31544/img_31544_dpku17tfemiayq0rj.jpeg", "https://http2.mlstatic.com/D_NQ_NP_2X_664889-MLA91641257978_092025-F.webp", "https://http2.mlstatic.com/D_NQ_NP_2X_892403-MLA91640333012_092025-F.webp"], category: ["Hogar"] },
+    { id: 111, name: "Colchón Inflable con Inflador Automático", price: 60000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_813235-MLA90172537638_082025-O.webp", images: ["https://cdn.v2.tiendanegocio.com/gallery/31544/img_31544_dpku17tfemiayq0rj.jpeg", "https://http2.mlstatic.com/D_NQ_NP_2X_664889-MLA91641257978_092025-F.webp", "https://http2.mlstatic.com/D_NQ_NP_2X_892403-MLA91640333012_092025-F.webp"], category: ["Hogar"] },
 
     { id: 112, name: "Reloj Despertador Digital", price: 9000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_769921-MLA85354406401_052025-O.webp", images: ["https://www.impotekno.com/fotos/003.jpg"], category: ["Infantil", "Electronica"] },
 
-    { id: 113, name: "Set Parrillero 13pcs de Acero", price: 26000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/ACC0206.jpg", category: ["Hogar"] },
+    { id: 113, name: "Set Parrillero 13pcs de Acero", price: 26000, isOffer: false, outOfStock: true, specs: "", img: "https://www.impotekno.com/fotos/ACC0206.jpg", category: ["Hogar"] },
 
     { id: 114, name: "Cepillo de Vapor para Mascota", price: 6000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_607495-MLA77325339563_062024-O.webp", images: ["https://www.impotekno.com/fotos/BR-2531.jpg"], category: ["Hogar"] },
 
     { id: 115, name: "Soporte Magnético", price: 7000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_737580-MLA92281176866_092025-O.webp", category: ["Soportes"] },
 
-    { id: 116, name: "Depiladora 6 en 1", price: 24000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/BXL-833.jpg", category: ["Hogar", "Electronica"] },
+    { id: 116, name: "Depiladora 6 en 1", price: 24000, isOffer: false, outOfStock: true, specs: "", img: "https://www.impotekno.com/fotos/BXL-833.jpg", category: ["Hogar", "Electronica"] },
 
     { id: 117, name: "Linterna con Zoom Recargable", price: 11000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/JS-7386.jpg", category: ["Hogar", "Luces"] },
 
@@ -1663,15 +1809,15 @@ const products = [
 
     { id: 120, name: "Kit Mouse y Teclado Inalámbricos", price: 17000, isOffer: false, specs: "", img: "https://papeleriacarranza.com.ar/wp-content/uploads/2026/03/D-NQ-NP-2X-664228-MLA100242963195-122025-F.jpg", images: ["https://www.impotekno.com/fotos/TMU-001.jpg"], category: ["Electronica"] },
 
-    { id: 121, name: "Anafe Electrónico de 2 Hornallas 2000W", price: 30000, isOffer: false, specs: "", img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTui_yn_Sm_6sQBzdIh5pvNrvR1Uq3ry4cTsT8lrIwshS9J_lyL", category: ["Hogar"] },
+    { id: 121, name: "Anafe Electrónico de 2 Hornallas 2000W", price: 30000, isOffer: false, outOfStock: true, specs: "", img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTui_yn_Sm_6sQBzdIh5pvNrvR1Uq3ry4cTsT8lrIwshS9J_lyL", category: ["Hogar"] },
 
     { id: 122, name: "Auriculares Vincha P47", price: 7000, isOffer: false, specs: "• Funciones: SD + Bluetooth. <br> • Distancia máxima de Bluetooth: 10mts. <br> • Tecnología de reducción de ruido: DPS procesador de señal digital. <br> • Tiempo de carga: 2 horas. <br> • Tiempo de reproducción por Bluetooth: 3/5 horas. <br> • Tiempo de Stand By: hasta 15 horas. <br> • No incluye cable 3.5mm/auxiliar", img: "https://images.fravega.com/f500/51c73d8a0762bb4c215bf745e5f479e9.jpg", images: ["https://http2.mlstatic.com/D_NQ_NP_716766-MLA106491913538_022026-O.webp"], category: ["Auriculares"] },
 
-    { id: 123, name: "Pelota de Basketball", price: 8500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_811108-MLA109041444498_032026-O.webp", category: ["Deporte"] },
+    { id: 123, name: "Pelota de Basketball", price: 8500, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_811108-MLA109041444498_032026-O.webp", category: ["Deporte"] },
 
     { id: 124, name: "Linterna Multifunción Recargable", price: 24000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/HM-7729G.jpg", category: ["Hogar", "Luces"] },
 
-    { id: 125, name: "Masajeador Cervical", price: 48000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/M-91105.jpg", category: ["Hogar"] },
+    { id: 125, name: "Masajeador Cervical", price: 48000, isOffer: false, outOfStock: true, specs: "", img: "https://www.impotekno.com/fotos/M-91105.jpg", category: ["Hogar"] },
 
     { id: 126, name: "Mouse Inalámbrico", price: 7500, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/004/456/291/products/4-47a8a23f18cc11f50b17458735374848-1024-1024.webp", category: ["Hogar", "Electronica"] },
 
@@ -1679,35 +1825,35 @@ const products = [
 
     { id: 128, name: "Organizador de Especies", price: 16000, isOffer: false, specs: "", img: "https://nextcell.com.ar/wp-content/uploads/2026/02/e1dbedfb-dd4a-4344-91d0-29856490ebce.jpg", images: ["https://www.impotekno.com/fotos/OT-020.jpg"], category: ["Hogar"] },
 
-    { id: 129, name: "Atornillador 12V 2 Baterías", price: 36000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/MELECH-209.jpg", category: ["Hogar"] },
+    { id: 129, name: "Atornillador 12V 2 Baterías", price: 36000, isOffer: false, outOfStock: true, specs: "", img: "https://www.impotekno.com/fotos/MELECH-209.jpg", category: ["Hogar"] },
 
-    { id: 130, name: "Muñeco Messi Inter y AFA", price: 13000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/7348.jpg", category: ["Infantil", "Deporte"] },
+    { id: 130, name: "Muñeco Messi Inter y AFA", price: 13000, isOffer: false, outOfStock: true, specs: "", img: "https://www.impotekno.com/fotos/7348.jpg", category: ["Infantil", "Deporte"] },
 
-    { id: 131, name: "Sandwichera Eléctrica 4 Sándwiches Placas Antiadherentes", price: 34000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_662580-MLA107887348450_032026-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_813061-MLA110118147957_042026-F.webp"], category: ["Hogar", "Electronica"] },
+    { id: 131, name: "Sandwichera Eléctrica 4 Sándwiches Placas Antiadherentes", price: 34000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_662580-MLA107887348450_032026-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_813061-MLA110118147957_042026-F.webp"], category: ["Hogar", "Electronica"] },
 
-    { id: 132, name: "Sandwichera Antiadherente 750W Tokyo", price: 27000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_921383-MLU78590263049_082024-O.webp", category: ["Hogar", "Electronica"] },
+    { id: 132, name: "Sandwichera Antiadherente 750W Tokyo", price: 27000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_921383-MLU78590263049_082024-O.webp", category: ["Hogar", "Electronica"] },
 
-    { id: 133, name: "Waflera Antiadherente OM", price: 23000, isOffer: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_634436-MLA88908524263_072025-O.webp", category: ["Hogar", "Electronica"] },
+    { id: 133, name: "Waflera Antiadherente OM", price: 23000, isOffer: true, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_634436-MLA88908524263_072025-O.webp", category: ["Hogar", "Electronica"] },
 
     { id: 134, name: "Consola Game Wiriles Pro - 2.4G", price: 29000, isOffer: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/904/750/products/02j-78e4e13e66a278a33e17513048922108-640-0.webp", category: ["Electronica", "Infantil"] },
 
     { id: 135, name: "Patitas Antivibración", price: 4000, isOffer: true, specs: "", img: "https://images.fravega.com/f1000/b104013fb723e6439a35f6c23173689a.jpg", category: ["Hogar"] },
 
-    { id: 136, name: "Grifería Monocomando Canilla Curvo", price: 29000, isOffer: false, specs: "Monocomando de diseño curvo, ideal para quienes buscan funcionalidad, estilo moderno y resistencia.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091406203470-a-6a527c4e297168ae5117544875352324-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091407491052-a-5c3b3290a55ed91c0117544875345275-1024-1024.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091407491052-b-467e97ac30f5dbc61d17544875349922-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091407491052-i-2d5998f3b65ef6806e17544875348023-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091407491052-h-66f9b03700493aa34517544875350241-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091407491052-f-0cfcaa4d280f0d7eb617544875338367-640-0.webp"], category: ["Hogar"] },
+    { id: 136, name: "Grifería Monocomando Canilla Curvo", price: 29000, isOffer: false, outOfStock: true, specs: "Monocomando de diseño curvo, ideal para quienes buscan funcionalidad, estilo moderno y resistencia.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091406203470-a-6a527c4e297168ae5117544875352324-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091407491052-a-5c3b3290a55ed91c0117544875345275-1024-1024.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091407491052-b-467e97ac30f5dbc61d17544875349922-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091407491052-i-2d5998f3b65ef6806e17544875348023-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091407491052-h-66f9b03700493aa34517544875350241-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091407491052-f-0cfcaa4d280f0d7eb617544875338367-640-0.webp"], category: ["Hogar"] },
 
-    { id: 137, name: "Grifería Monocomando Mezcladora", price: 32000, isOffer: false, specs: "Combina elegancia, durabilidad y funcionalidad en un solo producto. Fabricada con acero inoxidable de alta resistencia, es ideal tanto para baños como cocinas, brindando una solución práctica y estética para tu hogar.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091208511377-a-c702198fa81e6b4f7317544319033987-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091208511377-c-9ba50674b35b6ef28317544319068137-640-0.webp"], category: ["Hogar"] },
+    { id: 137, name: "Grifería Monocomando Mezcladora", price: 32000, isOffer: false, outOfStock: true, specs: "Combina elegancia, durabilidad y funcionalidad en un solo producto. Fabricada con acero inoxidable de alta resistencia, es ideal tanto para baños como cocinas, brindando una solución práctica y estética para tu hogar.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091208511377-a-c702198fa81e6b4f7317544319033987-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091208511377-c-9ba50674b35b6ef28317544319068137-640-0.webp"], category: ["Hogar"] },
 
-    { id: 138, name: "Grifería Monocomando Pico Extensible", price: 33000, isOffer: false, specs: "Este modelo combina tecnología premium con diseño profesional, permitiendo una mayor movilidad y comodidad gracias a su sistema de pico extensible. Fabricada en acero inoxidable 201 y equipada con flexibles 100% inoxidables, garantiza un uso intensivo y sin fallos. Ideal para quienes buscan elevar la funcionalidad de su espacio.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2000-x-2000-ale2-e45747d63eeb2277ba17545788216781-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091141172812-b-ec1a27b7ca3d9940d017545788262790-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091141172812-c-2a9bb17ae06aab940717545788263497-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091141172812-f-e93e120a42457731a117545788263753-640-0.webp"], category: ["Hogar"] },
+    { id: 138, name: "Grifería Monocomando Pico Extensible", price: 33000, isOffer: false, outOfStock: true, specs: "Este modelo combina tecnología premium con diseño profesional, permitiendo una mayor movilidad y comodidad gracias a su sistema de pico extensible. Fabricada en acero inoxidable 201 y equipada con flexibles 100% inoxidables, garantiza un uso intensivo y sin fallos. Ideal para quienes buscan elevar la funcionalidad de su espacio.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2000-x-2000-ale2-e45747d63eeb2277ba17545788216781-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091141172812-b-ec1a27b7ca3d9940d017545788262790-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091141172812-c-2a9bb17ae06aab940717545788263497-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091141172812-f-e93e120a42457731a117545788263753-640-0.webp"], category: ["Hogar"] },
 
-    { id: 139, name: "Grifería Monocomando Alta", price: 34000, isOffer: false, specs: "Su construcción en acero inoxidable y su altura especial la hacen ideal tanto para cocinas como baños, aportando comodidad y estilo en un solo producto.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/ppral-9190fa704014bf22e717544335633687-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091253427625-j-eae7f55c77eab0cc3b17544333958226-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091253427625-f-7f5626bf090f2f70a117544333892810-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091253427625-c-5511f955d9a69d081b17544333873879-640-0.webp"], category: ["Hogar"] },
+    { id: 139, name: "Grifería Monocomando Alta", price: 34000, isOffer: false, outOfStock: true, specs: "Su construcción en acero inoxidable y su altura especial la hacen ideal tanto para cocinas como baños, aportando comodidad y estilo en un solo producto.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/ppral-9190fa704014bf22e717544335633687-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091253427625-j-eae7f55c77eab0cc3b17544333958226-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091253427625-f-7f5626bf090f2f70a117544333892810-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091253427625-c-5511f955d9a69d081b17544333873879-640-0.webp"], category: ["Hogar"] },
 
-    { id: 140, name: "Grifería Canilla Monocomando Pico Cisne", price: 21000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-c1c2b1d0d25347f60517568357722938-1024-1024.webp", images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL0y5CJoN8D75YnFxiWHh-aXelwYw-g0lck-V18mN9D6-WxQhV"], category: ["Hogar"] },
+    { id: 140, name: "Grifería Canilla Monocomando Pico Cisne", price: 21000, isOffer: false, outOfStock: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-c1c2b1d0d25347f60517568357722938-1024-1024.webp", images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL0y5CJoN8D75YnFxiWHh-aXelwYw-g0lck-V18mN9D6-WxQhV"], category: ["Hogar"] },
 
-    { id: 141, name: "Grifería Monocomando Flexible Acero Inoxidable", price: 29000, isOffer: false, specs: "Con un diseño elegante y materiales de alta calidad, esta línea combina estética, durabilidad y facilidad de uso para tu hogar.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091151335918-a-10105b390c871a59bd17544292062509-640-0.webp", category: ["Hogar"] },
+    { id: 141, name: "Grifería Monocomando Flexible Acero Inoxidable", price: 29000, isOffer: false, outOfStock: true, specs: "Con un diseño elegante y materiales de alta calidad, esta línea combina estética, durabilidad y facilidad de uso para tu hogar.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091151335918-a-10105b390c871a59bd17544292062509-640-0.webp", category: ["Hogar"] },
 
-    { id: 142, name: "Grifería Monocomando Mesada", price: 21000, isOffer: false, specs: "Fabricada en acero inoxidable 304, esta pieza está pensada para quienes buscan calidad, diseño y resistencia en un solo producto. Su acabado brillante y su funcionamiento suave elevan cualquier espacio de cocina o baño.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091153183483-a-762dd2dd4043af7bfa17544325899684-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091153183483-b-022dd6f4a17741e15a17544325901406-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091153183483-g-eaa1aa532131b6d1d017544325921261-640-0.webp"], category: ["Hogar"] },
+    { id: 142, name: "Grifería Monocomando Mesada", price: 21000, isOffer: false, outOfStock: true, specs: "Fabricada en acero inoxidable 304, esta pieza está pensada para quienes buscan calidad, diseño y resistencia en un solo producto. Su acabado brillante y su funcionamiento suave elevan cualquier espacio de cocina o baño.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091153183483-a-762dd2dd4043af7bfa17544325899684-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091153183483-b-022dd6f4a17741e15a17544325901406-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091153183483-g-eaa1aa532131b6d1d017544325921261-640-0.webp"], category: ["Hogar"] },
 
-    { id: 143, name: "Grifería Monocomando Acero Inoxidable", price: 31000, isOffer: false, specs: "Combina diseño moderno, practicidad y durabilidad. Fabricada en acero inoxidable cromo niquelado y con un núcleo de válvula cerámico, resistente a la corrosión y diseñada para un uso prolongado.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091229439370-a-cc4a39b2a092a038ad17544310372887-640-0.webp", category: ["Hogar"] },
+    { id: 143, name: "Grifería Monocomando Acero Inoxidable", price: 31000, isOffer: false, outOfStock: true, specs: "Combina diseño moderno, practicidad y durabilidad. Fabricada en acero inoxidable cromo niquelado y con un núcleo de válvula cerámico, resistente a la corrosión y diseñada para un uso prolongado.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2410091229439370-a-cc4a39b2a092a038ad17544310372887-640-0.webp", category: ["Hogar"] },
 
     { id: 144, name: "Mandolina Picador de Verduras", price: 16000, isOffer: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_640957-MLA96098042273_102025-F.webp", category: ["Hogar"] },
 
@@ -1721,35 +1867,35 @@ const products = [
 
     { id: 149, name: "Walkie-Talkie", price: 39000, isOffer: false, specs: "", img: "https://www.yellowplumpatagonia.com/cdn/shop/files/Image-6.png?v=1756413243", category: ["Electronica"] },
 
-    { id: 150, name: "Vincha Bluetooth", price: 9500, isOffer: false, specs: "", img: "https://paraisopeluches.com.ar/wp-content/uploads/2026/03/JOR711.jpg", category: ["Auriculares"] },
+    { id: 150, name: "Vincha Bluetooth", price: 9500, isOffer: false, outOfStock: true, specs: "", img: "https://paraisopeluches.com.ar/wp-content/uploads/2026/03/JOR711.jpg", category: ["Auriculares"] },
 
-    { id: 151, name: "Guantes Lisos", price: 3500, isOffer: false, specs: "$3500 el par , 3 pares $9000, la docena $20 mil.", img: "https://worldtronik.com/wp-content/uploads/2026/05/A-9640-320x320.jpg", images: ["https://eleventech.com.ar/22157-large_default/guantes-para-celular-con-touch-screen-tactil-unisex.jpg", "https://www.modax.com.ar/media/catalog/product/cache/98762529506172252d110aea0651f54c/4/3/43793_5_1.jpg", "https://eleventech.com.ar/22155-large_default/guantes-para-celular-con-touch-screen-tactil-unisex.jpg", "https://eleventech.com.ar/22159-large_default/guantes-para-celular-con-touch-screen-tactil-unisex.jpg", "https://eleventech.com.ar/22161-large_default/guantes-para-celular-con-touch-screen-tactil-unisex.jpg"], category: ["Invierno"] },
+    { id: 151, name: "Guantes Lisos", price: 3500, isOffer: false, outOfStock: true, specs: "$3500 el par , 3 pares $9000, la docena $20 mil.", img: "https://worldtronik.com/wp-content/uploads/2026/05/A-9640-320x320.jpg", images: ["https://eleventech.com.ar/22157-large_default/guantes-para-celular-con-touch-screen-tactil-unisex.jpg", "https://www.modax.com.ar/media/catalog/product/cache/98762529506172252d110aea0651f54c/4/3/43793_5_1.jpg", "https://eleventech.com.ar/22155-large_default/guantes-para-celular-con-touch-screen-tactil-unisex.jpg", "https://eleventech.com.ar/22159-large_default/guantes-para-celular-con-touch-screen-tactil-unisex.jpg", "https://eleventech.com.ar/22161-large_default/guantes-para-celular-con-touch-screen-tactil-unisex.jpg"], category: ["Invierno"] },
 
-    { id: 152, name: "Guantes de Invierno", price: 2500, isOffer: false, specs: "$2500 el par , o 3 pares x $6 mil, la docena $13 mil", img: "https://acdn-us.mitiendanube.com/stores/215/480/products/1260-ff28c6f7fae06afff117787946105105-480-0.webp", category: ["Invierno"] },
+    { id: 152, name: "Guantes de Invierno", price: 2500, isOffer: false, outOfStock: true, specs: "$2500 el par , o 3 pares x $6 mil, la docena $13 mil", img: "https://acdn-us.mitiendanube.com/stores/215/480/products/1260-ff28c6f7fae06afff117787946105105-480-0.webp", category: ["Invierno"] },
 
-    { id: 153, name: "Mini parlante Bluetooth", price: 9500, isOffer: false, specs: "", img: "https://oncealpormayor.com.ar/wp-content/uploads/2025/03/GTS-1922.jpg", category: ["Parlantes"] },
+    { id: 153, name: "Mini parlante Bluetooth", price: 9500, isOffer: false, outOfStock: true, specs: "", img: "https://oncealpormayor.com.ar/wp-content/uploads/2025/03/GTS-1922.jpg", category: ["Parlantes"] },
 
     { id: 154, name: "Mochila Bandolera", price: 11000, isOffer: false, specs: "", img: "https://greemos.com.ar/wp-content/uploads/JK-30187.jpg", category: ["Hogar"] },
 
-    { id: 155, name: "Termo 1.2 L", price: 18000, isOffer: true, specs: "", img: "https://http2.mlstatic.com/D_Q_NP_869519-MLA95576367623_102025-O.webp", category: ["Hogar"] },
+    { id: 155, name: "Termo 1.2 L", price: 18000, isOffer: true, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_Q_NP_869519-MLA95576367623_102025-O.webp", category: ["Hogar"] },
 
-    { id: 156, name: "Radio Parlante", price: 10000, isOffer: false, specs: "", img: "https://impotekno.com/fotos/KTS-2281.jpg", category: ["Electronica"] },
+    { id: 156, name: "Radio Parlante", price: 10000, isOffer: false, outOfStock: true, specs: "", img: "https://impotekno.com/fotos/KTS-2281.jpg", category: ["Electronica"] },
 
-    { id: 157, name: "Juego Set de Belleza y Maquillaje", price: 22000, isOffer: false, specs: "", img: "https://cdn.v2.tiendanegocio.com/gallery/31544/img_31544_dpku21tkimphmwygn.jpeg?class=sm", category: ["Infantil"] },
+    { id: 157, name: "Juego Set de Belleza y Maquillaje", price: 22000, isOffer: false, outOfStock: true, specs: "", img: "https://cdn.v2.tiendanegocio.com/gallery/31544/img_31544_dpku21tkimphmwygn.jpeg?class=sm", category: ["Infantil"] },
 
-    { id: 158, name: "Set de Herramientas Infantil", price: 22000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_908924-MLA110980982344_052026-O.webp", category: ["Infantil"] },
+    { id: 158, name: "Set de Herramientas Infantil", price: 22000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_908924-MLA110980982344_052026-O.webp", category: ["Infantil"] },
 
     { id: 159, name: "Consola SUP 400 en 1", price: 18000, isOffer: false, specs: "", img: ["https://www.impotekno.com/fotos/CR-400.jpg"], category: ["Electonica", "Infantil"] },
 
-    { id: 160, name: "Super Consola de Juegos R36S Portatil ARK OS", price: 82000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_605468-MLA92122670852_092025-O.webp", category: ["Electronica", "Infantil"] },
+    { id: 160, name: "Super Consola de Juegos R36S Portatil ARK OS", price: 82000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_605468-MLA92122670852_092025-O.webp", category: ["Electronica", "Infantil"] },
 
     { id: 161, name: "Juego de Mesa ¡Basta!", price: 19000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_Q_NP_666943-MLA99435823748_112025-O.webp", category: ["Infantil"] },
 
-    { id: 162, name: "Cabezal de Ducha con Luz", price: 11500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_787234-MLA100082023853_122025-O.webp", images: ["https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQ1hjQf3fVJiguz8O8upeh97cA958TqucTKPEXYGSq4myqEMKTO"], category: ["Hogar"] },
+    { id: 162, name: "Cabezal de Ducha con Luz", price: 11500, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_787234-MLA100082023853_122025-O.webp", images: ["https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQ1hjQf3fVJiguz8O8upeh97cA958TqucTKPEXYGSq4myqEMKTO"], category: ["Hogar"] },
 
     { id: 163, name: "Organizador Acrilico de Alimentos 4pcs", price: 22000, isOffer: false, specs: "", img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRVJS6MH-Lmqndej27RoHGBjDHdDGmvUfppgCx8lD9vzOvAdasV", category: ["Hogar"] },
 
-    { id: 164, name: "Mochila Urbana", price: 8000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_621573-CBT100502959324_122025-O.webp", images: ["https://greemos.com.ar/wp-content/uploads/JK-23183.jpg"], category: ["Hogar"] },
+    { id: 164, name: "Mochila Urbana", price: 8000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_621573-CBT100502959324_122025-O.webp", images: ["https://greemos.com.ar/wp-content/uploads/JK-23183.jpg"], category: ["Hogar"] },
 
     { id: 165, name: "Pistola de Riego c/Boquillas Ajustables", price: 10000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_917753-CBT109201449392_042026-O.webp", images: ["https://greemos.com.ar/wp-content/uploads/JK-4411.jpg"], category: ["Hogar"] },
 
@@ -1757,23 +1903,23 @@ const products = [
 
     { id: 167, name: "Pelota Voladora", price: 9500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_634741-MLA90741663064_082025-O.webp", category: ["Infantil"] },
 
-    { id: 168, name: "Cargador Portatil Magsafe - Iphone", price: 16000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_994025-MLU71094997228_082023-F.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_769274-MLU71094929530_082023-F.webp"], category: ["Electronica"] },
+    { id: 168, name: "Cargador Portatil Magsafe - Iphone", price: 16000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_994025-MLU71094997228_082023-F.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_769274-MLU71094929530_082023-F.webp"], category: ["Electronica"] },
 
-    { id: 169, name: "Reloj SmartWatch T900 Pro Max 11 - 2.3\"", price: 17000, isOffer: false, specs: "", img: "https://images.fravega.com/f1000/f21418e8b3b0b21b8d88dfb7103ee198.jpg", images: ["https://www.oestech.com.ar/fotos/PROMAX-T900.jpg"], category: ["Electronica"] },
+    { id: 169, name: "Reloj SmartWatch T900 Pro Max 11 - 2.3\"", price: 17000, isOffer: false, outOfStock: true, specs: "", img: "https://images.fravega.com/f1000/f21418e8b3b0b21b8d88dfb7103ee198.jpg", images: ["https://www.oestech.com.ar/fotos/PROMAX-T900.jpg"], category: ["Electronica"] },
 
-    { id: 170, name: "Reloj SmartWatch Hello 1 Malla Silicona", price: 14000, isOffer: false, specs: "", img: "https://www.oestech.com.ar/fotos/REL-HELLO.jpg", category: ["Electronica"] },
+    { id: 170, name: "Reloj SmartWatch Hello 1 Malla Silicona", price: 14000, isOffer: false, outOfStock: true, specs: "", img: "https://www.oestech.com.ar/fotos/REL-HELLO.jpg", category: ["Electronica"] },
 
-    { id: 171, name: "Kit Auric y Reloj Smart c/Malla Intercambiable", price: 24000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/TH7-1.jpg", category: ["Electronica", "Auriculares"] },
+    { id: 171, name: "Kit Auric y Reloj Smart c/Malla Intercambiable", price: 24000, isOffer: false, outOfStock: true, specs: "", img: "https://www.impotekno.com/fotos/TH7-1.jpg", category: ["Electronica", "Auriculares"] },
 
-    { id: 172, name: "Combo Reloj SmartWatch + Auric + Parlante", price: 32000, isOffer: false, specs: "", img: "https://www.oestech.com.ar/fotos/H01-MAX.jpg", category: ["Auriculares", "Parlantes"] },
+    { id: 172, name: "Combo Reloj SmartWatch + Auric + Parlante", price: 32000, isOffer: false, outOfStock: true, specs: "", img: "https://www.oestech.com.ar/fotos/H01-MAX.jpg", category: ["Auriculares", "Parlantes"] },
 
-    { id: 173, name: "Reloj Smart D20", price: 8000, isOffer: false, specs: "", img: "https://www.oestech.com.ar/fotos/RELD20.jpg", video: "https://vimeo.com/560444008?fl=pl&fe=cm", category: ["Electronica"] },
+    { id: 173, name: "Reloj Smart D20", price: 8000, isOffer: false, outOfStock: true, specs: "", img: "https://www.oestech.com.ar/fotos/RELD20.jpg", video: "https://vimeo.com/560444008?fl=pl&fe=cm", category: ["Electronica"] },
 
-    { id: 174, name: "Reloj SmartWatch + Auric + Parlante + 7 Mallas", price: 31000, isOffer: false, specs: "", img: "https://www.oestech.com.ar/fotos/REL-PAR.jpg", category: ["Auriculares", "Parlantes"] },
+    { id: 174, name: "Reloj SmartWatch + Auric + Parlante + 7 Mallas", price: 31000, isOffer: false, outOfStock: true, specs: "", img: "https://www.oestech.com.ar/fotos/REL-PAR.jpg", category: ["Auriculares", "Parlantes"] },
 
-    { id: 175, name: "Combo Reloj smartWatch W26 Pro + Auricular + 2 Mallas", price: 19000, isOffer: false, specs: "", img: "https://www.oestech.com.ar/fotos/W26-PROMAX.jpg", category: ["Electronica", "Auriculares"] },
+    { id: 175, name: "Combo Reloj smartWatch W26 Pro + Auricular + 2 Mallas", price: 19000, isOffer: false, outOfStock: true, specs: "", img: "https://www.oestech.com.ar/fotos/W26-PROMAX.jpg", category: ["Electronica", "Auriculares"] },
 
-    { id: 176, name: "Combo 3 en 1 Parlante + Auric + Reloj", price: 25000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/B-21016.jpg", category: ["Parlantes", "Auriculares"] },
+    { id: 176, name: "Combo 3 en 1 Parlante + Auric + Reloj", price: 25000, isOffer: false, outOfStock: true, specs: "", img: "https://www.impotekno.com/fotos/B-21016.jpg", category: ["Parlantes", "Auriculares"] },
 
     { id: 177, name: "Cable HDMI de 1.5M Mallado", price: 3500, isOffer: false, specs: "", img: "https://oncealpormayor.com.ar/wp-content/uploads/2022/07/TMCB6552-removebg-preview.png", category: ["Cables y Adaptadores", "Electronica"] },
 
@@ -1785,19 +1931,19 @@ const products = [
 
     { id: 181, name: "Mouse Inalambrico Yelandar", price: 7000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_784247-MLA79450754724_102024-O.webp", images: ["https://www.oestech.com.ar/fotos/MOU-LED8.jpg"], category: ["Electronica"] },
 
-    { id: 182, name: "Lampara de Escritorio 60W con Soporte", price: 13000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_781960-MLA83296554736_042025-O.webp", images: ["https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSmM-zqSsElEhjw_FGOVVtSXN0uqDPwSocIsvfz-o5gkKQSlLTM"], category: ["Hogar", "Luces"] },
+    { id: 182, name: "Lampara de Escritorio 60W con Soporte", price: 13000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_781960-MLA83296554736_042025-O.webp", images: ["https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSmM-zqSsElEhjw_FGOVVtSXN0uqDPwSocIsvfz-o5gkKQSlLTM"], category: ["Hogar", "Luces"] },
 
     { id: 183, name: "Aspiradora Portatil Vaccun", price: 10000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_754924-MLU74823965022_032024-O.webp", images: ["https://www.impotekno.com/fotos/AS-228.jpg"], category: ["Hogar", "Electronica"] },
 
-    { id: 184, name: "Aspiradora de Auto Portatil 120W", price: 35000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/OG-A3.jpg", category: ["Hogar", "Electronica"] },
+    { id: 184, name: "Aspiradora de Auto Portatil 120W", price: 35000, isOffer: false, outOfStock: true, specs: "", img: "https://www.impotekno.com/fotos/OG-A3.jpg", category: ["Hogar", "Electronica"] },
 
-    { id: 185, name: "Escurridor Secaplatos Acero Inoxidable de 2 Niveles", price: 35000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/08-081bf80fa58eec3b7417789567480707-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-d379189259c0c9113e17789567483674-640-0.webp"], category: ["Hogar"] },
+    { id: 185, name: "Escurridor Secaplatos Acero Inoxidable de 2 Niveles", price: 35000, isOffer: false, outOfStock: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/08-081bf80fa58eec3b7417789567480707-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/02-d379189259c0c9113e17789567483674-640-0.webp"], category: ["Hogar"] },
 
-    { id: 186, name: "Escurridor Secaplatos con Bandeja y Cubiertero", price: 31000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/07-8f1e508147bba3970117789482982144-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/06-532b2795db39c7d24a17789482981292-640-0.webp"], category: ["Hogar"] },
+    { id: 186, name: "Escurridor Secaplatos con Bandeja y Cubiertero", price: 31000, isOffer: false, outOfStock: true, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/07-8f1e508147bba3970117789482982144-640-0.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/06-532b2795db39c7d24a17789482981292-640-0.webp"], category: ["Hogar"] },
 
-    { id: 187, name: "Buzo Softshell Térmico Micropolar", price: 25000, isOffer: false, specs: "(Consultar disponibilidad de Colores y Talles). <br> Colores: Azul Marino - Gris Topo - Verde Militar - Negro. <br> (Los primeros ejemplos son Con Logo y los ultimos Sin Logo) <br><br> •Exterior confeccionado en Softshell resistente. <br> •Interior de micropolar suave y térmico. <br> •Cuello alto para mayor protección contra el frío. <br> •Calce recto cómodo y versátil. <br> •Bolsillos laterales funcionales. <br> •Diseño sin capucha para mayor practicidad.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-copia-59b6382b467e9cb16017805871190162-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-copia-1077a8db9d2320cdd117805871467314-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/4-copia-7826ae27fec439144817805871602756-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-copia-d84b89d753d324716717805871531907-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/5-4d003709ad2af9ed8b17805873108818-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2-ce8973baedcae9185017805873248126-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/4-84538e733061643dad17805873179561-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/talles-buzos-11d049104f1c2b1c1b17805816779885-640-0.webp"], category: ["Invierno"] },
+    { id: 187, name: "Buzo Softshell Térmico Micropolar", price: 25000, isOffer: false, outOfStock: true, specs: "(Consultar disponibilidad de Colores y Talles). <br> Colores: Azul Marino - Gris Topo - Verde Militar - Negro. <br> (Los primeros ejemplos son Con Logo y los ultimos Sin Logo) <br><br> •Exterior confeccionado en Softshell resistente. <br> •Interior de micropolar suave y térmico. <br> •Cuello alto para mayor protección contra el frío. <br> •Calce recto cómodo y versátil. <br> •Bolsillos laterales funcionales. <br> •Diseño sin capucha para mayor practicidad.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-copia-59b6382b467e9cb16017805871190162-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-copia-1077a8db9d2320cdd117805871467314-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/4-copia-7826ae27fec439144817805871602756-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-copia-d84b89d753d324716717805871531907-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/5-4d003709ad2af9ed8b17805873108818-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2-ce8973baedcae9185017805873248126-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/4-84538e733061643dad17805873179561-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/talles-buzos-11d049104f1c2b1c1b17805816779885-640-0.webp"], category: ["Invierno"] },
 
-    { id: 188, name: "Campera Softshell Térmica Micropolar", price: 28000, isOffer: false, specs: "(Consultar disponibilidad de Colores y Talles). <br> Colores: Verde Militar - Azul Marino - Gris Topo - Negro. <br><br> •Exterior confeccionado en Softshell resistente. <br> •Interior térmico de micropolar suave y confortable. <br> •Diseño cortaviento para una mejor protección. <br> •Repelente al agua para soportar lloviznas y salpicaduras. <br> •Material respirable que ayuda a evacuar la humedad. <br> •Cuello alto para mayor protección térmica. <br> •Cierre frontal completo. <br> •Dos bolsillos externos funcionales.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-9553de285fe51794e917806014819931-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/3-f515ed86d17a24f43417806014892984-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-aecc7b2c67a3995cf717806015159004-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-42fda8f0012f9b6db817806015216436-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-5a857456ea0fd326f017806015249339-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/talles-camperas-526726d8b93bdc1b3a17806014994176-640-0.webp"], category: ["Invierno"] },
+    { id: 188, name: "Campera Softshell Térmica Micropolar", price: 28000, isOffer: false, outOfStock: true, specs: "(Consultar disponibilidad de Colores y Talles). <br> Colores: Verde Militar - Azul Marino - Gris Topo - Negro. <br><br> •Exterior confeccionado en Softshell resistente. <br> •Interior térmico de micropolar suave y confortable. <br> •Diseño cortaviento para una mejor protección. <br> •Repelente al agua para soportar lloviznas y salpicaduras. <br> •Material respirable que ayuda a evacuar la humedad. <br> •Cuello alto para mayor protección térmica. <br> •Cierre frontal completo. <br> •Dos bolsillos externos funcionales.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-9553de285fe51794e917806014819931-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/3-f515ed86d17a24f43417806014892984-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-aecc7b2c67a3995cf717806015159004-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-42fda8f0012f9b6db817806015216436-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-5a857456ea0fd326f017806015249339-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/talles-camperas-526726d8b93bdc1b3a17806014994176-640-0.webp"], category: ["Invierno"] },
 
     { id: 189, name: "Paraguas Infantil Capibara con Silbato", price: 6500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_667226-MLA97913409894_112025-O.webp", category: ["Infantil"] },
 
@@ -1813,15 +1959,15 @@ const products = [
 
     { id: 195, name: "Batidora de Cafe Recargable", price: 9500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_882999-MLA88905019361_072025-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_795268-MLA109477165295_032026-O.webp"], category: ["Hogar", "Electronica"] },
 
-    { id: 196, name: "Bandera de Tela Argentina", price: 3000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/EF10010.jpg", category: ["Hogar", "Deporte"] },
+    { id: 196, name: "Bandera de Tela Argentina", price: 3000, isOffer: false, outOfStock: true, specs: "", img: "https://www.impotekno.com/fotos/EF10010.jpg", category: ["Hogar", "Deporte"] },
 
-    { id: 197, name: "Guante de Invierno Polar de Adulto", price: 2500, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/SL113.jpg", category: ["Invierno"] },
+    { id: 197, name: "Guante de Invierno Polar de Adulto", price: 2500, isOffer: false, outOfStock: true, specs: "", img: "https://www.impotekno.com/fotos/SL113.jpg", category: ["Invierno"] },
 
-    { id: 198, name: "Doble Corneta Bocina Mundial", price: 3500, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/WCF-08.jpg", category: ["Deporte"] },
+    { id: 198, name: "Doble Corneta Bocina Mundial", price: 3500, isOffer: false, outOfStock: true, specs: "", img: "https://www.impotekno.com/fotos/WCF-08.jpg", category: ["Deporte"] },
 
     { id: 199, name: "Linga Cadena para Moto con Candado", price: 7500, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/C-130507.jpg", category: ["Hogar"] },
 
-    { id: 200, name: "Camiseta Bordada Argentina", price: 25000, isOffer: false, specs: "Talles: M-L-XL", img: "https://www.impotekno.com/fotos/TFW-01BL.jpg", category: ["Deporte"] },
+    { id: 200, name: "Camiseta Bordada Argentina", price: 25000, isOffer: false, outOfStock: true, specs: "Talles: M-L-XL", img: "https://www.impotekno.com/fotos/TFW-01BL.jpg", category: ["Deporte"] },
 
     { id: 201, name: "Botella Termo 500ml c/Termometro LED", price: 10000, isOffer: false, specs: "", img: "https://www.mink.com.ar/qloud/ryr/fotos/23866-1.jpg", images: ["https://http2.mlstatic.com/D_NQ_NP_773967-MLA53583803075_022023-O.webp"], category: ["Hogar", "Electronica"] },
 
@@ -1829,33 +1975,57 @@ const products = [
 
     { id: 203, name: "Cargador 45W c/Cable", price: 10000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/SM-15W.jpg", category: ["Cables y Adaptadores"] },
 
-    { id: 204, name: "Juego de Bloques Jenga Plastico", price: 12000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_807199-MLA112328358455_052026-O.webp", images: ["https://infinitysl.com.ar/productos/05f3622778d6cde65be72be48972d533.webp"], category: ["Infantil"] },
+    { id: 204, name: "Juego de Bloques Jenga Plastico", price: 12000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_807199-MLA112328358455_052026-O.webp", images: ["https://infinitysl.com.ar/productos/05f3622778d6cde65be72be48972d533.webp"], category: ["Infantil"] },
 
-    { id: 205, name: "Reloj Digital", price: 7500, isOffer: false, specs: "Con un diseño en forma de cubo blanco de 7.5 cm, cuenta con una función que cambia entre varios colores de luces LED. <br> Ofrece una pantalla LCD multifuncional que muestra la hora, fecha, día de la semana y temperatura ambiente en grados Celsius.", img: "https://http2.mlstatic.com/D_NQ_NP_815150-CBT108414099303_032026-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_721376-MLA74474041965_022024-O.webp"], category: ["Hogar"] },
+    { id: 205, name: "Reloj Digital", price: 7500, isOffer: false, outOfStock: true, specs: "Con un diseño en forma de cubo blanco de 7.5 cm, cuenta con una función que cambia entre varios colores de luces LED. <br> Ofrece una pantalla LCD multifuncional que muestra la hora, fecha, día de la semana y temperatura ambiente en grados Celsius.", img: "https://http2.mlstatic.com/D_NQ_NP_815150-CBT108414099303_032026-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_721376-MLA74474041965_022024-O.webp"], category: ["Hogar"] },
 
     { id: 206, name: "Balanza de Cocina con Bowl 10kg", price: 10000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_874078-MLA79244878109_092024-O.webp", images: ["https://www.impotekno.com/fotos/BA3500.jpg"], category: ["Hogar", "Electronica"] },
 
-    { id: 207, name: "Bandera Grande de Tela Argentina", price: 3900, isOffer: false, specs: "2 x $7.000", img: "https://www.impotekno.com/fotos/EF10009.jpg", category: ["Hogar", "Deporte"] },
+    { id: 207, name: "Bandera Grande de Tela Argentina", price: 3900, isOffer: false, outOfStock: true, specs: "2 x $7.000", img: "https://www.impotekno.com/fotos/EF10009.jpg", category: ["Hogar", "Deporte"] },
 
-    { id: 208, name: "Tripode Metal para Celular hasta 1.10M", price: 10000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_Q_NP_616257-CBT106243306467_012026-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_987843-MLA90073537342_082025-F.webp"], category: ["Hogar", "Soportes"] },
+    { id: 208, name: "Tripode Metal para Celular hasta 1.10M", price: 10000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_Q_NP_616257-CBT106243306467_012026-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_987843-MLA90073537342_082025-F.webp"], category: ["Hogar", "Soportes"] },
 
-    { id: 209, name: "Pochoclera con Bowl Pelota", price: 30000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_Q_NP_910635-MLA79773855271_102024-O.webp", images: ["https://www.impotekno.com/fotos/HOG0625.jpg"], category: ["Hogar", "Deporte"] },
+    { id: 209, name: "Pochoclera con Bowl Pelota", price: 30000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_Q_NP_910635-MLA79773855271_102024-O.webp", images: ["https://www.impotekno.com/fotos/HOG0625.jpg"], category: ["Hogar", "Deporte"] },
 
-    { id: 210, name: "Pulsera LED Argentina", price: 2500, isOffer: false, specs: "", img: "https://i5.walmartimages.com/asr/5c531dfb-7655-4453-97dc-17ce328a1673.d699fbf67678fc42b16d31c4b8525f33.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF", images: ["https://www.impotekno.com/fotos/2026WC-13.jpg", "https://i5.walmartimages.com/asr/181f9f3d-2729-4f3e-92ba-49cb6c97d973.43f8372e02b864b170b9cf2a6c1e699d.jpeg?odnHeight=717&odnWidth=717&odnBg=FFFFFF"], category: ["Deporte", "Infantil"] },
+    { id: 210, name: "Pulsera LED Argentina", price: 2500, isOffer: false, outOfStock: true, specs: "", img: "https://i5.walmartimages.com/asr/5c531dfb-7655-4453-97dc-17ce328a1673.d699fbf67678fc42b16d31c4b8525f33.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF", images: ["https://www.impotekno.com/fotos/2026WC-13.jpg", "https://i5.walmartimages.com/asr/181f9f3d-2729-4f3e-92ba-49cb6c97d973.43f8372e02b864b170b9cf2a6c1e699d.jpeg?odnHeight=717&odnWidth=717&odnBg=FFFFFF"], category: ["Deporte", "Infantil"] },
 
     { id: 211, name: "Calculadora de 12 Digitos", price: 8000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_619445-MLA81883112856_012025-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_831910-MLA83074096832_032025-O.webp"], category: ["Electronica", "Infantil"] },
 
-    { id: 212, name: "Cartel de Abierto", price: 18000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/0308.jpg", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_954625-MLA107738660647_022026-F.webp"], category: ["Luces"] },
+    { id: 212, name: "Cartel de Abierto", price: 18000, isOffer: false, outOfStock: true, specs: "", img: "https://www.impotekno.com/fotos/0308.jpg", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_954625-MLA107738660647_022026-F.webp"], category: ["Luces"] },
 
-    { id: 213, name: "Auriculares Vincha BT con Orejitas", price: 8000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_742672-MLA82115742424_022025-O.webp", category: ["Auriculares"] },
+    { id: 213, name: "Auriculares Vincha BT con Orejitas", price: 8000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_742672-MLA82115742424_022025-O.webp", category: ["Auriculares"] },
 
-    { id: 214, name: "Vincha Max Time BT", price: 18000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_738585-MLA107460398988_032026-O.webp", images: ["https://www.impotekno.com/fotos/AU-14002.jpg"], category: ["Auriculares"] },
+    { id: 214, name: "Vincha Max Time BT", price: 18000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_738585-MLA107460398988_032026-O.webp", images: ["https://www.impotekno.com/fotos/AU-14002.jpg"], category: ["Auriculares"] },
 
     { id: 215, name: "Repetidor WIFI", price: 16000, isOffer: false, specs: "Ofrece velocidades de transmisión inalámbrica de hasta 300 Mbps para ampliar la cobertura de Red.", img: "https://http2.mlstatic.com/D_NQ_NP_2X_731724-MLA95242893193_102025-F.webp", images: ["https://www.reyesdeloeste.com/fotos/10002.jpg"], category: ["Electronica", "Hogar"] },
 
-    { id: 216, name: "Botella Sport 800ml", price: 16000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/TW-827.jpg", category: ["Hogar"] },
+    { id: 216, name: "Botella Sport 800ml", price: 16000, isOffer: false, outOfStock: true, specs: "", img: "https://www.impotekno.com/fotos/TW-827.jpg", category: ["Hogar"] },
 
-	{ id: 217, name: "Soporte de Bici para Pared Gancho de Acero", price: 9500, isOffer: false, specs: "(Tornillos y Tarugos incluidos) <br> Fácil Instalación. <br> Ideal para ahorrar espacio. Muy buena calidad", img: "https://http2.mlstatic.com/D_NQ_NP_647486-MLA87775567052_072025-O.webp", category: ["Hogar", "Soportes"] },
+    { id: 217, name: "Soporte de Bici para Pared Gancho de Acero", price: 9500, isOffer: false, specs: "(Tornillos y Tarugos incluidos) <br> Fácil Instalación. <br> Ideal para ahorrar espacio. Muy buena calidad", img: "https://http2.mlstatic.com/D_NQ_NP_647486-MLA87775567052_072025-O.webp", category: ["Hogar", "Soportes"] },
+
+    { id: 218, name: "Control Remoto Universal TV BOX", price: 5000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_807355-MLA93198106087_092025-F.webp", images: [""], category: ["Hogar"] },
+
+    { id: 219, name: "Contol Universal de Tele", price: 6000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_795984-MLA75453229659_032024-O.webp", images: [""], category: ["Hogar"] },
+
+    { id: 220, name: "Control Remoto Duplicador Universal", price: 7000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_991694-MLA96871399999_102025-O.webp", images: ["https://www.impotekno.com/fotos/MELECH-317.jpg"], category: ["Hogar"] },
+
+    { id: 221, name: "Kit de 3 Cepillos Metalicos", price: 4000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_751623-CBT99342800592_112025-O.webp", images: ["https://www.impotekno.com/fotos/3704.jpg"], category: ["Hogar"] },
+
+    { id: 222, name: "Cable Universal 4 en 1", price: 4500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_904232-MLA91858519529_092025-F.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_777255-MLA91857844073_092025-F.webp"], category: ["Cables y Adaptadores"] },
+
+    { id: 223, name: "Auto Cross 4x4 Control Metal", price: 30000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_927121-MLA111719884880_062026-O.webp", images: [""], category: ["Infantil"] },
+
+    { id: 224, name: "Camioneta Cross 4x4 con Luz y Humo", price: 30000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_864038-MLA101808968925_122025-F.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_889021-MLA101811910753_122025-F.webp"], category: ["Infantil"] },
+
+    { id: 225, name: "Kit 8 Brochas de Maquillaje", price: 6500, isOffer: false, specs: "", img: "https://greemos.com.ar/wp-content/uploads/QH-006.jpg", images: [""], category: ["Hogar"] },
+
+    { id: 226, name: " Auricular BT Ultrapods S07", price: 8000, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/001/131/056/products/00ultrasx-6171e093ec6bd530ab17207895154229-1024-1024.webp", images: [""], category: ["Auriculares"] },
+
+    { id: 227, name: "Batalla Naval", price: 15000, isOffer: false, specs: "Juego de Mesa.", img: "https://www.reyesdeloeste.com/fotos/610Y.jpg", images: [""], category: ["Infantil"] },
+
+    { id: 228, name: "Mini Ruleta", price: 15000, isOffer: false, specs: "Juego de Mesa.", img: "https://www.reyesdeloeste.com/fotos/608Y.jpg", images: [""], category: ["Infantil"] },
+
+    { id: 229, name: "Juguete Velociraptor c/Accesorios", price: 21000, isOffer: false, specs: "", img: "https://www.reyesdeloeste.com/fotos/JY-25-462.jpg", images: [""], category: ["Infantil"] },
 
 ];
 
@@ -1906,6 +2076,19 @@ const socialLinksHTML = `
     <a href="https://www.instagram.com/clauyguillesenaimportodocyg/" class="social-link ig" title="Instagram"><svg viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.036 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/></svg></a>
     <a href="https://www.facebook.com/importodocyg" class="social-link fb" title="Facebook"><svg viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg></a>
     <a href="#" class="social-link tk" title="TikTok"><svg viewBox="0 0 16 16"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V0Z"/></svg></a>
+</div>`;
+
+const aboutSocialHTML = `
+<div class="social-links-grid" style="justify-content:center;">
+    <a href="https://www.instagram.com/clauyguillesenaimportodocyg/" target="_blank" rel="noopener noreferrer" class="social-icon-link instagram magnetic" title="Instagram">
+        <svg viewBox="0 0 448 512"><path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.8 9.9 67.6 36.1 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+    </a>
+    <a href="https://www.facebook.com/importodocyg" target="_blank" rel="noopener noreferrer" class="social-icon-link facebook magnetic" title="Facebook">
+        <svg viewBox="0 0 512 512"><path fill="currentColor" d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245.47V332.69h-57.3V256h57.3v-58.46c0-56.74 33.82-88.08 85.24-88.08 24.63 0 50.36 4.4 50.36 4.4v55.35h-28.36c-28.12 0-36.87 17.46-36.87 35.35V256h62.47l-10 76.69h-52.47V501.47C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+    <a href="#" target="_blank" rel="noopener noreferrer" class="social-icon-link tiktok magnetic" title="TikTok">
+        <svg viewBox="0 0 448 512"><path fill="currentColor" d="M448 209.91a210.06 210.06 0 0 1-122.77-39.25v178.72c0 101.71-83.03 184.71-185.31 184.71S4.31 451.12 4.31 349.4s83.03-184.71 185.31-184.71a189.62 189.62 0 0 1 34.2 3.1v113.6a88.18 88.18 0 0 0-34.2-6.1c-49.11 0-88.1 39-88.1 88.1s38.99 88.1 88.1 88.1 88.1-39 88.1-88.1V0h111.6a102.66 102.66 0 0 0 20.8 4.8 102.62 102.62 0 0 0 10.9 1.4 102.13 102.13 0 0 0 10.1.7 101.32 101.32 0 0 0 12.1-.5h.1v112a101.57 101.57 0 0 1-72.7-32.19l.17 38.31a209.73 209.73 0 0 1 122.77 39.25v76.23z"/></svg>
+    </a>
 </div>`;
 
 // ===== CART FUNCTIONS =====
@@ -2119,17 +2302,20 @@ function getFiltered() {
             .filter(x => x.score > 0)
             .sort((a, b) => b.score - a.score)
             .map(x => x.p);
-        return result; // la relevancia ya ordenó — no aplicar otro sort
+    } else {
+        // Sin búsqueda: orden elegido por el usuario
+        switch (sortOrder) {
+            case 'price-asc':  result.sort((a, b) => a.price - b.price); break;
+            case 'price-desc': result.sort((a, b) => b.price - a.price); break;
+            case 'name':       result.sort((a, b) => a.name.localeCompare(b.name)); break;
+            case 'offers':     result.sort((a, b) => (b.isOffer ? 1 : 0) - (a.isOffer ? 1 : 0)); break;
+        }
     }
 
-    // Sin búsqueda: orden elegido por el usuario
-    switch (sortOrder) {
-        case 'price-asc':  result.sort((a, b) => a.price - b.price); break;
-        case 'price-desc': result.sort((a, b) => b.price - a.price); break;
-        case 'name':       result.sort((a, b) => a.name.localeCompare(b.name)); break;
-        case 'offers':     result.sort((a, b) => (b.isOffer ? 1 : 0) - (a.isOffer ? 1 : 0)); break;
-    }
-    return result;
+    // Los productos "Sin Stock" siempre se ubican al final, sin importar el orden elegido
+    const inStock = result.filter(p => !p.outOfStock);
+    const noStock = result.filter(p => p.outOfStock);
+    return inStock.concat(noStock);
 }
 
 
@@ -2145,7 +2331,7 @@ function renderSection() {
             break;
         case 'detail': main.innerHTML = renderDetail(); break;
         case 'cart': main.innerHTML = renderCart(); break;
-        case 'about': main.innerHTML = renderAbout(); break;
+        case 'about': main.innerHTML = renderAbout(); setTimeout(initAboutSection, 30); break;
         case 'help': main.innerHTML = renderHelp(); break;
         case 'contact': main.innerHTML = renderContact(); break;
     }
@@ -2349,6 +2535,7 @@ function renderHome() {
             html += `
             <div class="product-card ${idx % 2 === 0 ? 'from-left' : 'from-right'}" data-card-id="${p.id}" onclick="viewProduct(${p.id})">
                 ${p.isOffer ? '<span class="offer-badge">OFERTA</span>' : ''}
+                ${p.outOfStock ? '<span class="stock-badge">POR PEDIDO</span>' : ''}
      <div class="product-img-wrap">
                     <img src="${p.img}" alt="${p.name}" loading="lazy"
                          onload="this.classList.add('loaded')">
@@ -2356,9 +2543,7 @@ function renderHome() {
                 <p class="product-cat">${catLabel}</p>
                 <h3 class="product-name">${p.name}</h3>
                 <p class="product-price ${p.isOffer ? 'offer' : ''}">$${p.price.toLocaleString()}</p>
-                <button class="add-cart-btn" id="addbtn-${p.id}" onclick="event.stopPropagation(); addToCartCard(${p.id}, this)">
-                    ${icons.cart} Añadir al carrito
-                </button>
+                <button class="add-cart-btn" id="addbtn-${p.id}" onclick="event.stopPropagation(); addToCartCard(${p.id}, this)">${icons.cart} Añadir al carrito</button>
             </div>`;
         });
         html += `</div>`;
@@ -2453,6 +2638,7 @@ function renderDetail() {
         <div class="detail-layout">
             <div class="detail-gallery">
                 ${product.isOffer ? '<span class="offer-badge" style="z-index:20">OFERTA</span>' : ''}
+                ${product.outOfStock ? '<span class="stock-badge" style="z-index:20">POR PEDIDO</span>' : ''}
                 <div class="detail-main-img" id="mainMediaWrap">
                     ${mainMedia}
                 </div>
@@ -2476,9 +2662,7 @@ function renderDetail() {
                     </div>
                 </div>
                 <div class="detail-btn-group">
-                    <button class="detail-add-btn" id="detailAddBtn" onclick="addToCartDetail(${product.id})">
-                        ${icons.cart} Añadir al Carrito
-                    </button>
+                    <button class="detail-add-btn" id="detailAddBtn" onclick="addToCartDetail(${product.id})">${icons.cart} Añadir al Carrito</button>
                     <button class="detail-wa-btn" onclick="shareProduct(${product.id})">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
                             <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
@@ -2616,7 +2800,7 @@ function renderCart() {
                 <span>Total</span>
                 <span>$${cartTotal().toLocaleString()}</span>
             </div>
-            <button class="checkout-btn" onclick="checkout()">Finalizar Pedido por WhatsApp</button>
+            <button class="checkout-btn btn-fill" onclick="checkout()">Finalizar Pedido por WhatsApp</button>
         </div>
     </div>`;
 }
@@ -2632,19 +2816,56 @@ function renderAbout() {
     var whyHTML = whyCards.map(function(c) {
         return '<div class="why-card"><div class="why-icon">' + c.icon + '</div><h3>' + c.title + '</h3><p>' + c.desc + '</p></div>';
     }).join('');
+
+    var heroWords = ["Más","de","10","años","acercando","lo","mejor","para","tu","hogar,","con","trato"];
+    var heroWordsHTML = heroWords.map(function(w, i) {
+        return '<span class="word-mask"><span class="word" style="--i:' + i + '">' + w + '</span></span>';
+    }).join(' ');
+    var heroAccentHTML = '<span class="word-mask"><span class="word accent" style="--i:' + heroWords.length + '">familiar.</span></span>';
+
+    var marqueeItems = categories.filter(function(c) { return c !== 'Todos'; });
+    var marqueeSpans = marqueeItems.map(function(c) { return '<span>' + c + '</span><span class="dot">&bull;</span>'; }).join('');
+
     return `
     <div class="about-section fade-in">
-        <section class="why-section" style="margin:0 0 40px;border-radius:16px;overflow:hidden;">
+        <section class="about-hero" data-reveal>
+            <p class="about-eyebrow">Villa Bosch · Bs. As. · Emprendimiento Familiar</p>
+            <h1 class="about-hero-title">${heroWordsHTML} ${heroAccentHTML}</h1>
+        </section>
+
+        <section class="about-split">
+            <div class="about-split-media">
+                <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&w=1200" alt="Importodo CyG">
+            </div>
+            <div class="about-split-text" data-reveal>
+                <h2>Nuestra Historia</h2>
+                <p>En <strong>Importodo CyG</strong> nacimos con la misión de acercar la tecnología de vanguardia a cada hogar. Somos un emprendimiento familiar, apasionado por la eficiencia, la innovación y, sobre todo, por el trato cercano con cada cliente.</p>
+                <p>Con más de 10 años en el rubro de ventas, fuimos creciendo de a poco, siempre priorizando la confianza y la calidad por sobre la cantidad.</p>
+            </div>
+        </section>
+
+        <div class="about-stats" data-reveal>
+            <div class="stat"><span class="stat-number" data-count="10">0</span><p class="stat-label">Años de trayectoria</p></div>
+            <div class="stat"><span class="stat-number" data-count="${products.length}">0</span><p class="stat-label">Productos disponibles</p></div>
+            <div class="stat"><span class="stat-number" data-count="500">0</span><p class="stat-label">Clientes felices</p></div>
+        </div>
+
+        <div class="about-marquee-wrap">
+            <div class="about-marquee-track">${marqueeSpans}${marqueeSpans}</div>
+        </div>
+
+        <section class="why-section" data-reveal-stagger style="margin:0;border-radius:24px;overflow:hidden;">
             <div class="section-header">
                 <h2>¿Por qué elegirnos?</h2>
-                <p>Somos un emprendimiento con mas de 10 años en Ventas, y...</p>
+                <p>Somos un emprendimiento con más de 10 años en ventas, y...</p>
             </div>
             <div class="why-grid">${whyHTML}</div>
         </section>
-        <h2>Nuestra Historia</h2>
-        <p>En <strong>Importodo CyG</strong>, nacimos con la misión de acercar la tecnología de vanguardia a cada hogar. Somos un emprendimiento apasionado por la eficiencia y la innovación.</p>
-        <h3 style="margin-top:40px; color:var(--destructive); font-weight:700; font-size:18px">Síguenos en nuestras redes:</h3>
-        <div style="margin-top:16px">${socialLinksHTML}</div>
+
+        <section class="about-social" data-reveal>
+            <h3>Síguenos en nuestras redes</h3>
+            ${aboutSocialHTML}
+        </section>
     </div>`;
 }
 
@@ -3044,6 +3265,67 @@ function updatePageTitle(section, productId) {
     }
     document.title = title;
 }
+
+// ===== ABOUT SECTION: reveal, contadores y efecto magnético =====
+function animateCounter(el, target, duration) {
+    var start = null;
+    function step(ts) {
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / duration, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.floor(eased * target).toLocaleString('es-AR');
+        if (p < 1) requestAnimationFrame(step);
+        else el.textContent = target.toLocaleString('es-AR');
+    }
+    requestAnimationFrame(step);
+}
+
+function initAboutSection() {
+    var els = document.querySelectorAll('#mainContent [data-reveal], #mainContent [data-reveal-stagger]');
+    if (!els.length) return;
+
+    var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('in-view');
+            if (entry.target.classList.contains('about-stats')) {
+                entry.target.querySelectorAll('.stat-number').forEach(function(el) {
+                    var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+                    animateCounter(el, target, 1600);
+                });
+            }
+            obs.unobserve(entry.target);
+        });
+    }, { threshold: 0.25 });
+
+    els.forEach(function(el) { obs.observe(el); });
+
+    // Efecto magnético en los íconos de redes
+    document.querySelectorAll('#mainContent .magnetic').forEach(function(btn) {
+        btn.addEventListener('mousemove', function(e) {
+            var r = btn.getBoundingClientRect();
+            var x = e.clientX - r.left - r.width / 2;
+            var y = e.clientY - r.top - r.height / 2;
+            btn.style.transform = 'translate(' + (x * 0.35).toFixed(1) + 'px,' + (y * 0.35).toFixed(1) + 'px)';
+        });
+        btn.addEventListener('mouseleave', function() {
+            btn.style.transform = 'translate(0,0)';
+        });
+    });
+}
+
+// Parallax sutil en la imagen de "Nuestra Historia"
+window.addEventListener('scroll', function() {
+    if (currentSection !== 'about') return;
+    var media = document.querySelector('.about-split-media img');
+    if (!media) return;
+    var rect = media.parentElement.getBoundingClientRect();
+    var vh = window.innerHeight;
+    var progress = (vh - rect.top) / (vh + rect.height);
+    progress = Math.max(0, Math.min(1, progress));
+    var shift = (progress - 0.5) * 60;
+    media.style.transform = 'translateY(' + shift.toFixed(1) + 'px) scale(1.08)';
+}, { passive: true });
 
 // ===== INIT =====
 renderSection();
