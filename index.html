@@ -1487,6 +1487,19 @@
 <div class="hero" id="heroSection">
     
 <div class="hero-slide active">
+        <img class="hero-bg" src="https://plain-enam-prod-public.komododecks.com/202608/15/P5viHS1QMLP3lU9NfSsb/image.jpg" alt="Día del Niño - Importodo CyG">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h2>Día del Niño</h2>
+            <h1>Sorprendé con el regalo perfecto</h1>
+            <p>Descubrí nuestra selección especial de juguetes y productos para esta fecha tan esperada.</p>
+            <div class="hero-buttons">
+                <button class="hero-btn-primary btn-fill" onclick="goToDiaDelNino()">Ver Productos</button>
+            </div>
+        </div>
+    </div>
+
+<div class="hero-slide">
         <img class="hero-bg" src="https://media.istockphoto.com/id/1191022270/photo/abstract-geometric-black-background-made-of-light-tubes.jpg?s=612x612&w=0&k=20&c=Gf-CZnUzuMgH4dAzcHAkAoEHa2W3Z4tvsQPqnsiD0vg=" alt="Fondo oscuro">
         <div class="hero-overlay"></div>
         <div class="hero-content">
@@ -1589,23 +1602,23 @@
 
 const products = [
 
-    { id: 1, name: "TV BOX 2+8G Time", price: 42000, isOffer: false, specs: "Con comando de voz y Xuper TV: Películas – Series – Futbol – etc...", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/11/tvbox-time.jpg", category: ["Hogar", "Electronica"] },
+    { id: 1, name: "TV BOX 2+8G Time", price: 45000, isOffer: false, specs: "Con comando de voz y Xuper TV: Películas – Series – Futbol – etc...", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/11/tvbox-time.jpg", category: ["Hogar", "Electronica"] },
 
     { id: 2, name: "Proyector 3 en 1", price: 115000, isOffer: false, specs: "Proyector con juegos y apps instalados. Incluye Xuper TV, series, películas, canales, fútbol, todo gratis! Incluye 2 joysticks inalámbricos.", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2026/01/proyector.webp", video: "https://www.youtube.com/embed/rUXbaPKYeYE", category: ["Electronica", "Hogar"] },
 
-    { id: 3, name: "Combo Auricular + Parlante Astronauta + Velador", price: 24000, isOffer: true, specs: "", img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQB59LwOW9z3dJk-CBJwcRuDktvbZq7ZymmJ1HpAgtfKmzB6q4L", images: ["https://acdn-us.mitiendanube.com/stores/001/131/056/products/ultrpod-25b69f8566aeed484017311936142468-640-0.webp", "https://http2.mlstatic.com/D_NQ_NP_958161-MLA99653095869_112025-O.webp", "https://http2.mlstatic.com/D_Q_NP_943437-MLA94687605859_102025-O.webp"], category: ["Día del Niño", "Auriculares", "Parlantes"] },
+    { id: 3, name: "Combo Auricular + Parlante Astronauta + Velador", price: 24000, isOffer: true, outOfStock: true, specs: "", img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQB59LwOW9z3dJk-CBJwcRuDktvbZq7ZymmJ1HpAgtfKmzB6q4L", images: ["https://acdn-us.mitiendanube.com/stores/001/131/056/products/ultrpod-25b69f8566aeed484017311936142468-640-0.webp", "https://http2.mlstatic.com/D_NQ_NP_958161-MLA99653095869_112025-O.webp", "https://http2.mlstatic.com/D_Q_NP_943437-MLA94687605859_102025-O.webp"], category: ["Día del Niño", "Auriculares", "Parlantes"] },
 
     { id: 4, name: "Ventilador de Techo", price: 120000, isOffer: false, outOfStock: true, specs: "VENTILADOR DE TECHO C/LUZ CALIDA/FRIO 60W.", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/11/ventecho.jpg", category: "Hogar" },
 
     { id: 5, name: "Taza Infusión y Mezclador Recargable", price: 12500, isOffer: false, outOfStock: true, specs: "(Ingresan por Pedido).", img: "https://http2.mlstatic.com/D_Q_NP_837557-MLA86057134583_062025-O.webp", category: ["Electronica", "Hogar"] },
 
-    { id: 6, name: "Auricular Bluetooth con Pantalla", price: 18000, isOffer: false, specs: "", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/12/JK-610.jpg", video: "https://www.youtube.com/embed/P5NcNGh3k3g", category: ["Auriculares", "Electronica"] },
+    { id: 6, name: "Auricular Bluetooth con Pantalla", price: 18000, isOffer: false, outOfStock: true, specs: "", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2025/12/JK-610.jpg", video: "https://www.youtube.com/embed/P5NcNGh3k3g", category: ["Auriculares", "Electronica"] },
 
-    { id: 7, name: "Portacepillo Luz UV con Dispensador de Pasta", price: 11000, isOffer: false, specs: "Recargable Disponible en color negro.", img: "https://acdn-us.mitiendanube.com/stores/001/567/093/products/3_108dcfd7-dd89-49b2-904b-85846895e4ff-b1068e280c17e6a08917263206707694-640-0.webp", category: "Hogar" },
+    { id: 7, name: "Portacepillo Luz UV con Dispensador de Pasta", price: 11000, isOffer: false, outOfStock: true, specs: "Recargable Disponible en color negro.", img: "https://acdn-us.mitiendanube.com/stores/001/567/093/products/3_108dcfd7-dd89-49b2-904b-85846895e4ff-b1068e280c17e6a08917263206707694-640-0.webp", category: "Hogar" },
 
     { id: 8, name: "Tapas de Silicona x 6", price: 4800, isOffer: false, specs: "Set x 6 tapas de silicona de distintos tamaños. Lo más práctico.", img: "https://http2.mlstatic.com/D_NQ_NP_732694-MLU75008658458_032024-O.webp", category: "Hogar" },
 
-    { id: 9, name: "Super Valija para Pintar", price: 25000, isOffer: true, specs: "Somos de Villa Bosch. Tenemos stock disponible. Últimas !!!", img: "https://http2.mlstatic.com/D_957088-MLA106485750159_022026-C.jpg", category: "Día del Niño" },
+    { id: 9, name: "Super Valija para Pintar", price: 20000, isOffer: true, specs: "Somos de Villa Bosch. Tenemos stock disponible. Últimas !!!", img: "https://http2.mlstatic.com/D_957088-MLA106485750159_022026-C.jpg", category: "Día del Niño" },
 
     { id: 10, name: "Calculadora Científica", price: 6500, isOffer: false, specs: "Calculadora Científica+ pilas.", img: "https://darkseagreen-cheetah-381757.hostingersite.com/wp-content/uploads/2026/01/calculadora.jpg", category: "Electronica" },
 
@@ -1629,13 +1642,13 @@ const products = [
 
     { id: 20, name: "Pava Eléctrica Plegable", price: 19000, isOffer: false, outOfStock: true, specs: "(Por Pedido) <br> Pava Eléctrica Plegable Ideal para Viaje, una solución práctica y eficiente para tus aventuras. Con una capacidad de 600ml, es perfecta para preparar café o mate  en cualquier lugar. Su diseño compacto y ligero la hace fácil de transportar, ideal para cualquier viaje", img: "https://http2.mlstatic.com/D_NQ_NP_825751-MLA95633512196_102025-O.webp", category: ["Hogar"] },
 
-    { id: 21, name: "Pizarra LED Neon USB 30 × 20", price: 13000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_825603-MLA101159527877_122025-O.webp", category: ["Día del Niño"] },
+    { id: 21, name: "Pizarra LED Neon USB 30 × 20", price: 12000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_825603-MLA101159527877_122025-O.webp", category: ["Día del Niño"] },
 
     { id: 22, name: "Organizador Multifuncional P/ Baño", price: 5500, isOffer: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_644268-MLA79993731546_102024-F.webp", category: ["Hogar"] },
 
     { id: 23, name: "Pava eléctrica con corte de Mate", price: 24000, isOffer: false, specs: "", img: "https://maxihogar.vtexassets.com/arquivos/ids/167054-800-auto?v=638705908365470000&width=800&height=auto&aspect=true", category: ["Hogar"] },
 
-    { id: 24, name: "Auriculares Deporte  Bluetooth Gafas de Sol Inteligente", price: 21000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_766147-CBT81011851840_122024-O.webp", category: ["Electronica", "Auriculares"] },
+    { id: 24, name: "Auriculares Deporte  Bluetooth Gafas de Sol Inteligente", price: 21000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_766147-CBT81011851840_122024-O.webp", category: ["Electronica", "Auriculares"] },
 
     { id: 25, name: "Sofa Inflable 116cm x 98cm x 83 cm", price: 35000, isOffer: false, outOfStock: true, specs: "Con apoyapies de 62cm x 62 cm x 31cm <br> Incluye inflador de pie", img: "https://http2.mlstatic.com/D_NQ_NP_718294-MLA86028238326_062025-O.webp", category: ["Hogar"] },
 
@@ -1649,9 +1662,9 @@ const products = [
 
     { id: 30, name: "Inflador", price: 6500, isOffer: false, specs: "Inflador con pico para ruedas y pico para pelotas.", img: "https://http2.mlstatic.com/D_NQ_NP_911733-MLA83441574562_042025-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_688336-MLA96618237117_102025-O.webp"], category: ["Hogar"] },
 
-    { id: 31, name: "Tira LED 50x50", price: 11000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_909336-MLA96402140577_102025-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_901014-MLA82327399244_022025-O.webp"], category: ["Luces"] },
+    { id: 31, name: "Tira LED 50x50", price: 13000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_909336-MLA96402140577_102025-O.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_901014-MLA82327399244_022025-O.webp"], category: ["Luces"] },
 
-    { id: 32, name: "Lámpara Velador Proyector de Estrellas", price: 9000, isOffer: false, specs: "Proyector de estrellas giratorio con varios colores de luz. <br> Se puede usar con un color fijo o que vaya cambiando de colores.", img: "https://dcdn-us.mitiendanube.com/stores/674/724/products/star-master-21-b0ca48f34004e7de9f15406113159174-1024-1024.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_623997-MLA107518491767_022026-O.webp"], category: ["Luces"] },
+    { id: 32, name: "Lámpara Velador Proyector de Estrellas", price: 9500, isOffer: false, specs: "Proyector de estrellas giratorio con varios colores de luz. <br> Se puede usar con un color fijo o que vaya cambiando de colores.", img: "https://dcdn-us.mitiendanube.com/stores/674/724/products/star-master-21-b0ca48f34004e7de9f15406113159174-1024-1024.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_623997-MLA107518491767_022026-O.webp"], category: ["Luces"] },
 
     { id: 33, name: "Batidora de 7 Velocidades", price: 19000, isOffer: false, outOfStock: true, specs: "", img: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTmCLle1t9PBnpw5pbvMLO7KI4gelxVWdZsXRPUDUOUtusXE44I", category: ["Hogar"] },
 
@@ -1737,7 +1750,7 @@ const products = [
 
     { id: 74, name: "Kit Conjunto Térmico + Guantes P Piel + Cuello Cordon Frio Extremo Deportivo Mujer", price: 33000, isOffer: false, outOfStock: true, specs: "Remera y Pantalón Térmico Frío Extremo: Microfibra de alta calidad, transpirables y de ajuste anatómico. <br> Guantes Primera Piel: Microfibra 85% y lycra 15%, anatómicos, resistentes y cómodos. Talle único universal. <br> Cuello de Polar con Cordón: Medidas 23x25 cm, con cordón y traba para usar también como gorro.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/mujer-d95ebe01ff1a0005a217728241148511-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/07-b25aef32cae2b1a6a117549361589502-640-0.webp"], category: ["Invierno"] },
 
-    { id: 75, name: "Auricular Bluetooth Time Negro", price: 14000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/JS370.jpg", images: ["https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQpa2BYgY00bsDYVfwMsY9q0gsYx1rKDtUqrJT5k7dugVJb9OJU"], category: ["Auriculares"] },
+    { id: 75, name: "Auricular Bluetooth Time Negro", price: 14000, isOffer: false, outOfStock: true, specs: "", img: "https://www.impotekno.com/fotos/JS370.jpg", images: ["https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQpa2BYgY00bsDYVfwMsY9q0gsYx1rKDtUqrJT5k7dugVJb9OJU"], category: ["Auriculares"] },
 
     { id: 76, name: "Guante Térmico con táctil. Para Bici/Moto ", price: 9000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_928753-CBT105338160290_012026-O.webp", category: ["Hogar", "Invierno"] },
 
@@ -1833,7 +1846,7 @@ const products = [
 
     { id: 122, name: "Auriculares Vincha P47", price: 7000, isOffer: false, specs: "• Funciones: SD + Bluetooth. <br> • Distancia máxima de Bluetooth: 10mts. <br> • Tecnología de reducción de ruido: DPS procesador de señal digital. <br> • Tiempo de carga: 2 horas. <br> • Tiempo de reproducción por Bluetooth: 3/5 horas. <br> • Tiempo de Stand By: hasta 15 horas. <br> • No incluye cable 3.5mm/auxiliar", img: "https://images.fravega.com/f500/51c73d8a0762bb4c215bf745e5f479e9.jpg", images: ["https://http2.mlstatic.com/D_NQ_NP_716766-MLA106491913538_022026-O.webp"], category: ["Auriculares"] },
 
-    { id: 123, name: "Pelota de Basketball", price: 8500, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_811108-MLA109041444498_032026-O.webp", category: ["Deporte"] },
+    { id: 123, name: "Pelota de Basketball", price: 8500, isOffer: false, outOfStock: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_811108-MLA109041444498_032026-O.webp", category: ["Deporte"] },
 
     { id: 124, name: "Linterna Multifunción Recargable", price: 24000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/HM-7729G.jpg", category: ["Hogar", "Luces"] },
 
@@ -1965,7 +1978,7 @@ const products = [
 
     { id: 188, name: "Campera Softshell Térmica Micropolar", price: 28000, isOffer: false, outOfStock: true, specs: "(Consultar disponibilidad de Colores y Talles). <br> Colores: Verde Militar - Azul Marino - Gris Topo - Negro. <br><br> •Exterior confeccionado en Softshell resistente. <br> •Interior térmico de micropolar suave y confortable. <br> •Diseño cortaviento para una mejor protección. <br> •Repelente al agua para soportar lloviznas y salpicaduras. <br> •Material respirable que ayuda a evacuar la humedad. <br> •Cuello alto para mayor protección térmica. <br> •Cierre frontal completo. <br> •Dos bolsillos externos funcionales.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-9553de285fe51794e917806014819931-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/3-f515ed86d17a24f43417806014892984-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-aecc7b2c67a3995cf717806015159004-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-42fda8f0012f9b6db817806015216436-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1-5a857456ea0fd326f017806015249339-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/talles-camperas-526726d8b93bdc1b3a17806014994176-640-0.webp"], category: ["Invierno"] },
 
-    { id: 189, name: "Paraguas Infantil Capibara con Silbato", price: 6500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_667226-MLA97913409894_112025-O.webp", category: ["Día del Niño"] },
+    { id: 189, name: "Repuestos para Maquina Aplicadora de Strass", price: 5500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_976451-MLA82736123112_032025-O.webp", category: ["Día del Niño"] },
 
     { id: 190, name: "Juego de Poker", price: 19000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_2X_818469-MLA104548557281_012026-F.webp", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_870761-MLA104007954936_012026-F.webp"], category: ["Hogar"] },
 
@@ -2013,7 +2026,7 @@ const products = [
 
     { id: 212, name: "Cartel de Abierto", price: 18000, isOffer: false, outOfStock: true, specs: "", img: "https://www.impotekno.com/fotos/0308.jpg", images: ["https://http2.mlstatic.com/D_NQ_NP_2X_954625-MLA107738660647_022026-F.webp"], category: ["Luces"] },
 
-    { id: 213, name: "Auriculares Vincha BT con Orejitas", price: 8000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_742672-MLA82115742424_022025-O.webp", category: ["Auriculares"] },
+    { id: 213, name: "Auriculares Vincha BT con Orejitas", price: 8000, isOffer: false, outOfStock: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_742672-MLA82115742424_022025-O.webp", category: ["Auriculares"] },
 
     { id: 214, name: "Vincha Max Time BT", price: 18000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_738585-MLA107460398988_032026-O.webp", images: ["https://www.impotekno.com/fotos/AU-14002.jpg"], category: ["Auriculares"] },
 
@@ -2043,9 +2056,35 @@ const products = [
 
     { id: 227, name: "Batalla Naval", price: 15000, isOffer: false, specs: "Juego de Mesa.", img: "https://www.reyesdeloeste.com/fotos/610Y.jpg", images: [""], category: ["Día del Niño"] },
 
-    { id: 228, name: "Mini Ruleta", price: 15000, isOffer: false, specs: "Juego de Mesa.", img: "https://www.reyesdeloeste.com/fotos/608Y.jpg", images: [""], category: ["Día del Niño"] },
+    { id: 228, name: "Mini Ruleta", price: 15000, isOffer: false, outOfStock: true, specs: "Juego de Mesa.", img: "https://www.reyesdeloeste.com/fotos/608Y.jpg", images: [""], category: ["Día del Niño"] },
 
-    { id: 229, name: "Juguete Velociraptor c/Accesorios", price: 21000, isOffer: false, specs: "", img: "https://www.reyesdeloeste.com/fotos/JY-25-462.jpg", images: [""], category: ["Día del Niño"] },
+    { id: 229, name: "Juguete Velociraptor c/Accesorios", price: 21000, isOffer: false, outOfStock: true, specs: "", img: "https://www.reyesdeloeste.com/fotos/JY-25-462.jpg", images: [""], category: ["Día del Niño"] },
+
+    { id: 230, name: "Cable de Carga 240w con Soporte", price: 8000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_Q_NP_2X_671977-CBT107502357552_032026-P.webp", images: ["https://http2.mlstatic.com/D_Q_NP_664622-MLA111826611542_062026-O.webp"], category: ["Hogar", "Electronica"] },
+
+    { id: 231, name: "Limpiador de Microondas", price: 3500, isOffer: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_932471-CBT111848095069_052026-O.webp", images: [""], category: ["Hogar"] },
+
+    { id: 232, name: "Juego de Mesa ¡Basta! 2.0", price: 20000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/BTC-2.jpg", images: [""], category: ["Día del Niño"] },
+
+    { id: 233, name: "Juego de Mesa ¡Basta! 3.0", price: 21000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/BTC-3.jpg", images: [""], category: ["Día del Niño"] },
+
+    { id: 234, name: "Joystick PS4 de la Selección", price: 31000, isOffer: false, specs: "", img: "https://greemos.com.ar/wp-content/uploads/AF-404.jpg", images: ["https://insumaxinformatica.com.ar/img/Public/1073/4085-producto-2.jpg"], category: ["Día del Niño", "Electronica"] },
+
+    { id: 235, name: "Cargador Carga Rapida 65W", price: 13000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/CC-59151.jpg", images: [""], category: ["Cables y Adaptadores"] },
+
+    { id: 236, name: "Cargador Time USB Tipo C 18W", price: 4500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_696460-MLA92281537534_092025-O.webp", images: [""], category: ["Cables y Adaptadores"] },
+
+    { id: 237, name: "Auriculares Bluetooth F9-5", price: 8500, isOffer: false, specs: "", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-80dc6dc0cfc75036a517546619553156-1024-1024.webp", images: [""], category: ["Auriculares"] },
+
+    { id: 238, name: "Guantes con Luz", price: 12000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_621912-CBT80698502879_112024-O.webp", images: ["https://www.impotekno.com/fotos/G0308.jpg"], category: ["Hogar", "Luces"] },
+
+    { id: 239, name: "Camara Infantil", price: 17000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_717730-MLA100079984507_122025-O.webp", images: [""], category: ["Día del Niño"] },
+
+    { id: 240, name: "Micrófono Inalámbrico K9", price: 11000, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_875915-MLA101071036315_122025-O.webp", images: [""], category: ["Electronica"] },
+
+    { id: 241, name: "Micrófono Inalámbrico K8", price: 8500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_754210-MLA87920493362_072025-O.webp", images: [""], category: ["Electronica"] },
+
+    { id: 242, name: "Micrófono Parlante Karaoke Bluetooht ", price: 11000, isOffer: false, specs: "", img: "https://www.oestech.com.ar/fotos/FD1491.jpg", images: [""], category: ["Día del Niño", "Parlantes"] },
 
 ];
 
@@ -2304,6 +2343,21 @@ function scoreProduct(p, rawQuery) {
     if (words.length > 1 && name.includes(q)) score += 50;
 
     return score;
+}
+
+function goToDiaDelNino() {
+    stockTab = 'disponible';
+    selectedCategory = 'Día del Niño';
+    searchQuery = '';
+    sortOrder = 'default';
+    hideDrop();
+    currentSection = 'home';
+    updateNavActive();
+    renderSection();
+    setTimeout(function() {
+        var cat = document.getElementById('catalogo');
+        if (cat) cat.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
 }
 
 function setStockTab(tab) {
@@ -2867,7 +2921,7 @@ function renderAbout() {
 
         <section class="about-split">
             <div class="about-split-media">
-                <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&w=1200" alt="Importodo CyG">
+                <img src="https://scontent.faep6-2.fna.fbcdn.net/v/t39.30808-6/480072964_1174832961311848_5212037324852562968_n.jpg?stp=dst-jpg_tt6&cstp=mx1080x1080&ctp=s1080x1080&_nc_cat=107&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeG0SQDxt7FEWcDdN8zKDmwFhXgZovtFxgGFeBmi-0XGAfrQ5vGOfLxOt57iYBPRlYI&_nc_ohc=6WQx-bKZeOIQ7kNvwGuvNZ-&_nc_oc=Ado_xElb8xqWSbnSX4ExbCh2FIBGvX7UE6yZYeDZ057Q1LNhbhH4qfV7rH9VJDjyrQx6hU95esrjrD0oI8cjiPlW&_nc_zt=23&_nc_ht=scontent.faep6-2.fna&_nc_gid=VjfMxNAl_rUaRuA2nCjpIQ&_nc_ss=7c2a8&oh=00_AQHFS81WbN2ciH_1zMbq6g9MM56HHIzqwXLX5X_uBqPn6w&oe=6A869A57" alt="Importodo CyG">
             </div>
             <div class="about-split-text" data-reveal>
                 <h2>Nuestra Historia</h2>
@@ -2879,7 +2933,7 @@ function renderAbout() {
         <div class="about-stats" data-reveal>
             <div class="stat"><span class="stat-number" data-count="10">0</span><p class="stat-label">Años de trayectoria</p></div>
             <div class="stat"><span class="stat-number" data-count="${products.length}">0</span><p class="stat-label">Productos disponibles</p></div>
-            <div class="stat"><span class="stat-number" data-count="500">0</span><p class="stat-label">Clientes felices</p></div>
+            <div class="stat"><span class="stat-number" data-count="1000">0</span><p class="stat-label">Clientes felices</p></div>
         </div>
 
         <div class="about-marquee-wrap">
@@ -3305,9 +3359,9 @@ function animateCounter(el, target, duration) {
         if (!start) start = ts;
         var p = Math.min((ts - start) / duration, 1);
         var eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.floor(eased * target).toLocaleString('es-AR');
+        el.textContent = '+' + Math.floor(eased * target).toLocaleString('es-AR');
         if (p < 1) requestAnimationFrame(step);
-        else el.textContent = target.toLocaleString('es-AR');
+        else el.textContent = '+' + target.toLocaleString('es-AR');
     }
     requestAnimationFrame(step);
 }
