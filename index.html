@@ -654,6 +654,25 @@
             --fill-bg: #fff; --fill-text: var(--fg);
         }
 
+        /* ===== OFERTAS EN CARRITO VACÍO ===== */
+        .cart-offers { margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--border); }
+        .cart-offers h3 { font-size: 18px; font-weight: 700; margin-bottom: 16px; text-align: center; }
+        .cart-offers-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .cart-offer-card {
+            position: relative; background: var(--bg); border-radius: 16px; padding: 14px;
+            text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center;
+            transition: transform .25s, box-shadow .25s;
+        }
+        .cart-offer-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .cart-offer-card img { width: 100%; height: 110px; object-fit: contain; margin-bottom: 10px; }
+        .cart-offer-card h4 { font-size: 13px; font-weight: 600; height: 36px; overflow: hidden; margin-bottom: 4px; }
+        .cart-offer-card .price { font-weight: 700; color: var(--destructive); margin-bottom: 10px; }
+        .cart-offer-card button {
+            width: 100%; padding: 8px; border-radius: 10px; font-size: 12px; font-weight: 600;
+            background: var(--fg); color: var(--bg); display: flex; align-items: center; justify-content: center; gap: 6px;
+        }
+        @media (max-width: 768px) { .cart-offers-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
+
         /* ===== ABOUT ===== */
         .about-section {
             display: flex; flex-direction: column; gap: 40px;
@@ -1397,6 +1416,13 @@
         .mobile-menu button:hover {
             background: rgba(255,255,255,0.16);
         }
+        /* Menú móvil solo con íconos, en fila */
+        .mobile-menu.open { flex-direction: row; justify-content: space-around; gap: 10px; }
+        .mobile-menu button {
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            padding: 10px 0;
+        }
+        .mobile-menu button svg { width: 22px; height: 22px; }
         .mobile-menu button.active {
             background: #fff !important;
             color: #000 !important;
@@ -1477,10 +1503,10 @@
         </div>
     </div>
     <div class="mobile-menu" id="mobileMenu">
-        <button class="active" onclick="navigate('home',{resetFilters:true})">Inicio</button>
-        <button onclick="navigate('about')">Conócenos</button>
-        <button onclick="navigate('help')">Ayuda</button>
-        <button onclick="navigate('contact')">Contacto</button>
+        <button class="active" onclick="navigate('home',{resetFilters:true})" aria-label="Inicio" title="Inicio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></button>
+        <button onclick="navigate('about')" aria-label="Conócenos" title="Conócenos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></button>
+        <button onclick="navigate('help')" aria-label="Ayuda" title="Ayuda"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/><path d="M21 19v1a3 3 0 0 1-3 3h-4"/></svg></button>
+        <button onclick="navigate('contact')" aria-label="Contacto" title="Contacto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg></button>
     </div>
 </nav>
 
@@ -1647,7 +1673,7 @@ const products = [
 
     { id: 27, name: "Auricular Bolsita Time M/L", price: 3500, isOffer: false, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_716376-MLA97025350731_112025-O.webp", category: ["Auriculares"] },
 
-    { id: 28, name: "Proyector LED ULTRA HD", price: 80000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_834810-MLA85558716745_062025-O.webp", video: "https://www.youtube.com/embed/rUXbaPKYeYE", category: ["Hogar", "Elctronica"] },
+    { id: 28, name: "Proyector LED ULTRA HD", price: 80000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_834810-MLA85558716745_062025-O.webp", video: "https://www.youtube.com/embed/rUXbaPKYeYE", category: ["Hogar", "Electronica"] },
 
     { id: 29, name: "Cargador Rápido. Tipo C. 45w + 20w", price: 15000, isOffer: false, specs: "Marca Time", img: "https://http2.mlstatic.com/D_NQ_NP_928761-MLA95527063900_102025-O.webp", category: ["Cables y Adaptadores"] },
 
@@ -1771,7 +1797,7 @@ const products = [
 
     { id: 90, name: "Mochila Antirrobo Porta Notebook 1322", price: 32000, isOffer: false, outOfStock: true, specs: "Transportá todo lo que necesitás con comodidad y estilo gracias a la Mochila 1322. Confeccionada en tejido Oxford antidesgarro, resistente al agua y de gran durabilidad, es ideal para uso urbano, laboral o de estudio. <br> Esta mochila ofrece gran capacidad de organización con compartimentos múltiples y espacio exclusivo para notebook de hasta 15.6\". Sus detalles ergonómicos brindan una postura cómoda durante el uso diario. Incorpora bolsillo con cierre en la correa para tarjetas, tiras reflectivas, y una correa de fijación para valijas con ruedas, ideal para quienes están en constante movimiento. <br><br> Capacidad: 30 litros. <br> Material: Oxford antidesgarro resistente al agua. <br> Diseño ergonómico: pensado para uso urbano diario. <br> Compartimento para notebook: de hasta 15.6\". <br> Correa de fijación: se adapta a maletas con ruedas. <br> Bolsillo con cierre en correa: ideal para tarjetas o llaves. <br> Salidas de auriculares: integradas. <br> Tiras reflectivas: mayor visibilidad en la vía pública. <br> Medidas: 46 cm alto x 33 cm ancho x 18 cm profundidad.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024x1024-daniel-98f613ca6c2d63b6ce17545108905846-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021230409583-a-6cd9616b389aa0db7617545109474849-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-b-1195b4620c25201c3f17545109013831-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-c-4185def3b1a55f250817545109102373-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-d-12515a4b1cfb3b15a517545109144418-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-f-e37918c2570a51556d17545109209936-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-g-e3ff5495e4ad9f7c1a17545109249507-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-h-64a4c41f841fc4c90e17545109279076-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021426534392-i-cad426d8950442cd1d17545109315915-640-0.webp"], category: ["Hogar"] },
 
-    { id: 90, name: "Mochila Porta Notebook c/Carga USB 1803", price: 22000, isOffer: false, outOfStock: true, specs: "La Mochila 1803 combina funcionalidad, diseño moderno y materiales resistentes en un formato compacto. Ideal para el trabajo, la universidad o escapadas rápidas, esta mochila ofrece comodidad, seguridad y conectividad en cada movimiento. <br> Está confeccionada con tela antidesgarro impermeable, cuenta con puerto USB, salida para auriculares y un compartimento acolchado para notebook, todo en una estructura liviana y reforzada. <br><br> Capacidad de 20 litros con múltiples compartimientos. <br> Puerto USB y salida para auriculares integrados. <br> Compartimento para notebook de hasta 16”. <br> Tela Oxford impermeable y antidesgarro. <br> Cierre reforzado y costuras elegantes. <br> Diseño ergonómico, liviano y cómodo.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-1-8691404f8a0ec771b917544772429066-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161848256815-a-2796d14753c362e33f17544773262111-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-b-c46be07fc2aacd4aac17544773045202-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-e-64d16ee70c6689550817544773059259-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-d-64611fa89e603e158617544773065227-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-c-8bac3c739150c0abaa17544773062400-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-i-b3488d587ee8453c7b17544773101176-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-h-dd2c69e60d320591a817544773088080-640-0.webp"], category: ["Hogar"] },
+    { id: 88, name: "Mochila Porta Notebook c/Carga USB 1803", price: 22000, isOffer: false, outOfStock: true, specs: "La Mochila 1803 combina funcionalidad, diseño moderno y materiales resistentes en un formato compacto. Ideal para el trabajo, la universidad o escapadas rápidas, esta mochila ofrece comodidad, seguridad y conectividad en cada movimiento. <br> Está confeccionada con tela antidesgarro impermeable, cuenta con puerto USB, salida para auriculares y un compartimento acolchado para notebook, todo en una estructura liviana y reforzada. <br><br> Capacidad de 20 litros con múltiples compartimientos. <br> Puerto USB y salida para auriculares integrados. <br> Compartimento para notebook de hasta 16”. <br> Tela Oxford impermeable y antidesgarro. <br> Cierre reforzado y costuras elegantes. <br> Diseño ergonómico, liviano y cómodo.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/1024-x-1024-juve-1-8691404f8a0ec771b917544772429066-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2409161848256815-a-2796d14753c362e33f17544773262111-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-b-c46be07fc2aacd4aac17544773045202-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-e-64d16ee70c6689550817544773059259-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-d-64611fa89e603e158617544773065227-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-c-8bac3c739150c0abaa17544773062400-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-i-b3488d587ee8453c7b17544773101176-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2311021232535599-h-dd2c69e60d320591a817544773088080-640-0.webp"], category: ["Hogar"] },
 
     { id: 91, name: "Mochila Deportiva 2327", price: 27000, isOffer: false, outOfStock: true, specs: "La Mochila 2327 es la aliada perfecta para quienes buscan capacidad, resistencia y funcionalidad en sus salidas diarias, viajes o actividades deportivas. Con un diseño moderno y ultra liviano, combina estilo con practicidad en cada detalle. <br> Su confección en Oxford 100% impermeable y reforzado ofrece durabilidad y protección en cualquier clima. Incluye amplio compartimento principal, bolsillo porta notebook, bolsillos frontales con cierre y espalda acolchada que brinda mayor comodidad. Todo pensado para tu comodidad y seguridad. <br><br> Compartimento para notebook: ideal para laptops de hasta 17\". <br> Tiras acolchadas: que reducen la carga sobre los hombros. <br> Diseño ergonómico: con espalda acolchada para mayor confort. <br> Modelo liviano: fácil de transportar en cualquier ocasión.", img: "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120826354346-a-9ed51a496699f3107017544108127668-1024-1024.webp", images: ["https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120826354346-c-5d14f126dcdd116e0117544108129013-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120826354346-b-61de471dc4f6c7da2317544108130880-640-0.webp", "https://acdn-us.mitiendanube.com/stores/006/281/009/products/2412120826354346-d-766a746cc024532af017544108138259-640-0.webp"], category: ["Hogar"] },
 
@@ -1909,7 +1935,7 @@ const products = [
 
     { id: 158, name: "Set de Herramientas Infantil", price: 22000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_908924-MLA110980982344_052026-O.webp", category: ["Infantil"] },
 
-    { id: 159, name: "Consola SUP 400 en 1", price: 18000, isOffer: false, specs: "", img: ["https://www.impotekno.com/fotos/CR-400.jpg"], category: ["Electonica", "Infantil"] },
+    { id: 159, name: "Consola SUP 400 en 1", price: 18000, isOffer: false, specs: "", img: "https://www.impotekno.com/fotos/CR-400.jpg", category: ["Electronica", "Infantil"] },
 
     { id: 160, name: "Super Consola de Juegos R36S Portatil ARK OS", price: 82000, isOffer: false, outOfStock: true, specs: "", img: "https://http2.mlstatic.com/D_NQ_NP_605468-MLA92122670852_092025-O.webp", category: ["Electronica", "Infantil"] },
 
@@ -2345,8 +2371,12 @@ function setStockTab(tab) {
 }
 
 function getFiltered() {
-    // Filtro por pestaña: Disponibles vs Por Pedido (no se mezclan)
-    let result = products.filter(p => stockTab === 'pedido' ? !!p.outOfStock : !p.outOfStock);
+    // Con búsqueda activa se muestran TODOS los productos (disponibles + por pedido);
+    // sin búsqueda se respeta la pestaña elegida.
+    const isSearching = !!(searchQuery && searchQuery.trim());
+    let result = isSearching
+        ? products.slice()
+        : products.filter(p => stockTab === 'pedido' ? !!p.outOfStock : !p.outOfStock);
 
     // Filtro por categoría
     if (selectedCategory !== 'Todos') {
@@ -2361,7 +2391,8 @@ function getFiltered() {
         result = result
             .map(p => ({ p, score: scoreProduct(p, searchQuery) }))
             .filter(x => x.score > 0)
-            .sort((a, b) => b.score - a.score)
+            // Disponibles primero, "Por Pedido" al final; dentro de cada grupo, por relevancia
+            .sort((a, b) => ((a.p.outOfStock ? 1 : 0) - (b.p.outOfStock ? 1 : 0)) || (b.score - a.score))
             .map(x => x.p);
     } else {
         // Sin búsqueda: orden elegido por el usuario
@@ -2428,7 +2459,7 @@ function showSearchDrop(value) {
     const matches = products
         .map(p => ({ p, score: scoreProduct(p, q) }))
         .filter(x => x.score > 0)
-        .sort((a, b) => b.score - a.score)
+        .sort((a, b) => ((a.p.outOfStock ? 1 : 0) - (b.p.outOfStock ? 1 : 0)) || (b.score - a.score))
         .slice(0, 5)
         .map(x => x.p);
 
@@ -2812,6 +2843,30 @@ function slideRelated(dir) {
     if (track) track.style.transform = 'translateX(-' + relatedOffset + 'px)';
 }
 
+// Ofertas disponibles (automático: isOffer + en stock), las 4 más baratas
+function renderCartOffers() {
+    const offers = products
+        .filter(p => p.isOffer && !p.outOfStock)
+        .sort((a, b) => a.price - b.price)
+        .slice(0, 4);
+    if (!offers.length) return '';
+    return `
+    <div class="cart-offers">
+        <h3>🔥 Ofertas que te pueden interesar</h3>
+        <div class="cart-offers-grid">
+            ${offers.map(p => `
+                <div class="cart-offer-card" onclick="viewProduct(${p.id})">
+                    <span class="offer-badge" style="font-size:10px;padding:2px 8px">OFERTA</span>
+                    <img src="${p.img}" alt="${p.name}" loading="lazy">
+                    <h4>${p.name}</h4>
+                    <p class="price">$${p.price.toLocaleString()}</p>
+                    <button onclick="event.stopPropagation(); addToCart(${p.id})">${icons.cart} Añadir</button>
+                </div>
+            `).join('')}
+        </div>
+    </div>`;
+}
+
 function renderCart() {
     if (cart.length === 0) {
         return `
@@ -2829,6 +2884,7 @@ function renderCart() {
                     Ver Catálogo
                 </button>
             </div>
+            ${renderCartOffers()}
         </div>`;
     }
 
